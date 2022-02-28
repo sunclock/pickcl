@@ -18,6 +18,7 @@ import {
 import SplashScreen from 'react-native-splash-screen'
 import { Button, NativeBaseProvider } from 'native-base';
 import Track from './src/templates/track.template';
+import { AppNavigator } from './src/navigation/AppNavigator';
 
 const store = createStore(
   rootReducer,
@@ -40,10 +41,7 @@ const App = () => {
     <Provider store={store}>
       <NativeBaseProvider>
         <NavigationContainer>
-          <SafeAreaView style={backgroundStyle}>
-            <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-            <Track />
-          </SafeAreaView>
+          <AppNavigator />
         </NavigationContainer>
       </NativeBaseProvider>
     </Provider>

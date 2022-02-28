@@ -8,7 +8,7 @@ import {
 	EditTrackArtworkAction,
 	EditTrackVoiceActorsAction
 } from './track.action.types';
-import { IVoiceActorList, IImage, ITrack } from '../../types';
+import { IVoiceActor, IImage, ITrack } from '../../types';
 
 export const addTrack = (tracks: ITrack[]): AddTrackAction => ({
 	type: TrackActionTypes.ADD_TRACK,
@@ -54,7 +54,7 @@ export const editTrackArtwork = (trackId: string | number, artwork: IImage): Edi
 	}
 });
 
-export const editTrackVoiceActors = (trackId: string | number, voiceActors: IVoiceActorList): EditTrackVoiceActorsAction => ({
+export const editTrackVoiceActors = (trackId: string | number, voiceActors: IVoiceActor[]): EditTrackVoiceActorsAction => ({
 	type: TrackActionTypes.EDIT_TRACK_VOICE_ACTORS,
 	payload: {
 		trackId,

@@ -13,10 +13,6 @@ export interface IVoiceActor {
 	description?: string;
 }
 
-export interface IVoiceActorList {
-	[key: string]: IVoiceActor;
-}
-
 export interface ITrack {
 	id: string | number;
 	filename: string;
@@ -26,8 +22,8 @@ export interface ITrack {
 	duration: number;
 	artwork?: IImage;
 	artist?: string;
-	uri: string;
-	voiceActors?: IVoiceActorList;
+	url: string;
+	voiceActors?: IVoiceActor[];
 }
 
 export interface ITrackList {
@@ -36,7 +32,7 @@ export interface ITrackList {
 	title: string;
 	description?: string;
 	artwork?: IImage;
-	voiceActors?: IVoiceActorList;
+	voiceActors?: IVoiceActor[];
 }
 
 export interface IPick {
@@ -44,7 +40,7 @@ export interface IPick {
 	track: ITrack;
 	timestamp: number;
 	memo?: string;
-	voiceActors?: IVoiceActorList;
+	voiceActors?: IVoiceActor[];
 }
 
 interface IUser {

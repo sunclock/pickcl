@@ -1,4 +1,4 @@
-import { ITrack, IImage, IVoiceActorList } from '../../types';
+import { ITrack, IImage, IVoiceActor } from '../../types';
 
 export enum TrackActionTypes {
 	ADD_TRACK = 'ADD_TRACK',
@@ -58,7 +58,7 @@ export type EditTrackVoiceActorsAction = {
 	type: TrackActionTypes.EDIT_TRACK_VOICE_ACTORS;
 	payload: {
 		trackId: string | number;
-		voiceActors: IVoiceActorList;
+		voiceActors: IVoiceActor[];
 	}
 };
 

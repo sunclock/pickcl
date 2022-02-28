@@ -1,4 +1,4 @@
-import { IPick, IVoiceActorList } from '../../types';
+import { IPick, IVoiceActor } from '../../types';
 
 export enum PickActionTypes {
 	ADD_PICK = 'ADD_PICK',
@@ -31,7 +31,7 @@ export type EditPickVoiceActorsAction = {
 	type: PickActionTypes.EDIT_PICK_VOICE_ACTORS;
 	payload: {
 		pickId: string | number;
-		voiceActors: IVoiceActorList;
+		voiceActors: IVoiceActor[];
 	}
 };
 

@@ -6,7 +6,7 @@ import {
 	EditPickVoiceActorsAction,
 } from './pick.action.types';
 
-import { IPick, IVoiceActorList } from '../../types';
+import { IPick, IVoiceActor } from '../../types';
 
 export const addPick = (pick: IPick): AddPickAction => ({
 	type: PickActionTypes.ADD_PICK,
@@ -28,7 +28,7 @@ export const editPickMemo = (pickId: string | number, memo: string): EditPickMem
 	}
 });
 
-export const editPickVoiceActors = (pickId: string | number, voiceActors: IVoiceActorList): EditPickVoiceActorsAction => ({
+export const editPickVoiceActors = (pickId: string | number, voiceActors: IVoiceActor[]): EditPickVoiceActorsAction => ({
 	type: PickActionTypes.EDIT_PICK_VOICE_ACTORS,
 	payload: {
 		pickId,

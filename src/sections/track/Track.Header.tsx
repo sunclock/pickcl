@@ -2,13 +2,13 @@ import React from 'react';
 import { Box } from 'native-base';
 import { TouchableWithoutFeedback } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { TrackScreenProps } from '../../navigation/RootNavigator';
+import { TrackScreenProp } from '../../navigation/RootNavigator';
 
-interface HeaderProps {
-	navigation: TrackScreenProps;
+interface HeaderProp {
+	navigation: TrackScreenProp;
 }
 
-function Header({ navigation }: HeaderProps) {
+function Header({ navigation }: HeaderProp) {
 	return (
 		<Box justifyContent="center" pl={4} pt={2}>
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('TrackList')}>

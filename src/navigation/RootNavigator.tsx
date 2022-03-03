@@ -1,15 +1,12 @@
 import * as React from 'react';
-import { createMaterialBottomTabNavigator, MaterialBottomTabNavigationProp, MaterialBottomTabScreenProps } from '@react-navigation/material-bottom-tabs';
+import { createMaterialBottomTabNavigator, MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import TrackList from '../templates/tracklist.template';
 import Track from '../templates/track.template';
 import Picks from '../templates/picks.template';
-import { ITrack, ITrackList, IPick } from '../types';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { SamplePicks, SampleTrack } from '../templates/sample';
 
 type TabParamList = {
 	Picks: undefined;

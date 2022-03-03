@@ -1,14 +1,14 @@
 import React from 'react';
 import { Box } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { TrackListScreenProps } from '../../navigation/RootNavigator';
+import { TrackListScreenProp } from '../../navigation/RootNavigator';
 import { Pressable } from 'react-native';
 
-interface FloatButtonProps {
-	navigation: TrackListScreenProps;
+interface FloatButtonProp {
+	navigation: TrackListScreenProp;
 }
 
-function FloatButton({ navigation }: FloatButtonProps) {
+function FloatButton({ navigation }: FloatButtonProp) {
 	const [longPress, setLongPress] = React.useState(false);
 	return (
 		<Box alignItems="center"

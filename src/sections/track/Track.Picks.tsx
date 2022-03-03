@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, Pressable, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, Pressable, StyleSheet } from 'react-native';
 import { IPick, ITrack } from '../../types';
 import { Text, Box, FlatList, HStack } from 'native-base';
 import TrackPlayer from 'react-native-track-player';
@@ -8,14 +8,14 @@ interface IItem {
 	item: IPick;
 };
 
-interface PicksProps {
+interface PicksProp {
 	track: ITrack;
 	picks: IPick[] | undefined;
 }
 
 const { width, height } = Dimensions.get('window');
 
-function Picks({ picks }: PicksProps) {
+function Picks({ picks }: PicksProp) {
 	const [focused, setFocused] = useState<String | Number>('');
 	const renderItem = (item: IItem) => {
 		return (

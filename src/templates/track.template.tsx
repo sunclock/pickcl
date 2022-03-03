@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useColorScheme, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { useSelector } from 'react-redux';
 import { IPick } from '../types';
@@ -6,10 +6,8 @@ import Title from '../sections/track/Track.Title';
 import Artwork from '../sections/track/Track.Artwork';
 import Picks from '../sections/track/Track.Picks';
 import Player from '../sections/track/Track.Player';
-import { TrackScreenProp, TrackScreenRouteProp } from '../navigation/RootNavigator';
+import { TrackScreenProp } from '../navigation/RootNavigator';
 import Header from '../sections/track/Track.Header';
-import { setupIfNeeded } from '../utils/Player';
-import TrackPlayer from 'react-native-track-player';
 
 interface TrackProp {
 	navigation: TrackScreenProp;

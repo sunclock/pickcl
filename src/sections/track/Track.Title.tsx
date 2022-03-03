@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Dimensions } from 'react-native';
 import { ITrack } from '../../types';
 import { Text, Box, Heading, Flex } from 'native-base';
-import TrackPlayer from 'react-native-track-player';
 
-interface TitleProps {
+interface TitleProp {
     track: ITrack;
 }
 
-function Title({ track }: TitleProps) {
+function Title({ track }: TitleProp) {
     return (
         <Box alignItems='center' my='4'>
             <Heading fontSize='xl'>

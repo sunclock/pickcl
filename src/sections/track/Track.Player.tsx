@@ -9,12 +9,12 @@ import { useDispatch } from 'react-redux';
 import { addPick } from '../../reducers/pick';
 import { changeTrack } from '../../reducers/track';
 
-interface PlayerProps {
+interface PlayerProp {
 	track: ITrack;
 	tracks: ITrack[];
 }
 
-function Player({ track, tracks }: PlayerProps) {
+function Player({ track, tracks }: PlayerProp) {
 	const [onPress, setPress] = useState('');
 	const [modalVisible, setModalVisible] = useState(false);
 	const [memo, setMemo] = useState('');

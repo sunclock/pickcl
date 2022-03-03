@@ -3,11 +3,11 @@ import { StyleSheet, Dimensions } from 'react-native';
 import { ITrack } from '../../types';
 import { Image, Box, Center } from 'native-base';
 
-interface ArtworkProps {
+interface ArtworkProp {
 	track: ITrack,
 }
 
-function Artwork({ track }: ArtworkProps) {
+function Artwork({ track }: ArtworkProp) {
 	return (
 		<Center alignSelf='center' borderRadius='20' style={styles.container}>
 			<Box p='4'>

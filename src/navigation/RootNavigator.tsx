@@ -7,6 +7,7 @@ import Track from '../templates/track.template';
 import Picks from '../templates/picks.template';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 type TabParamList = {
 	Picks: undefined;
@@ -22,7 +23,7 @@ export type TrackScreenRouteProp = RouteProp<StackParamList, 'Track'>;
 
 export type TrackScreenProp = NativeStackNavigationProp<StackParamList, 'Track'>;
 
-export type PicksScreenProps = CompositeNavigationProp<
+export type PicksScreenProp = CompositeNavigationProp<
 	MaterialBottomTabNavigationProp<TabParamList, 'Picks'>,
 	NativeStackNavigationProp<StackParamList>
 >;
@@ -32,7 +33,7 @@ export type TrackListScreenProp = CompositeNavigationProp<
 	NativeStackNavigationProp<StackParamList>
 >;
 
-export type TrackListScreenRouteProps = RouteProp<TabParamList, 'TrackListTab'>;
+export type TrackListScreenRouteProp = RouteProp<TabParamList, 'TrackListTab'>;
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -48,6 +49,8 @@ export const RootNavigator = () => {
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
 
 export const TabNavigator = () => {
+	const picks = useSelector((state: any) => state.picks.picks);
+	const tracks = useSelector((state: any) => state.tracks.tracks);
 	return (
 		<Tab.Navigator
 			initialRouteName="TrackListTab"
@@ -82,6 +85,7 @@ export const TabNavigator = () => {
 				component={TrackList}
 				options={{
 					tabBarLabel: 'TrackList',
+					tabBarBadge: tracks.length ? tracks.length : null,
 				}}
 			/>
 			<Tab.Screen
@@ -89,7 +93,7 @@ export const TabNavigator = () => {
 				component={Picks}
 				options={{
 					tabBarLabel: 'Picks',
-					tabBarBadge: 1,
+					tabBarBadge: picks.length ? picks.length : null,
 				}}
 			/>
 		</Tab.Navigator>

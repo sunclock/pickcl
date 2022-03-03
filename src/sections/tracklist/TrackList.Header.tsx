@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Heading, Flex, HStack } from 'native-base';
+import { Box, Heading, HStack } from 'native-base';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import { Pressable } from 'react-native';
 import { pickFiles } from '../../utils/Uploader';

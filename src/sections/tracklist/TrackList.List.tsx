@@ -1,58 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { ITrack, IPick } from '../../types';
-import { Text, Box } from 'native-base';
+import React from 'react';
+import { TouchableOpacity, FlatList, Pressable } from 'react-native';
+import { Text, Box, HStack } from 'native-base';
 import { TrackListScreenProp } from '../../navigation/RootNavigator';
-import TrackPlayer, { Track } from 'react-native-track-player';
-import { TouchableOpacity, FlatList } from 'react-native';
+import { ITrack } from '../../types';
 import { useDispatch } from 'react-redux';
-import { addTrack, changeTrack } from '../../reducers/track';
-import { convertTrackType } from '../../utils/Player';
+import { changeTrack, removeTrack } from '../../reducers/track';
+import TrackPlayer from 'react-native-track-player';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface IItem {
-	item: Track;
+	item: ITrack;
 };
 
-interface ListProps {
+interface ListProp {
 	navigation: TrackListScreenProp;
 	tracks: ITrack[];
-	picks: IPick[];
 }
 
-function List({ tracks, picks, navigation }: ListProps) {
-	const [queue, setQueue] = useState();
+function List({ navigation, tracks }: ListProp) {
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		async function getQueue() {
-			let queue = await TrackPlayer.getQueue()
-			if (queue.length !== tracks.length) {
-				await TrackPlayer.reset();
-				await TrackPlayer.add(convertTrackType(tracks));
-			}
-			queue = await TrackPlayer.getQueue();
-			setQueue(queue);
-		}
-		getQueue();
-	}, []);
 	const renderItem = (item: IItem) => {
 		return (
-			<TouchableOpacity onPress={async () => {
-				await TrackPlayer.skip(queue.indexOf(item.item));
-				await TrackPlayer.play();
-				dispatch(changeTrack(tracks[queue.indexOf(item.item)]));
-				navigation.navigate('Track');
-			}
-			}>
-				<Box borderBottomWidth='1' borderBottomColor='trueGray.100' py='2'>
-					<Text fontSize='sm'>{item.item.title}</Text>
+			<HStack justifyContent={'space-between'} borderBottomWidth='1' borderBottomColor='trueGray.100' py='2'>
+				<Box>
+					<TouchableOpacity onPress={async () => {
+						await TrackPlayer.skip(tracks.indexOf(item.item));
+						await TrackPlayer.play();
+						dispatch(changeTrack(item.item));
+						navigation.navigate('Track');
+					}
+					}>
+						<Text fontSize='sm'>{item.item.filename}</Text>
+					</TouchableOpacity>
 				</Box>
-			</TouchableOpacity>
+				<Box>
+					<Pressable onPress={async () => {
+						await TrackPlayer.remove(tracks.indexOf(item.item));
+						dispatch(removeTrack(item.item.id));
+					}}>
+						<Ionicons name='ios-close' size={24} color='gray' />
+					</Pressable>
+				</Box>
+			</HStack>
 		)
 	}
 	return (
 		<Box px='4' borderRadius='10'>
 			<FlatList
-				data={queue}
+				data={tracks}
 				renderItem={renderItem}
 				keyExtractor={(item) => item.url}
 			/>

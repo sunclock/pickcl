@@ -35,14 +35,6 @@ export const tracklists = (
 	action: AddTrackListAction | RemoveTrackListAction | AddTrackToTrackListAction | RemoveTrackFromTrackListAction | EditTrackListTrackOrderAction | EditTrackListTitleAction | EditTrackListDescriptionAction | EditTrackListArtworkAction
 ) => {
 	const newState: TrackListsState = _.cloneDeep(state);
-	// const loadTracklists = async () => {
-	// 	const tracklists = await AsyncStorage.getItem('tracklists');
-	// 	if (!tracklists) {
-	// 		return initialState;
-	// 	}
-	// 	return (initialState.tracklists = JSON.parse(tracklists))
-	// }
-	// loadTracklists();
 	switch (action.type) {
 		case TrackListActionTypes.ADD_TRACKLIST:
 			newState.tracklists = newState.tracklists.concat(action.payload);

@@ -31,15 +31,6 @@ export const picks = (
 	action: AddPickAction | RemovePickAction | EditPickMemoAction | EditPickVoiceActorsAction
 ) => {
 	const newState: PicksState = _.cloneDeep(state);
-	// const loadPicks = async () => {
-	// 	const picks = await AsyncStorage.getItem('picks');
-	// 	if (!picks) {
-	// 		return initialState;
-	// 	}
-	// 	let parsedPicks = JSON.parse(picks);
-	// 	return (initialState.picks = parsedPicks.data)
-	// }
-	// loadPicks();
 	switch (action.type) {
 		case PickActionTypes.ADD_PICK:
 			newState.picks = newState.picks.concat(action.payload);

@@ -6,7 +6,7 @@ import {
 } from './track.action.types';
 import _ from 'lodash';
 import { saveDataToStorage } from '../../utils/Tools';
-import { SampleTrack } from '../../templates/sample';
+import { SampleTrack } from '../../assets/sample';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const initialState = () => {

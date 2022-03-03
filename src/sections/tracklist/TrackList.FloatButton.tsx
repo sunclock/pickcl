@@ -3,8 +3,6 @@ import { Box } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TrackListScreenProp } from '../../navigation/RootNavigator';
 import { Pressable } from 'react-native';
-import { useSelector } from 'react-redux';
-import { ITrack } from '../../types';
 
 interface FloatButtonProp {
 	navigation: TrackListScreenProp;

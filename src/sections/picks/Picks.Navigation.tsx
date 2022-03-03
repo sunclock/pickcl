@@ -13,7 +13,7 @@ function Navigation({ category, setCategory }: NavigationProps) {
 			<ScrollView horizontal>
 				<Box alignItems='center'>
 					<Flex direction="row" p="4">
-						{['음악파일'].map((item, index) =>
+						{['모두 보기'].map((item, index) =>
 							<TouchableOpacity key={index} style={{ width: width / 6, alignItems: 'center' }} onPress={() => setCategory(item)}>
 								{category === item
 									? <Text key={index} borderBottomWidth='8' borderBottomColor='#7575FF' fontSize='sm'>{item}</Text>

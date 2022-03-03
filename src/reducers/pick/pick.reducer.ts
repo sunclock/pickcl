@@ -10,12 +10,24 @@ import _ from 'lodash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { saveDataToStorage } from '../../utils/Tools';
 
-export const initialState: PicksState = {
-	picks: []
+export const initialState = () => {
+	let initialData = {
+		picks: []
+	};
+	async function getDataFromStorage() {
+		const data = await AsyncStorage.getItem('picks');
+		if (data) {
+			let parsedData = JSON.parse(data);
+			initialData = parsedData.data;
+		}
+	}
+	getDataFromStorage();
+	return initialData;
 };
 
+
 export const picks = (
-	state: PicksState = initialState,
+	state: PicksState = initialState(),
 	action: AddPickAction | RemovePickAction | EditPickMemoAction | EditPickVoiceActorsAction
 ) => {
 	const newState: PicksState = _.cloneDeep(state);

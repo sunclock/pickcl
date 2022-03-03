@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ITrack, IPick } from '../../types';
 import { Text, Box } from 'native-base';
 import { TrackListScreenProp } from '../../navigation/RootNavigator';
@@ -21,11 +21,19 @@ interface ListProps {
 function List({ tracks, picks, navigation }: ListProps) {
 	const [queue, setQueue] = useState();
 	const dispatch = useDispatch();
-	async function getQueue() {
-		let queue = await TrackPlayer.getQueue()
-		setQueue(queue);
-	}
-	getQueue();
+
+	useEffect(() => {
+		async function getQueue() {
+			let queue = await TrackPlayer.getQueue()
+			if (queue.length !== tracks.length) {
+				await TrackPlayer.reset();
+				await TrackPlayer.add(convertTrackType(tracks));
+			}
+			queue = await TrackPlayer.getQueue();
+			setQueue(queue);
+		}
+		getQueue();
+	}, []);
 	const renderItem = (item: IItem) => {
 		return (
 			<TouchableOpacity onPress={async () => {

@@ -9,6 +9,8 @@ import Files from '../sections/tracklist/TrackList.Files';
 import { TrackListScreenProp } from '../navigation/RootNavigator';
 import { IPick } from '../types';
 import { setupIfNeeded } from '../utils/Player';
+import TrackPlayer from 'react-native-track-player';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface TrackListProp {
 	navigation: TrackListScreenProp;
@@ -26,7 +28,7 @@ const TrackList = ({ navigation }: TrackListProp) => {
 	};
 
 	useEffect(() => {
-		setupIfNeeded()
+		setupIfNeeded();
 	}, []);
 
 	return (

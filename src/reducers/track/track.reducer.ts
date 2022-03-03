@@ -7,33 +7,34 @@ import {
 import _ from 'lodash';
 import { saveDataToStorage } from '../../utils/Tools';
 import { SampleTrack } from '../../templates/sample';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const initialState: TracksState = {
-	tracks: [],
-	currentTrack: SampleTrack,
-	currentQueue: [],
-	isPlaying: false,
+export const initialState = () => {
+	let initialData = {
+		tracks: [],
+		currentTrack: SampleTrack,
+		currentQueue: [],
+		isPlaying: false,
+	}
+	async function getDataFromStorage() {
+		const data = await AsyncStorage.getItem('tracks');
+		if (data) {
+			let parsedData = JSON.parse(data);
+			initialData = parsedData.data;
+		}
+	}
+	getDataFromStorage();
+	return initialData;
 };
 
+
 export const tracks = (
-	state: TracksState = initialState,
+	state: TracksState = initialState(),
 	action: AddTrackAction | RemoveTrackAction | EditTrackTitleAction | EditTrackArtworkAction |
 		EditTrackArtworkAction | EditTrackEpisodeAction | EditTrackSeasonAction | EditTrackVoiceActorsAction |
 		ChangeTrackAction | ChangeQueueAction
 ) => {
 	const newState: TracksState = _.cloneDeep(state);
-	// const loadTracks = async () => {
-	// 	const tracks = await AsyncStorage.getItem('tracks');
-	// 	if (!tracks) {
-	// 		return initialState;
-	// 	}
-	// 	let parsedTracks = JSON.parse(tracks);
-	// 	initialState.tracks = parsedTracks.data.tracks;
-	// 	initialState.currentTrack = parsedTracks.data.currentTrack;
-	// 	initialState.currentQueue = parsedTracks.currentQueue;
-	// 	return initialState;
-	// }
-	// loadTracks();
 	switch (action.type) {
 		case TrackActionTypes.ADD_TRACK:
 			if (action.payload) {

@@ -14,12 +14,24 @@ import _ from 'lodash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { saveDataToStorage } from '../../utils/Tools';
 
-export const initialState: TrackListsState = {
-	tracklists: []
+
+export const initialState = () => {
+	let initialData = {
+		tracklists: []
+	};
+	async function getDataFromStorage() {
+		const data = await AsyncStorage.getItem('tracklists');
+		if (data) {
+			let parsedData = JSON.parse(data);
+			initialData = parsedData.data;
+		}
+	}
+	getDataFromStorage();
+	return initialData;
 };
 
 export const tracklists = (
-	state: TrackListsState = initialState,
+	state: TrackListsState = initialState(),
 	action: AddTrackListAction | RemoveTrackListAction | AddTrackToTrackListAction | RemoveTrackFromTrackListAction | EditTrackListTrackOrderAction | EditTrackListTitleAction | EditTrackListDescriptionAction | EditTrackListArtworkAction
 ) => {
 	const newState: TrackListsState = _.cloneDeep(state);

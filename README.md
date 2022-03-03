@@ -11,7 +11,7 @@ Simple audio player app with React Native and TypeScript
 
 ## Features
 - **Lightweight** - Optimized to use the least amount of resources.
-- **No Internet Connection** - upload audio files from local storage and keep it safe in local storage's boundary.
+- **No Internet Connection** - read audio files from local storage and keep it safe in local storage's boundary.
 - **List** - List bookmarks and tracks and easily access them.
 - **Bookmark** - Bookmark your favorite part with memo and play them again by clicking on memo!
 - **30 minutes and more** - This App focus on enhancing experience of streaming long audio files (longer than 30 minutes).

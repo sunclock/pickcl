@@ -1,5 +1,7 @@
 # Pickcl - audio player app
 Simple audio player app with React Native and TypeScript
+
+[Blog post link on the lessons i learned during development](https://velog.io/@sunclock/%EC%9D%8C%EC%95%85-%EC%9E%AC%EC%83%9D-%EC%95%B1-%EA%B0%9C%EB%B0%9C-%EB%92%B7%EC%9D%B4%EC%95%BC%EA%B8%B0)
 ## Table of Contents
 - [Screenshots](#Screenshots)
 - [Features](#features)

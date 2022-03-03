@@ -1,3 +1,13 @@
+type IFile = {
+	ctime: Date;     // The creation date of the file (iOS only)
+	mtime: Date;     // The last modified date of the file
+	name: string;     // The name of the item
+	path: string;     // The absolute path to the item
+	size: string;     // Size in bytes
+	isFile: () => boolean;        // Is the file just a file?
+	isDirectory: () => boolean;   // Is the file a directory?
+};
+
 export interface IImage {
 	uri: string;
 	filename: string;
@@ -19,7 +29,7 @@ export interface ITrack {
 	title?: string;
 	season?: number | string;
 	episode?: number | string;
-	duration: number;
+	duration?: number;
 	artwork?: IImage;
 	artist?: string;
 	url: string;

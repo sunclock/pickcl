@@ -1,5 +1,6 @@
 import { ITrack, IImage, IVoiceActor } from '../../types';
 
+
 export enum TrackActionTypes {
 	ADD_TRACK = 'ADD_TRACK',
 	REMOVE_TRACK = 'REMOVE_TRACK',
@@ -8,11 +9,13 @@ export enum TrackActionTypes {
 	EDIT_TRACK_EPISODE = 'EDIT_TRACK_EPISODE',
 	EDIT_TRACK_ARTWORK = 'EDIT_TRACK_ARTWORK',
 	EDIT_TRACK_VOICE_ACTORS = 'EDIT_TRACK_VOICE_ACTORS',
+	CHANGE_TRACK = 'CHANGE_TRACK',
+	CHANGE_QUEUE = 'CHANGE_QUEUE',
 }
 
 export type AddTrackAction = {
 	type: TrackActionTypes.ADD_TRACK;
-	payload: ITrack[];
+	payload: ITrack[] | undefined;
 };
 
 export type RemoveTrackAction = {
@@ -62,8 +65,21 @@ export type EditTrackVoiceActorsAction = {
 	}
 };
 
+export type ChangeTrackAction = {
+	type: TrackActionTypes.CHANGE_TRACK;
+	payload: ITrack;
+}
+
+export type ChangeQueueAction = {
+	type: TrackActionTypes.CHANGE_QUEUE;
+	payload: ITrack[];
+}
+
 export type TracksState = {
 	tracks: ITrack[];
+	currentTrack: ITrack | undefined;
+	currentQueue: ITrack[];
+	isPlaying: boolean;
 };
 
 export type AppState = {

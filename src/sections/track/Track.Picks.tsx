@@ -1,29 +1,57 @@
-import React, { ReactNode } from 'react';
-import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { Dimensions, Pressable, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { IPick, ITrack } from '../../types';
-import { VStack, Text, Box } from 'native-base';
+import { Text, Box, FlatList, HStack } from 'native-base';
+import TrackPlayer from 'react-native-track-player';
+
+interface IItem {
+	item: IPick;
+};
 
 interface PicksProps {
-	track: ITrack,
-	picks: IPick[],
-	// children: ReactNode[] | ReactNode;
+	track: ITrack;
+	picks: IPick[] | undefined;
 }
 
 const { width, height } = Dimensions.get('window');
 
-function Picks({ track, picks }: PicksProps) {
+function Picks({ picks }: PicksProps) {
+	const [focused, setFocused] = useState<String | Number>('');
+	const renderItem = (item: IItem) => {
+		return (
+			<Pressable
+				key={item.item.id}
+				onPressIn={() => setFocused(item.item.id)}
+				onPress={() => TrackPlayer.seekTo(item.item.timestamp)}
+				onPressOut={() => setFocused('')}
+			>
+				<HStack alignItems='center' space='1'>
+					<Text style={focused === item.item.id ? styles.timestampOn : styles.off}>{
+						new Date((item.item.timestamp) * 1000)
+							.toISOString()
+							.substr(14, 5)
+					} </Text>
+					<Text
+						fontSize={'md'}
+						key={item.item.id}
+						style={focused === item.item.id ? styles.memoOn : styles.off}>
+						{item.item.memo}</Text>
+				</HStack>
+			</Pressable>
+		)
+	}
 	return (
-		<Box my='2' p='4' borderRadius='10' style={styles.container}>
-			{picks
-				? picks.map((pick, index) =>
-					<TouchableOpacity
-						key={index}
-						onPress={() => console.log(pick.memo, '를 누르셨어요')}>
-						<Text key={index}>{pick.memo}</Text>
-					</TouchableOpacity>)
-				: <Text>아직 나만의 픽이 없어요!</Text>
-			}
-		</Box>
+		<Box alignSelf={'center'} borderRadius='20' style={styles.container}>
+			<Box p='4'>
+				<FlatList
+					data={picks}
+					renderItem={renderItem}
+					extraData={picks?.length}
+					keyExtractor={(item) => item.id.toString()}
+				/>
+				{picks?.length === 0 && <Text>아직 나만의 픽이 없어요! </Text>}
+			</Box>
+		</Box >
 	);
 }
 
@@ -31,8 +59,20 @@ export default Picks;
 
 const styles = StyleSheet.create({
 	container: {
-		width: width - 20,
-		height: height / 2,
-		backgroundColor: '#f5f5f5',
+		width: width * 0.9,
+		height: height / 1.8,
 	},
+	timestampOn: {
+		color: '#7575FF',
+		fontWeight: '800',
+	},
+	memoOn: {
+		color: '#7575FF',
+		borderBottomColor: '#7575FF',
+		borderBottomWidth: 2,
+		fontWeight: 'bold',
+	},
+	off: {
+		color: 'gray',
+	}
 });

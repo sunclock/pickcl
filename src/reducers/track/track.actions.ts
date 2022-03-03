@@ -6,11 +6,13 @@ import {
 	EditTrackSeasonAction,
 	EditTrackEpisodeAction,
 	EditTrackArtworkAction,
-	EditTrackVoiceActorsAction
+	EditTrackVoiceActorsAction,
+	ChangeQueueAction,
+	ChangeTrackAction,
 } from './track.action.types';
 import { IVoiceActor, IImage, ITrack } from '../../types';
 
-export const addTrack = (tracks: ITrack[]): AddTrackAction => ({
+export const addTrack = (tracks: ITrack[] | undefined): AddTrackAction => ({
 	type: TrackActionTypes.ADD_TRACK,
 	payload: tracks
 });
@@ -60,4 +62,14 @@ export const editTrackVoiceActors = (trackId: string | number, voiceActors: IVoi
 		trackId,
 		voiceActors
 	}
+});
+
+export const changeTrack = (track: ITrack): ChangeTrackAction => ({
+	type: TrackActionTypes.CHANGE_TRACK,
+	payload: track
+});
+
+export const changeQueue = (tracks: ITrack[]): ChangeQueueAction => ({
+	type: TrackActionTypes.CHANGE_QUEUE,
+	payload: tracks
 });

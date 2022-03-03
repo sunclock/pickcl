@@ -1,10 +1,14 @@
 import React from 'react';
-import { View, useColorScheme, SafeAreaView, StatusBar } from 'react-native';
-import { VStack, HStack, Text, Button } from 'native-base';
+import { useColorScheme, SafeAreaView, StatusBar } from 'react-native';
 import { useSelector } from 'react-redux';
+import Header from '../sections/picks/Picks.Header';
+import { PicksScreenProps } from '../navigation/RootNavigator';
+import FloatButton from '../sections/picks/Picks.FloatButton';
 
-function Picks({ }) {
-	const picks = useSelector(state => state.picks.picks);
+interface PicksProps {
+	navigation: PicksScreenProps;
+}
+function Picks({ navigation }: PicksProps) {
 	const isDarkMode = useColorScheme() === 'dark';
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? 'black' : 'white',
@@ -13,13 +17,9 @@ function Picks({ }) {
 
 	return (
 		<SafeAreaView style={backgroundStyle}>
-			<StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-			<VStack
-				style={{
-					backgroundColor: isDarkMode ? 'black' : 'white',
-				}}>
-				<Text>Picks</Text>
-			</VStack>
+			<StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={isDarkMode ? 'black' : 'white'} />
+			<Header />
+			<FloatButton navigation={navigation} />
 		</SafeAreaView>
 	);
 }

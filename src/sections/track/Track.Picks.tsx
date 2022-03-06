@@ -25,7 +25,7 @@ function Picks({ picks }: PicksProp) {
 				onPress={() => TrackPlayer.seekTo(item.item.timestamp)}
 				onPressOut={() => setFocused('')}
 			>
-				<HStack alignItems='center' space='1'>
+				<HStack space='1' alignContent={'center'}>
 					<Text style={focused === item.item.id ? styles.timestampOn : styles.off}>{
 						new Date((item.item.timestamp) * 1000)
 							.toISOString()
@@ -71,8 +71,10 @@ const styles = StyleSheet.create({
 		borderBottomColor: '#7575FF',
 		borderBottomWidth: 2,
 		fontWeight: 'bold',
+		flexShrink: 1,
 	},
 	off: {
 		color: 'gray',
+		flexShrink: 1,
 	}
 });

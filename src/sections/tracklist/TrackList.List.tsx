@@ -8,10 +8,6 @@ import { changeTrack, removeTrack } from '../../reducers/track';
 import TrackPlayer from 'react-native-track-player';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-interface IItem {
-	item: ITrack;
-};
-
 interface ListProp {
 	navigation: TrackListScreenProp;
 	tracks: ITrack[];
@@ -19,24 +15,30 @@ interface ListProp {
 
 function List({ navigation, tracks }: ListProp) {
 	const dispatch = useDispatch();
-	const renderItem = (item: IItem) => {
+	const renderItem = ({ item, index }: { item: ITrack, index: number }) => {
+		if (index === tracks.length - 1) {
+			return (
+				<Box h='300'>
+				</Box>
+			);
+		}
 		return (
 			<HStack justifyContent={'space-between'} borderBottomWidth='1' borderBottomColor='trueGray.100' py='2'>
 				<Box>
 					<TouchableOpacity onPress={async () => {
-						await TrackPlayer.skip(tracks.indexOf(item.item));
+						await TrackPlayer.skip(tracks.indexOf(item));
 						await TrackPlayer.play();
-						dispatch(changeTrack(item.item));
+						dispatch(changeTrack(item));
 						navigation.navigate('Track');
 					}
 					}>
-						<Text fontSize='sm'>{item.item.filename}</Text>
+						<Text fontSize='sm'>{item.filename}</Text>
 					</TouchableOpacity>
 				</Box>
-				<Box>
+				<Box mr='2'>
 					<Pressable onPress={async () => {
-						await TrackPlayer.remove(tracks.indexOf(item.item));
-						dispatch(removeTrack(item.item.id));
+						await TrackPlayer.remove(tracks.indexOf(item));
+						dispatch(removeTrack(item.id));
 					}}>
 						<Ionicons name='ios-close' size={24} color='gray' />
 					</Pressable>

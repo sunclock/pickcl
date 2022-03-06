@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { createMaterialBottomTabNavigator, MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -7,7 +7,11 @@ import Track from '../templates/track.template';
 import Picks from '../templates/picks.template';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import TrackPlayer from 'react-native-track-player';
+import { Alert, BackHandler } from 'react-native';
+import { resetTrack } from '../reducers/track';
+import { resetPick } from '../reducers/pick';
 
 type TabParamList = {
 	Picks: undefined;
@@ -51,6 +55,34 @@ const Tab = createMaterialBottomTabNavigator<TabParamList>();
 export const TabNavigator = () => {
 	const picks = useSelector((state: any) => state.picks.picks);
 	const tracks = useSelector((state: any) => state.tracks.tracks);
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		const backAction = () => {
+			Alert.alert("앱 종료", "앱을 종료하시겠습니까? 모든 정보가 초기화됩니다.", [
+				{
+					text: "취소",
+					onPress: () => null,
+				},
+				{
+					text: "확인", onPress: () => {
+						dispatch(resetTrack());
+						dispatch(resetPick());
+						TrackPlayer.destroy()
+						BackHandler.exitApp()
+					}
+				}
+			]);
+			return true;
+		};
+
+		const backHandler = BackHandler.addEventListener(
+			"hardwareBackPress",
+			backAction
+		);
+
+		return () => backHandler.remove();
+	}, []);
 	return (
 		<Tab.Navigator
 			initialRouteName="TrackListTab"

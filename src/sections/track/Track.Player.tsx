@@ -18,6 +18,7 @@ function Player({ track, tracks }: PlayerProp) {
 	const [onPress, setPress] = useState('');
 	const [modalVisible, setModalVisible] = useState(false);
 	const [memo, setMemo] = useState('');
+	const [timestamp, setTimestamp] = useState(0);
 	const playbackState = usePlaybackState();
 	const progress = useProgress();
 	const dispatch = useDispatch();
@@ -154,7 +155,11 @@ function Player({ track, tracks }: PlayerProp) {
 					<Pressable
 						onPressIn={async () => setPress('bookmark')}
 						onPressOut={async () => setPress('')}
-						onPress={async () => setModalVisible(!modalVisible)}
+						onPress={async () => {
+							setTimestamp(progress.position);
+							setModalVisible(!modalVisible)
+						}
+						}
 					>
 						<Ionicons
 							name={onPress === 'bookmark' ? "ios-bookmark-sharp" : "ios-bookmark-outline"}
@@ -186,7 +191,6 @@ function Player({ track, tracks }: PlayerProp) {
 									취소
 								</Button>
 								<Button background='#7575FF' onPress={() => {
-									const timestamp = progress.position;
 									let now = new Date();
 									let id = track.filename + '_' + now.toISOString();
 									let pick = {

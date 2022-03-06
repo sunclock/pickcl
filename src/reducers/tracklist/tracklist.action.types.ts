@@ -10,6 +10,7 @@ export enum TrackListActionTypes {
 	EDIT_TRACKLIST_DESCRIPTION = 'EDIT_TRACKLIST_DESCRIPTION',
 	EDIT_TRACKLIST_ARTWORK = 'EDIT_TRACKLIST_ARTWORK',
 	EDIT_TRACKLIST_VOICE_ACTORS = 'EDIT_TRACKLIST_VOICE_ACTORS',
+	RESET_TRACKLIST = 'RESET_TRACKLIST'
 }
 
 export type AddTrackListAction = {
@@ -78,6 +79,10 @@ export type EditTrackListVoiceActorsAction = {
 		tracklistId: string | number;
 		voiceActors: string[];
 	}
+};
+
+export type ResetTrackListAction = {
+	type: TrackListActionTypes.RESET_TRACKLIST;
 };
 
 export type TrackListsState = {

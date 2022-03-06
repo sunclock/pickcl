@@ -8,6 +8,7 @@ import {
 	EditTrackListTitleAction,
 	EditTrackListDescriptionAction,
 	EditTrackListArtworkAction,
+	ResetTrackListAction,
 } from './tracklist.action.types';
 import { ITrackList, IImage, ITrack } from '../../types';
 
@@ -69,4 +70,8 @@ export const editTrackListArtwork = (tracklistId: string | number, artwork: IIma
 		tracklistId,
 		artwork
 	}
+});
+
+export const resetTrackList = (): ResetTrackListAction => ({
+	type: TrackListActionTypes.RESET_TRACKLIST
 });

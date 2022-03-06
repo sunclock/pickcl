@@ -15,7 +15,6 @@ interface TrackProp {
 
 const Track = ({ navigation }: TrackProp) => {
 	const track = useSelector((state: any) => state.tracks.currentTrack);
-	console.log('current track', track);
 	const tracks = useSelector((state: any) => state.tracks.tracks);
 	const picks = useSelector((state: any) => state.picks.picks.filter((pick: IPick) => pick.track.url === track.url));
 	const [isArtwork, setArtwork] = useState(false);

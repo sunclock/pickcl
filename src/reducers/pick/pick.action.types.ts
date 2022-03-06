@@ -5,6 +5,7 @@ export enum PickActionTypes {
 	REMOVE_PICK = 'REMOVE_PICK',
 	EDIT_PICK_MEMO = 'EDIT_PICK_MEMO',
 	EDIT_PICK_VOICE_ACTORS = 'EDIT_PICK_VOICE_ACTORS',
+	RESET_PICK = 'RESET_PICK',
 }
 
 export type AddPickAction = {
@@ -33,6 +34,10 @@ export type EditPickVoiceActorsAction = {
 		pickId: string | number;
 		voiceActors: IVoiceActor[];
 	}
+};
+
+export type ResetPickAction = {
+	type: PickActionTypes.RESET_PICK;
 };
 
 export type PicksState = {

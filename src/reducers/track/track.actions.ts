@@ -9,6 +9,7 @@ import {
 	EditTrackVoiceActorsAction,
 	ChangeQueueAction,
 	ChangeTrackAction,
+	ResetTrackAction,
 } from './track.action.types';
 import { IVoiceActor, IImage, ITrack } from '../../types';
 
@@ -72,4 +73,8 @@ export const changeTrack = (track: ITrack): ChangeTrackAction => ({
 export const changeQueue = (tracks: ITrack[]): ChangeQueueAction => ({
 	type: TrackActionTypes.CHANGE_QUEUE,
 	payload: tracks
+});
+
+export const resetTrack = (): ResetTrackAction => ({
+	type: TrackActionTypes.RESET_TRACK,
 });

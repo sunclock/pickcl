@@ -11,6 +11,7 @@ export enum TrackActionTypes {
 	EDIT_TRACK_VOICE_ACTORS = 'EDIT_TRACK_VOICE_ACTORS',
 	CHANGE_TRACK = 'CHANGE_TRACK',
 	CHANGE_QUEUE = 'CHANGE_QUEUE',
+	RESET_TRACK = 'RESET_TRACK',
 }
 
 export type AddTrackAction = {
@@ -73,6 +74,10 @@ export type ChangeTrackAction = {
 export type ChangeQueueAction = {
 	type: TrackActionTypes.CHANGE_QUEUE;
 	payload: ITrack[];
+}
+
+export type ResetTrackAction = {
+	type: TrackActionTypes.RESET_TRACK;
 }
 
 export type TracksState = {

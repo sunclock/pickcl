@@ -9,10 +9,10 @@ import {
 	EditTrackListTitleAction,
 	EditTrackListDescriptionAction,
 	EditTrackListArtworkAction,
+	ResetTrackListAction,
 } from './tracklist.action.types';
 import _ from 'lodash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { saveDataToStorage } from '../../utils/Tools';
 
 
 export const initialState = () => {
@@ -32,17 +32,15 @@ export const initialState = () => {
 
 export const tracklists = (
 	state: TrackListsState = initialState(),
-	action: AddTrackListAction | RemoveTrackListAction | AddTrackToTrackListAction | RemoveTrackFromTrackListAction | EditTrackListTrackOrderAction | EditTrackListTitleAction | EditTrackListDescriptionAction | EditTrackListArtworkAction
+	action: AddTrackListAction | RemoveTrackListAction | AddTrackToTrackListAction | RemoveTrackFromTrackListAction | EditTrackListTrackOrderAction | EditTrackListTitleAction | EditTrackListDescriptionAction | EditTrackListArtworkAction | ResetTrackListAction
 ) => {
 	const newState: TrackListsState = _.cloneDeep(state);
 	switch (action.type) {
 		case TrackListActionTypes.ADD_TRACKLIST:
 			newState.tracklists = newState.tracklists.concat(action.payload);
-			saveDataToStorage('tracklists', newState);
 			return newState;
 		case TrackListActionTypes.REMOVE_TRACKLIST:
 			newState.tracklists = newState.tracklists.filter(tracklist => tracklist.id !== action.payload.tracklistId);
-			saveDataToStorage('tracklists', newState);
 			return newState;
 		case TrackListActionTypes.ADD_TRACK_TO_TRACKLIST:
 			newState.tracklists = newState.tracklists.map(tracklist => {
@@ -51,7 +49,6 @@ export const tracklists = (
 				}
 				return tracklist;
 			});
-			saveDataToStorage('tracklists', newState);
 			return newState;
 		case TrackListActionTypes.REMOVE_TRACK_FROM_TRACKLIST:
 			newState.tracklists.forEach(tracklist => {
@@ -59,7 +56,6 @@ export const tracklists = (
 					tracklist.tracks = tracklist.tracks.filter(track => track.id !== action.payload.trackId);
 				}
 			});
-			saveDataToStorage('tracklists', newState);
 			return newState;
 		case TrackListActionTypes.EDIT_TRACKLIST_TRACK_ORDER:
 			newState.tracklists.forEach(tracklist => {
@@ -67,7 +63,6 @@ export const tracklists = (
 					tracklist.tracks = action.payload.tracks;
 				}
 			});
-			saveDataToStorage('tracklists', newState);
 			return newState;
 		case TrackListActionTypes.EDIT_TRACKLIST_TITLE:
 			newState.tracklists = newState.tracklists.map(tracklist => {
@@ -76,7 +71,6 @@ export const tracklists = (
 				}
 				return tracklist;
 			});
-			saveDataToStorage('tracklists', newState);
 			return newState;
 		case TrackListActionTypes.EDIT_TRACKLIST_DESCRIPTION:
 			newState.tracklists = newState.tracklists.map(tracklist => {
@@ -85,7 +79,6 @@ export const tracklists = (
 				}
 				return tracklist;
 			});
-			saveDataToStorage('tracklists', newState);
 			return newState;
 		case TrackListActionTypes.EDIT_TRACKLIST_ARTWORK:
 			newState.tracklists = newState.tracklists.map(tracklist => {
@@ -94,7 +87,9 @@ export const tracklists = (
 				}
 				return tracklist;
 			});
-			saveDataToStorage('tracklists', newState);
+			return newState;
+		case TrackListActionTypes.RESET_TRACKLIST:
+			newState.tracklists = [];
 			return newState;
 		default:
 			return newState;

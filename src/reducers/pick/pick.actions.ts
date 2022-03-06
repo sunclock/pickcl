@@ -4,6 +4,7 @@ import {
 	RemovePickAction,
 	EditPickMemoAction,
 	EditPickVoiceActorsAction,
+	ResetPickAction,
 } from './pick.action.types';
 
 import { IPick, IVoiceActor } from '../../types';
@@ -34,4 +35,8 @@ export const editPickVoiceActors = (pickId: string | number, voiceActors: IVoice
 		pickId,
 		voiceActors
 	}
+});
+
+export const resetPick = (): ResetPickAction => ({
+	type: PickActionTypes.RESET_PICK,
 });

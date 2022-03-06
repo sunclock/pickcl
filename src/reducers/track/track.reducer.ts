@@ -2,10 +2,9 @@ import {
 	TracksState,
 	TrackActionTypes,
 	AddTrackAction, EditTrackArtworkAction, EditTrackEpisodeAction, EditTrackVoiceActorsAction, RemoveTrackAction,
-	EditTrackSeasonAction, EditTrackTitleAction, ChangeTrackAction, ChangeQueueAction,
+	EditTrackSeasonAction, EditTrackTitleAction, ChangeTrackAction, ChangeQueueAction, ResetTrackAction,
 } from './track.action.types';
 import _ from 'lodash';
-import { saveDataToStorage } from '../../utils/Tools';
 import { SampleTrack } from '../../assets/sample';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -16,14 +15,6 @@ export const initialState = () => {
 		currentQueue: [],
 		isPlaying: false,
 	}
-	async function getDataFromStorage() {
-		const data = await AsyncStorage.getItem('tracks');
-		if (data) {
-			let parsedData = JSON.parse(data);
-			initialData = parsedData.data;
-		}
-	}
-	getDataFromStorage();
 	return initialData;
 };
 
@@ -32,19 +23,17 @@ export const tracks = (
 	state: TracksState = initialState(),
 	action: AddTrackAction | RemoveTrackAction | EditTrackTitleAction | EditTrackArtworkAction |
 		EditTrackArtworkAction | EditTrackEpisodeAction | EditTrackSeasonAction | EditTrackVoiceActorsAction |
-		ChangeTrackAction | ChangeQueueAction
+		ChangeTrackAction | ChangeQueueAction | ResetTrackAction
 ) => {
 	const newState: TracksState = _.cloneDeep(state);
 	switch (action.type) {
 		case TrackActionTypes.ADD_TRACK:
 			if (action.payload) {
 				newState.tracks = newState.tracks.concat(action.payload);
-				saveDataToStorage('tracks', newState);
 			}
 			return newState;
 		case TrackActionTypes.REMOVE_TRACK:
 			newState.tracks = newState.tracks.filter(track => track.id !== action.payload.trackId);
-			saveDataToStorage('tracks', newState);
 			return newState;
 		case TrackActionTypes.EDIT_TRACK_TITLE:
 			newState.tracks = newState.tracks.map(track => {
@@ -54,7 +43,6 @@ export const tracks = (
 				return track;
 			}
 			);
-			saveDataToStorage('tracks', newState);
 			return newState;
 		case TrackActionTypes.EDIT_TRACK_SEASON:
 			newState.tracks = newState.tracks.map(track => {
@@ -64,7 +52,6 @@ export const tracks = (
 				return track;
 			}
 			);
-			saveDataToStorage('tracks', newState);
 			return newState;
 		case TrackActionTypes.EDIT_TRACK_EPISODE:
 			newState.tracks = newState.tracks.map(track => {
@@ -74,7 +61,6 @@ export const tracks = (
 				return track;
 			}
 			);
-			saveDataToStorage('tracks', newState);
 			return newState;
 		case TrackActionTypes.EDIT_TRACK_ARTWORK:
 			newState.tracks = newState.tracks.map(track => {
@@ -84,7 +70,6 @@ export const tracks = (
 				return track;
 			}
 			);
-			saveDataToStorage('tracks', newState);
 			return newState;
 		case TrackActionTypes.EDIT_TRACK_VOICE_ACTORS:
 			newState.tracks = newState.tracks.map(track => {
@@ -94,15 +79,16 @@ export const tracks = (
 				return track;
 			}
 			);
-			saveDataToStorage('tracks', newState);
 			return newState;
 		case TrackActionTypes.CHANGE_TRACK:
 			newState.currentTrack = action.payload;
-			saveDataToStorage('tracks', newState);
 			return newState;
 		case TrackActionTypes.CHANGE_QUEUE:
 			newState.currentQueue = action.payload;
-			saveDataToStorage('tracks', newState);
+			return newState;
+		case TrackActionTypes.RESET_TRACK:
+			newState.currentTrack = SampleTrack;
+			newState.tracks = [];
 			return newState;
 		default:
 			return newState;

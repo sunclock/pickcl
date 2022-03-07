@@ -17,15 +17,13 @@ Simple audio player app with React Native and TypeScript
 - [Setup](#setup)
 
 ## Screenshots
-
-<img src="https://user-images.githubusercontent.com/69966899/156602866-b2b8544a-9191-4ec1-9e5a-42b5ae4a988a.jpeg" width="200" height="100%" /> <img src="https://user-images.githubusercontent.com/69966899/156602897-60c51c1d-df06-4111-9c1b-26b65f00c4de.jpeg" width="200" height="100%" /> <img src="https://user-images.githubusercontent.com/69966899/156602933-5889ef36-8aca-4333-9ed1-d4a179faf99a.jpeg" width="200" height="100%" /> <img src="https://user-images.githubusercontent.com/69966899/156602991-a2552b22-c2b3-4ad2-86f6-7317b88e76ff.jpeg" width="200" height="100%" />
+<img alt="파일을 추가하는 방법" src="https://user-images.githubusercontent.com/69966899/157003118-abe3e0b6-1fc4-4d1d-9aac-4139d81962e9.gif" width="250" height="100%" /> <img alt="북마크 추가하는 방법" src="https://user-images.githubusercontent.com/69966899/157002903-48606794-156e-48e3-a368-75f14de0dfea.gif" width="250" height="100%" /> <img alt="북마크 재생하는 방법" src="https://user-images.githubusercontent.com/69966899/157002364-c30793d3-8123-4ccd-b495-b30c1a1fd022.gif" width="250" height="100%" />
 
 ## Features
 
-- **Lightweight** - Optimized to use the least amount of resources.
 - **No Internet Connection** - read audio files from local storage and keep it safe in local storage's boundary.
-- **List** - List bookmarks and tracks and easily access them.
 - **Bookmark** - Bookmark your favorite part with memo and play them again by clicking on memo!
+- **List** - List bookmarks and tracks and easily access them.
 - **30 minutes and more** - This App focus on enhancing experience of streaming long audio files (longer than 30 minutes).
 
 ### To do:

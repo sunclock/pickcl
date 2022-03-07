@@ -35,7 +35,7 @@ function Picks({ picks }: PicksProp) {
 						fontSize={'md'}
 						key={item.item.id}
 						style={focused === item.item.id ? styles.memoOn : styles.off}>
-						{item.item.memo}</Text>
+						{item.item.memo}{' '}</Text>
 				</HStack>
 			</Pressable>
 		)
@@ -49,7 +49,7 @@ function Picks({ picks }: PicksProp) {
 					extraData={picks?.length}
 					keyExtractor={(item) => item.id.toString()}
 				/>
-				{picks?.length === 0 && <Text>아직 나만의 픽이 없어요! </Text>}
+				{picks?.length === 0 && <Text style={styles.off}>아직 나만의 픽이 없어요! </Text>}
 			</Box>
 		</Box >
 	);
@@ -65,6 +65,8 @@ const styles = StyleSheet.create({
 	timestampOn: {
 		color: '#7575FF',
 		fontWeight: '800',
+		flexShrink: 1,
+		lineHeight: 25,
 	},
 	memoOn: {
 		color: '#7575FF',
@@ -72,9 +74,11 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 2,
 		fontWeight: 'bold',
 		flexShrink: 1,
+		lineHeight: 25,
 	},
 	off: {
 		color: 'gray',
 		flexShrink: 1,
+		lineHeight: 25,
 	}
 });

@@ -20,27 +20,24 @@ interface ListProp {
 function List({ navigation, tracks, picks }: ListProp) {
 	const dispatch = useDispatch();
 	const renderItem = ({ item, index }: { item: IPick, index: number }) => {
-		if (index === picks.length - 1) {
-			return (
-				<Box h='300'>
-				</Box>
-			);
-		}
 		return (
-			<VStack justifyContent={'space-between'} borderBottomWidth='1' borderBottomColor='trueGray.100' py='2'>
-				<TouchableOpacity onPress={async () => {
-					await TrackPlayer.skip(
-						tracks.findIndex(track => track.id === item.track.id));
-					await TrackPlayer.seekTo(item.timestamp)
-					await TrackPlayer.play();
-					dispatch(changeTrack(item.track));
-					navigation.navigate('Track');
-				}
-				}>
-					<Text color='gray.900' fontWeight='normal' fontSize='sm'>{item.memo}{' '}</Text>
-					<Text color='gray.500' fontSize='xs'>{item.track.filename} {new Date(item.timestamp * 1000).toISOString().substr(14, 5)}</Text>
-				</TouchableOpacity>
-			</VStack>
+			<>
+				<VStack justifyContent={'space-between'} borderBottomWidth='1' borderBottomColor='trueGray.100' py='2'>
+					<TouchableOpacity onPress={async () => {
+						await TrackPlayer.skip(
+							tracks.findIndex(track => track.id === item.track.id));
+						await TrackPlayer.seekTo(item.timestamp)
+						await TrackPlayer.play();
+						dispatch(changeTrack(item.track));
+						navigation.navigate('Track');
+					}
+					}>
+						<Text color='gray.900' fontWeight='normal' fontSize='sm'>{item.memo}{' '}</Text>
+						<Text color='gray.500' fontSize='xs'>{item.track.filename} {new Date(item.timestamp * 1000).toISOString().substr(14, 5)}</Text>
+					</TouchableOpacity>
+				</VStack>
+				{index === picks.length - 1 && <Box h='300'></Box>}
+			</>
 		)
 	}
 	return (

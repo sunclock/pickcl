@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ITrack } from '../../types';
 import { Dimensions, Pressable, TextInput } from 'react-native';
-import { Text, HStack, Slider, Box, Button, Modal } from 'native-base';
+import { Text, HStack, Slider, Box, Button, Modal, KeyboardAvoidingView } from 'native-base';
 import TrackPlayer, { Event, State, usePlaybackState, useProgress, useTrackPlayerEvents } from 'react-native-track-player';
 import { togglePlay } from '../../utils/Player';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import { addPick } from '../../reducers/pick';
 import { changeTrack } from '../../reducers/track';
+import { SampleTrack } from '../../assets/sample';
 
 interface PlayerProp {
 	track: ITrack;
@@ -22,11 +23,17 @@ function Player({ track, tracks }: PlayerProp) {
 	const playbackState = usePlaybackState();
 	const progress = useProgress();
 	const dispatch = useDispatch();
+	const inputRef = useRef<TextInput>(null);
 	useTrackPlayerEvents([Event.PlaybackTrackChanged], async event => {
 		if (event.type === Event.PlaybackTrackChanged && event.nextTrack !== null) {
 			dispatch(changeTrack(tracks[event.nextTrack]));
 		}
 	})
+
+	useEffect(() => {
+		if (track === SampleTrack)
+			TrackPlayer.stop();
+	}, [track]);
 
 	return (
 		<Box mx='3' my='5'>
@@ -157,7 +164,11 @@ function Player({ track, tracks }: PlayerProp) {
 						onPressOut={async () => setPress('')}
 						onPress={async () => {
 							setTimestamp(progress.position);
-							setModalVisible(!modalVisible)
+							setModalVisible(!modalVisible);
+							setTimeout(() => {
+								inputRef.current?.blur();
+								inputRef.current?.focus();
+							}, 100);
 						}
 						}
 					>
@@ -176,7 +187,9 @@ function Player({ track, tracks }: PlayerProp) {
 						<Modal.Body bgColor='trueGray.100'>
 							<TextInput
 								multiline={true}
+								ref={inputRef}
 								style={{ textAlignVertical: 'top' }}
+								autoFocus={true}
 								numberOfLines={10}
 								value={memo}
 								onChangeText={(text) => setMemo(text)}

@@ -60,7 +60,7 @@ export async function setupIfNeeded(tracks: ITrack[] | undefined) {
 		],
 		compactCapabilities: [Capability.Play, Capability.Pause],
 	});
-	TrackPlayer.setRepeatMode(RepeatMode.Off);
+	TrackPlayer.setRepeatMode(RepeatMode.Queue);
 	if (tracks) {
 		await TrackPlayer.add(convertTrackType(tracks));
 	}

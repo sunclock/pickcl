@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, Heading, HStack } from 'native-base';
+import { Box, Button, Heading, HStack, Text } from 'native-base';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import { Pressable } from 'react-native';
+import { Dimensions, Pressable } from 'react-native';
 import { pickFiles } from '../../utils/Uploader';
 import { useDispatch } from 'react-redux';
 import { addTrack } from '../../reducers/track';
@@ -16,8 +16,8 @@ interface HeaderProps {
 function Header({ tracks }: HeaderProps) {
 	const dispatch = useDispatch();
 	return (
-		<HStack space='230'>
-			<Box>
+		<HStack>
+			<Box width={width / 1.15}>
 				<Heading fontSize="2xl" pl="4" pt='2'>트랙리스트</Heading>
 			</Box>
 			<Box alignItems='center' justifyContent="center">
@@ -35,3 +35,5 @@ function Header({ tracks }: HeaderProps) {
 }
 
 export default Header;
+
+const { width, height } = Dimensions.get('window')

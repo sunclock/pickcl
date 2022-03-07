@@ -8,13 +8,17 @@ import Picks from '../sections/track/Track.Picks';
 import Player from '../sections/track/Track.Player';
 import { TrackScreenProp } from '../navigation/RootNavigator';
 import Header from '../sections/track/Track.Header';
+import { SampleTrack } from '../assets/sample';
 
 interface TrackProp {
 	navigation: TrackScreenProp;
 };
 
 const Track = ({ navigation }: TrackProp) => {
-	const track = useSelector((state: any) => state.tracks.currentTrack);
+	let track = useSelector((state: any) => state.tracks.currentTrack);
+	if (track == undefined) {
+		track = SampleTrack;
+	};
 	const tracks = useSelector((state: any) => state.tracks.tracks);
 	const picks = useSelector((state: any) => state.picks.picks.filter((pick: IPick) => pick.track.url === track.url));
 	const [isArtwork, setArtwork] = useState(false);

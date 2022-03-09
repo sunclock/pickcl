@@ -6,7 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { rootReducer } from './src/reducers';
 import SplashScreen from 'react-native-splash-screen'
-import { NativeBaseProvider } from 'native-base';
+import { extendTheme, NativeBaseProvider } from 'native-base';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import RNPermissions, {
   PERMISSIONS,

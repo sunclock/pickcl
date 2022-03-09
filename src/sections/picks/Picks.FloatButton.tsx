@@ -3,6 +3,7 @@ import { Box } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TrackListScreenProp } from '../../navigation/RootNavigator';
 import { Pressable } from 'react-native';
+import { Colors } from '../../styles/Colors';
 
 interface FloatButtonProp {
 	navigation: TrackListScreenProp;
@@ -17,7 +18,7 @@ function FloatButton({ navigation }: FloatButtonProp) {
 			shadow='5'
 			width={60} height={60}
 			borderRadius={50}
-			backgroundColor='#7575FF'
+			backgroundColor={Colors.primary}
 		>
 			{/* I'm Feeling Lucky! */}
 			<Pressable
@@ -34,7 +35,7 @@ function FloatButton({ navigation }: FloatButtonProp) {
 							: "ios-headset-sharp"
 					}
 					size={30}
-					color="white" />
+					color={Colors.white} />
 			</Pressable>
 		</Box>
 	);

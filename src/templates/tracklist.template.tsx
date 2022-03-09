@@ -9,6 +9,7 @@ import { TrackListScreenProp } from '../navigation/RootNavigator';
 import { IPick } from '../types';
 import { setupIfNeeded } from '../utils/Player';
 import { SampleTrack } from '../assets/sample';
+import { Colors } from '../styles/Colors';
 
 interface TrackListProp {
 	navigation: TrackListScreenProp;
@@ -23,7 +24,7 @@ const TrackList = ({ navigation }: TrackListProp) => {
 	const picks = useSelector((state: any) => state.picks.picks.filter((pick: IPick) => pick.track.url === track.url));
 	const isDarkMode = useColorScheme() === 'dark';
 	const backgroundStyle = {
-		backgroundColor: isDarkMode ? 'black' : 'white',
+		backgroundColor: isDarkMode ? Colors.dark.background : Colors.background,
 		flex: 1,
 	};
 
@@ -33,10 +34,10 @@ const TrackList = ({ navigation }: TrackListProp) => {
 
 	return (
 		<SafeAreaView style={backgroundStyle}>
-			<StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={isDarkMode ? 'black' : 'white'} />
-			<Header tracks={tracks} />
-			<Navigation />
-			<List navigation={navigation} tracks={tracks} picks={picks} />
+			<StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={isDarkMode ? Colors.dark.background : Colors.background} />
+			<Header tracks={tracks} isDarkMode={isDarkMode} />
+			<Navigation isDarkMode={isDarkMode} />
+			<List navigation={navigation} tracks={tracks} picks={picks} isDarkMode={isDarkMode} />
 			<FloatButton navigation={navigation} />
 		</SafeAreaView>
 	);

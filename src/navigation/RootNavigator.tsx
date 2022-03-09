@@ -90,7 +90,7 @@ export const TabNavigator = () => {
 		<Tab.Navigator
 			initialRouteName="TrackListTab"
 			activeColor={isDarkMode ? Colors.dark.primaryText : Colors.primary}
-			inactiveColor={isDarkMode ? Colors.darkGray : Colors.lightGray}
+			inactiveColor={isDarkMode ? Colors.darkGray : Colors.darkGray}
 			barStyle={{
 				position: 'absolute',
 				bottom: 20,

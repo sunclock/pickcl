@@ -5,23 +5,27 @@ import TrackList from '../templates/tracklist.template';
 import Picks from '../templates/picks.template';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Text } from 'native-base';
+import { Colors } from '../styles/Colors';
+import { useColorScheme } from 'react-native';
 
 const Drawer = createDrawerNavigator();
 
 export const AppNavigator = () => {
+	const isDarkMode = useColorScheme() === 'dark';
+
 	return (
 		<Drawer.Navigator
 			initialRouteName="Home"
 			screenOptions={({ route }) => ({
-				drawerActiveBackgroundColor: '#fff',
-				drawerActiveTintColor: '#6667AB',
+				drawerActiveBackgroundColor: Colors.background,
+				drawerActiveTintColor: Colors.primary,
 				headerTintColor: '#3f3f46',
 				headerTitleStyle: {
 					fontWeight: 'bold',
 				},
 				drawerIcon: ({ focused }) => {
 					let iconName;
-					const color = focused ? '#6667AB' : '#3f3f46';
+					const color = focused ? Colors.primary : '#3f3f46';
 					if (route.name == 'Home')
 						if (focused) iconName = 'ios-home-sharp';
 						else iconName = 'ios-home-outline';

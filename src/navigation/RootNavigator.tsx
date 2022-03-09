@@ -9,9 +9,10 @@ import { CompositeNavigationProp } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
-import { Alert, BackHandler } from 'react-native';
+import { Alert, BackHandler, useColorScheme } from 'react-native';
 import { resetTrack } from '../reducers/track';
 import { resetPick } from '../reducers/pick';
+import { Colors } from '../styles/Colors';
 
 type TabParamList = {
 	Picks: undefined;
@@ -57,6 +58,8 @@ export const TabNavigator = () => {
 	const tracks = useSelector((state: any) => state.tracks.tracks);
 	const dispatch = useDispatch()
 
+	const isDarkMode = useColorScheme() === 'dark';
+
 	useEffect(() => {
 		const backAction = () => {
 			Alert.alert("앱 종료", "앱을 종료하시겠습니까? 모든 정보가 초기화됩니다.", [
@@ -86,14 +89,14 @@ export const TabNavigator = () => {
 	return (
 		<Tab.Navigator
 			initialRouteName="TrackListTab"
-			activeColor="#6667AB"
-			inactiveColor="#3f3f46"
+			activeColor={isDarkMode ? Colors.dark.primaryText : Colors.primary}
+			inactiveColor={isDarkMode ? Colors.darkGray : Colors.darkGray}
 			barStyle={{
 				position: 'absolute',
 				bottom: 20,
 				left: 20,
 				right: 20,
-				backgroundColor: '#ffffff',
+				backgroundColor: isDarkMode ? Colors.dark.hover : Colors.background,
 				borderRadius: 15,
 				padding: 5,
 				paddingBottom: 5,
@@ -101,7 +104,9 @@ export const TabNavigator = () => {
 			screenOptions={({ route }) => ({
 				tabBarIcon: ({ focused }) => {
 					let iconName;
-					const color = focused ? '#6667AB' : '#3f3f46';
+					const color = focused
+						? isDarkMode ? Colors.dark.primaryText : Colors.primary
+						: isDarkMode ? Colors.darkGray : Colors.lightGray;
 					if (route.name == 'TrackListTab')
 						if (focused) iconName = 'ios-list-sharp';
 						else iconName = 'ios-list-outline';

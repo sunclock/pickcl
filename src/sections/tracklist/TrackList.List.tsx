@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { changeTrack, removeTrack } from '../../reducers/track';
 import TrackPlayer from 'react-native-track-player';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Colors } from '../../styles/Colors';
 
 interface ListProp {
 	navigation: TrackListScreenProp;
@@ -19,7 +20,7 @@ function List({ navigation, tracks, isDarkMode }: ListProp) {
 	const renderItem = ({ item, index }: { item: ITrack, index: number }) => {
 		return (
 			<>
-				<HStack justifyContent={'space-between'} borderBottomWidth='1' borderBottomColor='trueGray.100' py='2'>
+				<HStack justifyContent={'space-between'} borderBottomWidth='0.5' borderBottomColor={isDarkMode ? Colors.dark.border : Colors.lightGray} py='2'>
 					<Box>
 						<TouchableOpacity onPress={async () => {
 							await TrackPlayer.skip(tracks.indexOf(item));
@@ -28,7 +29,7 @@ function List({ navigation, tracks, isDarkMode }: ListProp) {
 							navigation.navigate('Track');
 						}
 						}>
-							<Text color={isDarkMode ? 'white' : 'black'} fontSize='sm'>{item.filename}</Text>
+							<Text color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText} fontSize='sm'>{item.filename}</Text>
 						</TouchableOpacity>
 					</Box>
 					<Box mr='2'>
@@ -36,7 +37,7 @@ function List({ navigation, tracks, isDarkMode }: ListProp) {
 							await TrackPlayer.remove(tracks.indexOf(item));
 							dispatch(removeTrack(item.id));
 						}}>
-							<Ionicons name='ios-close' size={24} color={isDarkMode ? 'lightgray' : 'gray'} />
+							<Ionicons name='ios-close' size={24} color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText} />
 						</Pressable>
 					</Box>
 				</HStack>

@@ -6,6 +6,7 @@ import { PicksScreenProp } from '../navigation/RootNavigator';
 import FloatButton from '../sections/picks/Picks.FloatButton';
 import List from '../sections/picks/Picks.List';
 import Navigation from '../sections/picks/Picks.Navigation';
+import { Colors } from '../styles/Colors';
 
 interface PicksProp {
 	navigation: PicksScreenProp;
@@ -16,13 +17,13 @@ function Picks({ navigation }: PicksProp) {
 	const [category, setCategory] = useState('모두 보기');
 	const isDarkMode = useColorScheme() === 'dark';
 	const backgroundStyle = {
-		backgroundColor: isDarkMode ? 'black' : 'white',
+		backgroundColor: isDarkMode ? Colors.dark.background : Colors.background,
 		flex: 1,
 	};
 
 	return (
 		<SafeAreaView style={backgroundStyle}>
-			<StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={isDarkMode ? 'black' : 'white'} />
+			<StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={isDarkMode ? Colors.dark.background : Colors.background} />
 			<Header isDarkMode={isDarkMode} />
 			<Navigation category={category} setCategory={setCategory} isDarkMode={isDarkMode} />
 			{category === '모두 보기' && <List navigation={navigation} tracks={tracks} picks={picks} isDarkMode={isDarkMode} />}

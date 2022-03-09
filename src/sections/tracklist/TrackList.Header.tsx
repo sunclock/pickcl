@@ -8,6 +8,7 @@ import { addTrack } from '../../reducers/track';
 import TrackPlayer from 'react-native-track-player';
 import { convertTrackType } from '../../utils/Player';
 import { ITrack } from '../../types';
+import { Colors } from '../../styles/Colors';
 
 interface HeaderProps {
 	tracks: ITrack[];
@@ -19,7 +20,7 @@ function Header({ tracks, isDarkMode }: HeaderProps) {
 	return (
 		<HStack>
 			<Box width={width / 1.15}>
-				<Heading color={isDarkMode ? 'white' : 'black'} fontSize="2xl" pl="4" pt='2'>트랙리스트</Heading>
+				<Heading color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText} fontSize="2xl" pl="4" pt='2'>트랙리스트</Heading>
 			</Box>
 			<Box alignItems='center' justifyContent="center">
 				<Pressable onPress={async () => {
@@ -28,7 +29,7 @@ function Header({ tracks, isDarkMode }: HeaderProps) {
 					if (newTracks && newTracks?.length > 0) await TrackPlayer.add(convertTrackType(newTracks));
 				}
 				}>
-					<Ionicon color={isDarkMode ? 'white' : 'black'} name="ios-add-sharp" size={40} />
+					<Ionicon color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText} name="ios-add-sharp" size={40} />
 				</Pressable>
 			</Box>
 		</HStack>

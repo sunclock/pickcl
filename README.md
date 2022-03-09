@@ -17,6 +17,7 @@ Simple audio player app with React Native and TypeScript
 - [Setup](#setup)
 
 ## Screenshots
+
 <img alt="파일을 추가하는 방법" src="https://user-images.githubusercontent.com/69966899/157003118-abe3e0b6-1fc4-4d1d-9aac-4139d81962e9.gif" width="250" height="100%" /> <img alt="북마크 추가하는 방법" src="https://user-images.githubusercontent.com/69966899/157005500-94444189-730a-4eab-b1d1-557c77080f6a.gif" width="250" height="100%" /> <img alt="북마크 재생하는 방법" src="https://user-images.githubusercontent.com/69966899/157002364-c30793d3-8123-4ccd-b495-b30c1a1fd022.gif" width="250" height="100%" />
 
 ## Features
@@ -25,6 +26,7 @@ Simple audio player app with React Native and TypeScript
 - **Bookmark** - Bookmark your favorite part with memo and play them again by clicking on memo!
 - **List** - List bookmarks and tracks and easily access them.
 - **30 minutes and more** - This App focus on enhancing experience of streaming long audio files (longer than 30 minutes).
+- **Dark Mode Support** - From Mar 9 2022, Pickcl supports dark mode!
 
 ### To do:
 

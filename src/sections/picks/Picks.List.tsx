@@ -24,7 +24,7 @@ function List({ navigation, tracks, picks, isDarkMode }: ListProp) {
 	const renderItem = ({ item, index }: { item: IPick, index: number }) => {
 		return (
 			<>
-				<VStack justifyContent={'space-between'} borderBottomWidth='0.5' borderBottomColor={isDarkMode ? Colors.dark.border : Colors.lightGray} py='2'>
+				<VStack justifyContent={'space-between'} borderBottomWidth='0.5' borderBottomColor={isDarkMode ? Colors.dark.border : Colors.extraLightGray} py='2'>
 					<TouchableOpacity onPress={async () => {
 						await TrackPlayer.skip(tracks.findIndex(track => track.id === item.track.id));
 						await TrackPlayer.seekTo(item.timestamp)
@@ -34,7 +34,7 @@ function List({ navigation, tracks, picks, isDarkMode }: ListProp) {
 					}
 					}>
 						<Text color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText} fontWeight='normal' fontSize='sm'>{item.memo}{' '}</Text>
-						<Text color={isDarkMode ? Colors.extraLightGray : Colors.darkGray} fontSize='xs'>{item.track.filename} {new Date(item.timestamp * 1000).toISOString().substr(14, 5)}</Text>
+						<Text color={isDarkMode ? Colors.extraLightGray : Colors.dark.secondaryText} fontSize='xs'>{item.track.filename} {new Date(item.timestamp * 1000).toISOString().substr(14, 5)}</Text>
 					</TouchableOpacity>
 				</VStack>
 				{index === picks.length - 1 && <Box h='300'></Box>}

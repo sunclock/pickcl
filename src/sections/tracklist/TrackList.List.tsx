@@ -20,7 +20,7 @@ function List({ navigation, tracks, isDarkMode }: ListProp) {
 	const renderItem = ({ item, index }: { item: ITrack, index: number }) => {
 		return (
 			<>
-				<HStack justifyContent={'space-between'} borderBottomWidth='0.5' borderBottomColor={isDarkMode ? Colors.dark.border : Colors.lightGray} py='2'>
+				<HStack justifyContent={'space-between'} borderBottomWidth='0.5' borderBottomColor={isDarkMode ? Colors.dark.border : Colors.extraLightGray} py='2'>
 					<Box>
 						<TouchableOpacity onPress={async () => {
 							await TrackPlayer.skip(tracks.indexOf(item));
@@ -37,7 +37,7 @@ function List({ navigation, tracks, isDarkMode }: ListProp) {
 							await TrackPlayer.remove(tracks.indexOf(item));
 							dispatch(removeTrack(item.id));
 						}}>
-							<Ionicons name='ios-close' size={24} color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText} />
+							<Ionicons name='ios-close' size={24} color={isDarkMode ? Colors.dark.secondaryText : Colors.primaryText} />
 						</Pressable>
 					</Box>
 				</HStack>

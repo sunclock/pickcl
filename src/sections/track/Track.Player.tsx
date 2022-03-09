@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ITrack } from '../../types';
 import { Dimensions, Pressable, TextInput } from 'react-native';
-import { Text, HStack, Slider, Box, Button, Modal, KeyboardAvoidingView } from 'native-base';
+import { Text, HStack, Slider, Box, Button, Modal } from 'native-base';
 import TrackPlayer, { Event, State, usePlaybackState, useProgress, useTrackPlayerEvents } from 'react-native-track-player';
 import { togglePlay } from '../../utils/Player';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -9,13 +9,15 @@ import { useDispatch } from 'react-redux';
 import { addPick } from '../../reducers/pick';
 import { changeTrack } from '../../reducers/track';
 import { SampleTrack } from '../../assets/sample';
+import { Colors } from '../../styles/Colors';
 
 interface PlayerProp {
 	track: ITrack;
 	tracks: ITrack[];
+	isDarkMode: boolean;
 }
 
-function Player({ track, tracks }: PlayerProp) {
+function Player({ track, tracks, isDarkMode }: PlayerProp) {
 	const [onPress, setPress] = useState('');
 	const [modalVisible, setModalVisible] = useState(false);
 	const [memo, setMemo] = useState('');
@@ -23,13 +25,13 @@ function Player({ track, tracks }: PlayerProp) {
 	const playbackState = usePlaybackState();
 	const progress = useProgress();
 	const dispatch = useDispatch();
+	const iconColor = isDarkMode ? Colors.dark.primaryText : Colors.primaryText;
 	const inputRef = useRef<TextInput>(null);
 	useTrackPlayerEvents([Event.PlaybackTrackChanged], async event => {
 		if (event.type === Event.PlaybackTrackChanged && event.nextTrack !== null) {
 			dispatch(changeTrack(tracks[event.nextTrack]));
 		}
 	})
-
 	useEffect(() => {
 		if (track === SampleTrack)
 			TrackPlayer.stop();
@@ -42,7 +44,7 @@ function Player({ track, tracks }: PlayerProp) {
 					value={progress.position}
 					defaultValue={0} minValue={0} maxValue={progress.duration}
 					accessibilityLabel="hello world" step={0.0001}
-					colorScheme='violet'
+					colorScheme={isDarkMode ? 'dark' : 'light'}
 					onChangeEnd={async (v) => await TrackPlayer.seekTo(v)}>
 					<Slider.Track>
 						<Slider.FilledTrack />
@@ -52,11 +54,11 @@ function Player({ track, tracks }: PlayerProp) {
 			</Box>
 			<HStack justifyContent={'space-between'}>
 				<Box>
-					<Text textAlign="center">
+					<Text textAlign="center" color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>
 						{new Date(progress.position * 1000).toISOString().substr(14, 5)}</Text>
 				</Box>
 				<Box>
-					<Text textAlign="center">
+					<Text textAlign="center" color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>
 						{new Date((progress.duration - progress.position) * 1000)
 							.toISOString()
 							.substr(14, 5)}</Text>
@@ -75,7 +77,7 @@ function Player({ track, tracks }: PlayerProp) {
 						<Ionicons
 							name={onPress === 'heart' ? "ios-heart-sharp" : "ios-heart-outline"}
 							size={40}
-							color='black'
+							color={iconColor}
 						/>
 					</Pressable>
 				</Box>
@@ -97,7 +99,7 @@ function Player({ track, tracks }: PlayerProp) {
 						<Ionicons
 							name={onPress === 'backward' ? "ios-play-skip-back-sharp" : "ios-play-skip-back-outline"}
 							size={40}
-							color='black'
+							color={iconColor}
 						/>
 					</Pressable>
 				</Box>
@@ -111,7 +113,7 @@ function Player({ track, tracks }: PlayerProp) {
 							<Ionicons
 								name="ios-pause-outline"
 								size={45}
-								color='black'
+								color={iconColor}
 							/>
 						</Pressable>
 					</Box>
@@ -127,7 +129,7 @@ function Player({ track, tracks }: PlayerProp) {
 							<Ionicons
 								name={onPress === 'play' ? "ios-play-sharp" : "ios-play-outline"}
 								size={45}
-								color='black'
+								color={iconColor}
 							/>
 						</Pressable>
 					</Box>
@@ -150,7 +152,7 @@ function Player({ track, tracks }: PlayerProp) {
 						<Ionicons
 							name={onPress === 'forward' ? "ios-play-skip-forward-sharp" : "ios-play-skip-forward-outline"}
 							size={40}
-							color='black'
+							color={iconColor}
 						/>
 					</Pressable>
 				</Box>
@@ -169,41 +171,47 @@ function Player({ track, tracks }: PlayerProp) {
 								inputRef.current?.blur();
 								inputRef.current?.focus();
 							}, 100);
-						}
-						}
-					>
+						}}>
 						<Ionicons
 							name={onPress === 'bookmark' ? "ios-bookmark-sharp" : "ios-bookmark-outline"}
 							size={40}
-							color='black'
+							color={iconColor}
 						/>
 					</Pressable>
 				</Box>
-			</HStack ><>
-				<Modal isOpen={modalVisible} onClose={setModalVisible} size='xl'>
-					<Modal.Content maxH="400">
-						<Modal.CloseButton />
-						<Modal.Header>내 픽 작성하기</Modal.Header>
-						<Modal.Body bgColor='trueGray.100'>
-							<TextInput
-								multiline={true}
-								ref={inputRef}
-								style={{ textAlignVertical: 'top' }}
-								autoFocus={true}
-								numberOfLines={10}
-								value={memo}
-								onChangeText={(text) => setMemo(text)}
-							/>
-						</Modal.Body>
-						<Modal.Footer>
-							<Button.Group space={2}>
-								<Button variant='ghost' colorScheme='dark' onPress={() => {
-									setModalVisible(false);
-									setMemo('');
-								}}>
-									취소
-								</Button>
-								<Button background='#7575FF' onPress={() => {
+			</HStack>
+			<Modal isOpen={modalVisible} onClose={setModalVisible} size='xl'>
+				<Modal.Content maxH="400"
+					bgColor={isDarkMode ? Colors.dark.card : Colors.background}
+					color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}
+				>
+					<Modal.CloseButton />
+					<Modal.Header>
+						<Text color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>내 픽 작성하기</Text>
+					</Modal.Header>
+					<Modal.Body>
+						<TextInput
+							multiline={true}
+							ref={inputRef}
+							style={{ textAlignVertical: 'top' }}
+							autoFocus={true}
+							numberOfLines={10}
+							value={memo}
+							onChangeText={(text) => setMemo(text)}
+						/>
+					</Modal.Body>
+					<Modal.Footer
+						bgColor={isDarkMode ? Colors.dark.card : Colors.background}>
+						<Button.Group space={2}>
+							<Button variant='ghost' colorScheme='dark' onPress={() => {
+								setModalVisible(false);
+								setMemo('');
+							}}>
+								취소
+							</Button>
+							<Button
+								background={isDarkMode ? Colors.dark.primary : Colors.primary}
+								onPress={() => {
 									let now = new Date();
 									let id = track.filename + '_' + now.toISOString();
 									let pick = {
@@ -217,13 +225,12 @@ function Player({ track, tracks }: PlayerProp) {
 									setMemo('');
 									setModalVisible(false);
 								}}>
-									등록
-								</Button>
-							</Button.Group>
-						</Modal.Footer>
-					</Modal.Content>
-				</Modal>
-			</>
+								등록
+							</Button>
+						</Button.Group>
+					</Modal.Footer>
+				</Modal.Content>
+			</Modal>
 		</Box >
 	);
 }

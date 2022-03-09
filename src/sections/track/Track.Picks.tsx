@@ -1,22 +1,43 @@
 import React, { useState } from 'react';
-import { Dimensions, Pressable, StyleSheet } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, useColorScheme } from 'react-native';
 import { IPick, ITrack } from '../../types';
 import { Text, Box, FlatList, HStack } from 'native-base';
 import TrackPlayer from 'react-native-track-player';
+import { Colors } from '../../styles/Colors';
 
 interface IItem {
 	item: IPick;
 };
 
 interface PicksProp {
-	track: ITrack;
 	picks: IPick[] | undefined;
+	isDarkMode: boolean;
 }
 
 const { width, height } = Dimensions.get('window');
 
-function Picks({ picks }: PicksProp) {
+function Picks({ picks, isDarkMode }: PicksProp) {
 	const [focused, setFocused] = useState<String | Number>('');
+
+	const timestampOn = {
+		color: isDarkMode ? Colors.dark.primary : Colors.primary,
+		fontWeight: '800',
+		flexShrink: 1,
+		lineHeight: 25,
+	}
+	const memoOn = {
+		color: isDarkMode ? Colors.dark.primary : Colors.primary,
+		borderBottomColor: isDarkMode ? Colors.dark.primary : Colors.primary,
+		borderBottomWidth: 2,
+		fontWeight: 'bold',
+		flexShrink: 1,
+		lineHeight: 25,
+	}
+	const off = {
+		color: isDarkMode ? Colors.dark.primaryText : Colors.darkGray,
+		flexShrink: 1,
+		lineHeight: 25,
+	}
 	const renderItem = (item: IItem) => {
 		return (
 			<Pressable
@@ -26,7 +47,7 @@ function Picks({ picks }: PicksProp) {
 				onPressOut={() => setFocused('')}
 			>
 				<HStack space='1' alignContent={'center'}>
-					<Text style={focused === item.item.id ? styles.timestampOn : styles.off}>{
+					<Text style={focused === item.item.id ? timestampOn : off}>{
 						new Date((item.item.timestamp) * 1000)
 							.toISOString()
 							.substr(14, 5)
@@ -34,7 +55,7 @@ function Picks({ picks }: PicksProp) {
 					<Text
 						fontSize={'md'}
 						key={item.item.id}
-						style={focused === item.item.id ? styles.memoOn : styles.off}>
+						style={focused === item.item.id ? memoOn : off}>
 						{item.item.memo}{' '}</Text>
 				</HStack>
 			</Pressable>
@@ -49,7 +70,7 @@ function Picks({ picks }: PicksProp) {
 					extraData={picks?.length}
 					keyExtractor={(item) => item.id.toString()}
 				/>
-				{picks?.length === 0 && <Text style={styles.off}>아직 나만의 픽이 없어요! </Text>}
+				{picks?.length === 0 && <Text style={off}>아직 나만의 픽이 없어요! </Text>}
 			</Box>
 		</Box >
 	);
@@ -61,24 +82,5 @@ const styles = StyleSheet.create({
 	container: {
 		width: width * 0.9,
 		height: height / 1.8,
-	},
-	timestampOn: {
-		color: '#7575FF',
-		fontWeight: '800',
-		flexShrink: 1,
-		lineHeight: 25,
-	},
-	memoOn: {
-		color: '#7575FF',
-		borderBottomColor: '#7575FF',
-		borderBottomWidth: 2,
-		fontWeight: 'bold',
-		flexShrink: 1,
-		lineHeight: 25,
-	},
-	off: {
-		color: 'gray',
-		flexShrink: 1,
-		lineHeight: 25,
 	}
 });

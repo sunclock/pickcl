@@ -32,16 +32,19 @@ const Track = ({ navigation }: TrackProp) => {
 
 	return (
 		<SafeAreaView style={backgroundStyle}>
-			<StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={isDarkMode ? Colors.dark.background : Colors.background} />
-			<Header navigation={navigation} />
-			<Title track={track} />
-			<TouchableOpacity onPress={() => setArtwork(!isArtwork)}>
+			<StatusBar
+				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+				backgroundColor={isDarkMode ? Colors.dark.background : Colors.background}
+			/>
+			<Header navigation={navigation} isDarkMode={isDarkMode} />
+			<Title track={track} isDarkMode={isDarkMode} />
+			<TouchableOpacity onPress={() => setArtwork(!isArtwork)} >
 				{isArtwork
-					? <Artwork track={track} />
-					: <Picks track={track} picks={picks} />
+					? <Artwork track={track} isDarkMode={isDarkMode} />
+					: <Picks picks={picks} isDarkMode={isDarkMode} />
 				}
 			</TouchableOpacity>
-			<Player track={track} tracks={tracks} />
+			<Player track={track} tracks={tracks} isDarkMode={isDarkMode} />
 		</SafeAreaView>
 	);
 }

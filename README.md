@@ -4,9 +4,9 @@ Simple audio player app with React Native and TypeScript
 
 [Blog post link on the lessons i learned during development](https://velog.io/@sunclock/%EC%9D%8C%EC%95%85-%EC%9E%AC%EC%83%9D-%EC%95%B1-%EA%B0%9C%EB%B0%9C-%EB%92%B7%EC%9D%B4%EC%95%BC%EA%B8%B0)
 
-## pickcl 1.0.0의 테스터가 되어보세요!
+## pickcl 1.0.1의 테스터가 되어보세요!
 
-[pickcl 1.0.0 테스터 안내 링크](https://descriptive-frost-43a.notion.site/pickcl-1-0-0-Android-Test-4f627a991ad8495bade31683d9807d7c)
+[pickcl 1.0.1 테스터 안내 링크](https://descriptive-frost-43a.notion.site/pickcl-1-0-1-Android-Test-cf68e7dca2ef46048576682b1cf0775c)
 
 ## Table of Contents
 

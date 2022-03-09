@@ -11,14 +11,15 @@ import { ITrack } from '../../types';
 
 interface HeaderProps {
 	tracks: ITrack[];
+	isDarkMode: boolean;
 }
 
-function Header({ tracks }: HeaderProps) {
+function Header({ tracks, isDarkMode }: HeaderProps) {
 	const dispatch = useDispatch();
 	return (
 		<HStack>
 			<Box width={width / 1.15}>
-				<Heading fontSize="2xl" pl="4" pt='2'>트랙리스트</Heading>
+				<Heading color={isDarkMode ? 'white' : 'black'} fontSize="2xl" pl="4" pt='2'>트랙리스트</Heading>
 			</Box>
 			<Box alignItems='center' justifyContent="center">
 				<Pressable onPress={async () => {
@@ -27,7 +28,7 @@ function Header({ tracks }: HeaderProps) {
 					if (newTracks && newTracks?.length > 0) await TrackPlayer.add(convertTrackType(newTracks));
 				}
 				}>
-					<Ionicon name="ios-add-sharp" size={40} color="black" />
+					<Ionicon color={isDarkMode ? 'white' : 'black'} name="ios-add-sharp" size={40} />
 				</Pressable>
 			</Box>
 		</HStack>

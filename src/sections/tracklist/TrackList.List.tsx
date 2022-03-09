@@ -11,9 +11,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 interface ListProp {
 	navigation: TrackListScreenProp;
 	tracks: ITrack[];
+	isDarkMode: boolean;
 }
 
-function List({ navigation, tracks }: ListProp) {
+function List({ navigation, tracks, isDarkMode }: ListProp) {
 	const dispatch = useDispatch();
 	const renderItem = ({ item, index }: { item: ITrack, index: number }) => {
 		return (
@@ -27,7 +28,7 @@ function List({ navigation, tracks }: ListProp) {
 							navigation.navigate('Track');
 						}
 						}>
-							<Text fontSize='sm'>{item.filename}</Text>
+							<Text color={isDarkMode ? 'white' : 'black'} fontSize='sm'>{item.filename}</Text>
 						</TouchableOpacity>
 					</Box>
 					<Box mr='2'>
@@ -35,7 +36,7 @@ function List({ navigation, tracks }: ListProp) {
 							await TrackPlayer.remove(tracks.indexOf(item));
 							dispatch(removeTrack(item.id));
 						}}>
-							<Ionicons name='ios-close' size={24} color='gray' />
+							<Ionicons name='ios-close' size={24} color={isDarkMode ? 'lightgray' : 'gray'} />
 						</Pressable>
 					</Box>
 				</HStack>

@@ -15,9 +15,10 @@ interface ListProp {
 	navigation: TrackListScreenProp;
 	tracks: ITrack[];
 	picks: IPick[];
+	isDarkMode: boolean;
 }
 
-function List({ navigation, tracks, picks }: ListProp) {
+function List({ navigation, tracks, picks, isDarkMode }: ListProp) {
 	const dispatch = useDispatch();
 	const renderItem = ({ item, index }: { item: IPick, index: number }) => {
 		return (
@@ -32,8 +33,8 @@ function List({ navigation, tracks, picks }: ListProp) {
 						navigation.navigate('Track');
 					}
 					}>
-						<Text color='gray.900' fontWeight='normal' fontSize='sm'>{item.memo}{' '}</Text>
-						<Text color='gray.500' fontSize='xs'>{item.track.filename} {new Date(item.timestamp * 1000).toISOString().substr(14, 5)}</Text>
+						<Text color={isDarkMode ? 'white' : 'black'} fontWeight='normal' fontSize='sm'>{item.memo}{' '}</Text>
+						<Text color={isDarkMode ? 'white' : 'gray.500'} fontSize='xs'>{item.track.filename} {new Date(item.timestamp * 1000).toISOString().substr(14, 5)}</Text>
 					</TouchableOpacity>
 				</VStack>
 				{index === picks.length - 1 && <Box h='300'></Box>}

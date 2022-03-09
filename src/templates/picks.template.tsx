@@ -23,9 +23,9 @@ function Picks({ navigation }: PicksProp) {
 	return (
 		<SafeAreaView style={backgroundStyle}>
 			<StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={isDarkMode ? 'black' : 'white'} />
-			<Header />
-			<Navigation category={category} setCategory={setCategory} />
-			{category === '모두 보기' && <List navigation={navigation} tracks={tracks} picks={picks} />}
+			<Header isDarkMode={isDarkMode} />
+			<Navigation category={category} setCategory={setCategory} isDarkMode={isDarkMode} />
+			{category === '모두 보기' && <List navigation={navigation} tracks={tracks} picks={picks} isDarkMode={isDarkMode} />}
 			<FloatButton navigation={navigation} />
 		</SafeAreaView>
 	);

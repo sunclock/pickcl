@@ -34,7 +34,7 @@ function Picks({ picks, isDarkMode }: PicksProp) {
 		lineHeight: 25,
 	}
 	const off = {
-		color: isDarkMode ? Colors.dark.primaryText : Colors.darkGray,
+		color: isDarkMode ? Colors.dark.primaryText : Colors.primaryText,
 		flexShrink: 1,
 		lineHeight: 25,
 	}

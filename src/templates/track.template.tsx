@@ -21,6 +21,7 @@ const Track = ({ navigation }: TrackProp) => {
 		track = SampleTrack;
 	};
 	const tracks = useSelector((state: any) => state.tracks.tracks);
+	const skipInterval = useSelector((state: any) => state.tracks.settings.skipInterval);
 	const picks = useSelector((state: any) => state.picks.picks.filter((pick: IPick) => pick.track.url === track.url));
 	const [isArtwork, setArtwork] = useState(false);
 
@@ -36,7 +37,7 @@ const Track = ({ navigation }: TrackProp) => {
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
 				backgroundColor={isDarkMode ? Colors.dark.background : Colors.background}
 			/>
-			<Header navigation={navigation} isDarkMode={isDarkMode} />
+			<Header navigation={navigation} isDarkMode={isDarkMode} defaultSkipInterval={skipInterval} />
 			<Title track={track} isDarkMode={isDarkMode} />
 			<TouchableOpacity onPress={() => setArtwork(!isArtwork)} >
 				{isArtwork
@@ -44,7 +45,7 @@ const Track = ({ navigation }: TrackProp) => {
 					: <Picks picks={picks} isDarkMode={isDarkMode} />
 				}
 			</TouchableOpacity>
-			<Player track={track} tracks={tracks} isDarkMode={isDarkMode} />
+			<Player track={track} tracks={tracks} isDarkMode={isDarkMode} skipInterval={skipInterval} />
 		</SafeAreaView>
 	);
 }

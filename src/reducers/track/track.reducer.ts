@@ -2,7 +2,7 @@ import {
 	TracksState,
 	TrackActionTypes,
 	AddTrackAction, EditTrackArtworkAction, EditTrackEpisodeAction, EditTrackVoiceActorsAction, RemoveTrackAction,
-	EditTrackSeasonAction, EditTrackTitleAction, ChangeTrackAction, ChangeQueueAction, ResetTrackAction,
+	EditTrackSeasonAction, EditTrackTitleAction, ChangeTrackAction, ChangeQueueAction, ResetTrackAction, ChangeSkipIntervalAction,
 } from './track.action.types';
 import _ from 'lodash';
 import { SampleTrack } from '../../assets/sample';
@@ -14,16 +14,18 @@ export const initialState = () => {
 		currentTrack: SampleTrack,
 		currentQueue: [],
 		isPlaying: false,
+		settings: {
+			skipInterval: 15,
+		}
 	}
 	return initialData;
 };
-
 
 export const tracks = (
 	state: TracksState = initialState(),
 	action: AddTrackAction | RemoveTrackAction | EditTrackTitleAction | EditTrackArtworkAction |
 		EditTrackArtworkAction | EditTrackEpisodeAction | EditTrackSeasonAction | EditTrackVoiceActorsAction |
-		ChangeTrackAction | ChangeQueueAction | ResetTrackAction
+		ChangeTrackAction | ChangeQueueAction | ResetTrackAction | ChangeSkipIntervalAction
 ) => {
 	const newState: TracksState = _.cloneDeep(state);
 	switch (action.type) {
@@ -89,6 +91,9 @@ export const tracks = (
 		case TrackActionTypes.RESET_TRACK:
 			newState.currentTrack = SampleTrack;
 			newState.tracks = [];
+			return newState;
+		case TrackActionTypes.CHANGE_SKIP_INTERVAL:
+			newState.settings.skipInterval = action.payload;
 			return newState;
 		default:
 			return newState;

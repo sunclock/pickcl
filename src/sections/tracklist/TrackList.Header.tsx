@@ -24,7 +24,7 @@ function Header({ tracks, isDarkMode }: HeaderProps) {
 				<Pressable onPress={async () => {
 					Alert.alert(
 						'재생 목록 초기화'
-						, '재생 중인 모든 트랙이 삭제됩니다.'
+						, '현재 재생 중인 트랙을 포함한 모든 트랙을 삭제합니다.'
 						, [
 							{ text: '취소', style: 'cancel' }
 							, { text: '확인', onPress: async () => { dispatch(resetTrack()); await TrackPlayer.reset() } }

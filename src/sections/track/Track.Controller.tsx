@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ITrack } from '../../types';
 import { Pressable, Dimensions, StyleSheet } from 'react-native';
-import { Text, HStack, Slider, Box } from 'native-base';
+import { Text, HStack, Slider, Box, Center } from 'native-base';
 import TrackPlayer, { Event, State, usePlaybackState, useProgress, useTrackPlayerEvents } from 'react-native-track-player';
 import { togglePlay } from '../../utils/Player';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -37,11 +37,7 @@ function Controller({ track, tracks, isDarkMode, skipInterval }: ControllerProp)
 
 	return (
 		<HStack shadow={2} borderRadius='20' style={{ ...styles.container, backgroundColor: backgroundColor }}>
-			<Box
-				alignItems="center"
-				justifyContent="center"
-				width={60} height={60}
-			>
+			<Center style={styles.buttonContainer}>
 				<Pressable
 					onPressIn={async () => setPress('skip-back')}
 					onPressOut={async () => setPress('')}
@@ -54,16 +50,12 @@ function Controller({ track, tracks, isDarkMode, skipInterval }: ControllerProp)
 					}}>
 					<Ionicons
 						name={onPress === 'skip-back' ? "ios-play-skip-back-sharp" : "ios-play-skip-back-outline"}
-						size={40}
+						size={30}
 						color={iconColor}
 					/>
 				</Pressable>
-			</Box>
-			<Box
-				alignItems="center"
-				justifyContent="center"
-				width={60} height={60}
-			>
+			</Center>
+			<Center style={styles.buttonContainer}>
 				<Pressable
 					onPress={async () => TrackPlayer.seekTo(progress.position - skipInterval)}>
 					<MaterialCommunityIcons
@@ -72,26 +64,20 @@ function Controller({ track, tracks, isDarkMode, skipInterval }: ControllerProp)
 						color={iconColor}
 					/>
 				</Pressable>
-			</Box>
-			{playbackState === State.Playing
-				? <Box
-					alignItems="center"
-					justifyContent="center"
-					width={60} height={60}
-				>
+			</Center>
+			{playbackState === State.Playing || playbackState === State.Buffering
+				?
+				<Center style={styles.playButtonContainer}>
 					<Pressable onPress={async () => await TrackPlayer.pause()}>
 						<Ionicons
 							name="ios-pause-outline"
-							size={45}
+							size={50}
 							color={iconColor}
 						/>
 					</Pressable>
-				</Box>
-				: <Box
-					alignItems="center"
-					justifyContent="center"
-					width={60} height={60}
-				>
+				</Center>
+				:
+				<Center style={styles.playButtonContainer}>
 					<Pressable
 						onPressIn={async () => setPress('play')}
 						onPressOut={async () => setPress('')}
@@ -102,13 +88,9 @@ function Controller({ track, tracks, isDarkMode, skipInterval }: ControllerProp)
 							color={iconColor}
 						/>
 					</Pressable>
-				</Box>
+				</Center>
 			}
-			<Box
-				alignItems="center"
-				justifyContent="center"
-				width={60} height={60}
-			>
+			<Center style={styles.buttonContainer}>
 				<Pressable
 					onPress={async () => TrackPlayer.seekTo(progress.position + skipInterval)}>
 					<MaterialCommunityIcons
@@ -117,12 +99,8 @@ function Controller({ track, tracks, isDarkMode, skipInterval }: ControllerProp)
 						color={iconColor}
 					/>
 				</Pressable>
-			</Box>
-			<Box
-				alignItems="center"
-				justifyContent="center"
-				width={60} height={60}
-			>
+			</Center>
+			<Center style={styles.buttonContainer}>
 				<Pressable
 					onPressIn={async () => setPress('skip-next')}
 					onPressOut={async () => setPress('')}
@@ -135,11 +113,11 @@ function Controller({ track, tracks, isDarkMode, skipInterval }: ControllerProp)
 					}}>
 					<Ionicons
 						name={onPress === 'skip-next' ? "ios-play-skip-forward-sharp" : "ios-play-skip-forward-outline"}
-						size={40}
+						size={30}
 						color={iconColor}
 					/>
 				</Pressable>
-			</Box>
+			</Center>
 		</HStack>
 	);
 }
@@ -158,4 +136,17 @@ const styles = StyleSheet.create({
 		paddingBottom: 5,
 		justifyContent: 'space-between',
 	},
+	playButtonContainer: {
+		width: width / 5,
+		height: 60,
+	},
+	buttonContainer: {
+		width: width / 7,
+		height: 60,
+	},
+	button: {
+		alignItems: 'center',
+		marginVertical: 10,
+		justifyContent: 'center',
+	}
 });

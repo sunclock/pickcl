@@ -25,7 +25,7 @@ function Options({ track, isDarkMode, skipInterval }: OptionsProp) {
 	const [repeatMode, setRepeatMode] = useState(RepeatMode.Queue);
 	const dispatch = useDispatch();
 	const inputRef = useRef<TextInput>(null);
-	const iconColor = isDarkMode ? Colors.dark.primaryText : Colors.primaryText;
+	const iconColor = isDarkMode ? Colors.dark.primary : Colors.primary;
 	const textColor = isDarkMode ? Colors.dark.primaryText : Colors.primaryText;
 	const backgroundColor = isDarkMode ? Colors.dark.hover : Colors.background;
 	const { isOpen, onOpen, onClose } = useDisclose();
@@ -50,9 +50,9 @@ function Options({ track, isDarkMode, skipInterval }: OptionsProp) {
 						{repeatMode === RepeatMode.Queue
 							? <Ionicons
 								name="ios-repeat-outline"
-								size={25}
+								size={30}
 								color={iconColor} />
-							: <MaterialIcons name="repeat-one" size={25} color={iconColor} />
+							: <MaterialIcons name="repeat-one" size={30} color={iconColor} />
 						}
 					</Pressable>
 				</Center>
@@ -60,7 +60,7 @@ function Options({ track, isDarkMode, skipInterval }: OptionsProp) {
 					<Pressable
 						style={styles.button}
 						onPress={onOpen}>
-						<Text style={{ fontSize: 18, color: textColor }}>{skipInterval}초</Text>
+						<Text style={{ fontSize: 18, color: iconColor }}>{skipInterval}초</Text>
 					</Pressable>
 				</Center>
 				<Center style={styles.buttonContainer}>
@@ -78,7 +78,7 @@ function Options({ track, isDarkMode, skipInterval }: OptionsProp) {
 						}}>
 						<Ionicons
 							name={onPress === 'bookmark' ? "ios-bookmark-sharp" : "ios-bookmark-outline"}
-							size={25}
+							size={30}
 							color={iconColor}
 						/>
 					</Pressable>
@@ -102,7 +102,7 @@ function Options({ track, isDarkMode, skipInterval }: OptionsProp) {
 								dispatch(changeSkipInterval(10))
 								onClose()
 							}}>
-							<Text style={{ fontSize: 16, color: textColor }}>10초</Text>
+							<Text style={{ fontSize: 16, color: iconColor }}>10초</Text>
 						</Actionsheet.Item>
 						<Actionsheet.Item
 							onPress={() => {

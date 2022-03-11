@@ -95,35 +95,35 @@ function Options({ track, isDarkMode, skipInterval }: OptionsProp) {
 								dispatch(changeSkipInterval(5))
 								onClose()
 							}}>
-							<Text style={{ fontSize: 16, color: textColor }}>5초</Text>
+							<Text style={{ fontSize: 16, color: skipInterval === 10 ? iconColor : textColor }}>5초</Text>
 						</Actionsheet.Item>
 						<Actionsheet.Item
 							onPress={() => {
 								dispatch(changeSkipInterval(10))
 								onClose()
 							}}>
-							<Text style={{ fontSize: 16, color: iconColor }}>10초</Text>
+							<Text style={{ fontSize: 16, color: skipInterval === 10 ? iconColor : textColor }}>10초</Text>
 						</Actionsheet.Item>
 						<Actionsheet.Item
 							onPress={() => {
 								dispatch(changeSkipInterval(15))
 								onClose()
 							}}>
-							<Text style={{ fontSize: 16, color: textColor }}>15초</Text>
+							<Text style={{ fontSize: 16, color: skipInterval === 10 ? iconColor : textColor }}>15초</Text>
 						</Actionsheet.Item>
 						<Actionsheet.Item
 							onPress={() => {
 								dispatch(changeSkipInterval(30))
 								onClose()
 							}}>
-							<Text style={{ fontSize: 16, color: textColor }}>30초</Text>
+							<Text style={{ fontSize: 16, color: skipInterval === 10 ? iconColor : textColor }}>30초</Text>
 						</Actionsheet.Item>
 						<Actionsheet.Item
 							onPress={() => {
 								dispatch(changeSkipInterval(60))
 								onClose()
 							}}>
-							<Text style={{ fontSize: 16, color: textColor }}>60초</Text>
+							<Text style={{ fontSize: 16, color: skipInterval === 10 ? iconColor : textColor }}>60초</Text>
 						</Actionsheet.Item>
 						<Actionsheet.Item
 							onPress={() => onClose()}>

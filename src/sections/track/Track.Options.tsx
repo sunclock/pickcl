@@ -27,6 +27,7 @@ function Options({ track, isDarkMode, skipInterval }: OptionsProp) {
 	const inputRef = useRef<TextInput>(null);
 	const iconColor = isDarkMode ? Colors.dark.primaryText : Colors.primaryText;
 	const textColor = isDarkMode ? Colors.dark.primaryText : Colors.primaryText;
+	const backgroundColor = isDarkMode ? Colors.dark.hover : Colors.background;
 	const { isOpen, onOpen, onClose } = useDisclose();
 
 	async function changeMode() {
@@ -84,35 +85,50 @@ function Options({ track, isDarkMode, skipInterval }: OptionsProp) {
 				</Center>
 			</HStack>
 			<Center>
-				<Actionsheet isOpen={isOpen} onClose={onClose} >
-					<Actionsheet.Content>
+				<Actionsheet isOpen={isOpen} onClose={onClose}>
+					<Actionsheet.Content bgColor={backgroundColor}>
 						<Box w="100%" h={60} px={4} justifyContent="center">
-							<Text style={{ fontSize: 16, color: Colors.darkGray }}>
-								트랙 이동 시간 설정
-							</Text>
+							<Text style={{ fontSize: 16, color: textColor }}>트랙 이동 시간 설정</Text>
 						</Box>
-						<Actionsheet.Item onPress={() => {
-							dispatch(changeSkipInterval(5))
-							onClose()
-						}}>5초</Actionsheet.Item>
-						<Actionsheet.Item onPress={() => {
-							dispatch(changeSkipInterval(10))
-							onClose()
-						}}>10초</Actionsheet.Item>
-						<Actionsheet.Item onPress={() => {
-							dispatch(changeSkipInterval(15))
-							onClose()
-						}}>15초</Actionsheet.Item>
+						<Actionsheet.Item
+							onPress={() => {
+								dispatch(changeSkipInterval(5))
+								onClose()
+							}}>
+							<Text style={{ fontSize: 16, color: textColor }}>5초</Text>
+						</Actionsheet.Item>
+						<Actionsheet.Item
+							onPress={() => {
+								dispatch(changeSkipInterval(10))
+								onClose()
+							}}>
+							<Text style={{ fontSize: 16, color: textColor }}>10초</Text>
+						</Actionsheet.Item>
+						<Actionsheet.Item
+							onPress={() => {
+								dispatch(changeSkipInterval(15))
+								onClose()
+							}}>
+							<Text style={{ fontSize: 16, color: textColor }}>15초</Text>
+						</Actionsheet.Item>
 						<Actionsheet.Item
 							onPress={() => {
 								dispatch(changeSkipInterval(30))
 								onClose()
-							}}>30초</Actionsheet.Item>
-						<Actionsheet.Item onPress={() => {
-							dispatch(changeSkipInterval(60))
-							onClose()
-						}}>60초</Actionsheet.Item>
-						<Actionsheet.Item onPress={() => onClose()}>닫기</Actionsheet.Item>
+							}}>
+							<Text style={{ fontSize: 16, color: textColor }}>30초</Text>
+						</Actionsheet.Item>
+						<Actionsheet.Item
+							onPress={() => {
+								dispatch(changeSkipInterval(60))
+								onClose()
+							}}>
+							<Text style={{ fontSize: 16, color: textColor }}>60초</Text>
+						</Actionsheet.Item>
+						<Actionsheet.Item
+							onPress={() => onClose()}>
+							<Text style={{ fontSize: 16, color: textColor }}>닫기</Text>
+						</Actionsheet.Item>
 					</Actionsheet.Content>
 				</Actionsheet>
 			</Center>

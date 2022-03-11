@@ -9,10 +9,6 @@ import TrackPlayer from 'react-native-track-player';
 import { Colors } from '../../styles/Colors';
 import { convertTrackType } from '../../utils/Player';
 
-interface IItem {
-	item: IPick;
-};
-
 interface ListProp {
 	navigation: TrackListScreenProp;
 	tracks: ITrack[];
@@ -37,7 +33,7 @@ function List({ navigation, tracks, picks, isDarkMode }: ListProp) {
 							if (tracks.length === 0)
 								TrackPlayer.skip(0)
 							else
-								TrackPlayer.skip(tracks.length - 1)
+								TrackPlayer.skip(tracks.length)
 						}
 						await TrackPlayer.seekTo(item.timestamp)
 						await TrackPlayer.play();

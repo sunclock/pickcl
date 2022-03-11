@@ -27,7 +27,6 @@ export function convertTrackType(tracks: ITrack | ITrack[]) {
 
 export async function togglePlay(playbackState: State) {
 	const currentTrack = await TrackPlayer.getCurrentTrack();
-	console.log('currentTrack', currentTrack);
 	if (currentTrack === null || currentTrack === undefined)
 		await setupIfNeeded(undefined);
 	else {
@@ -44,7 +43,6 @@ export async function togglePlay(playbackState: State) {
 export async function setupIfNeeded(tracks: ITrack[] | undefined) {
 	// if app was relaunched and music was already playing, we don't setup again.
 	const currentTrack = await TrackPlayer.getCurrentTrack();
-	console.log('currentTrack', currentTrack);
 	if (currentTrack !== null) {
 		return;
 	}

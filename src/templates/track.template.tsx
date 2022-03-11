@@ -10,6 +10,7 @@ import { TrackScreenProp } from '../navigation/RootNavigator';
 import Header from '../sections/track/Track.Header';
 import { SampleTrack } from '../assets/sample';
 import { Colors } from '../styles/Colors';
+import BottomTab from '../sections/track/Track.BottomTab';
 
 interface TrackProp {
 	navigation: TrackScreenProp;
@@ -46,6 +47,7 @@ const Track = ({ navigation }: TrackProp) => {
 				}
 			</TouchableOpacity>
 			<Player track={track} tracks={tracks} isDarkMode={isDarkMode} skipInterval={skipInterval} />
+			<BottomTab track={track} isDarkMode={isDarkMode} />
 		</SafeAreaView>
 	);
 }

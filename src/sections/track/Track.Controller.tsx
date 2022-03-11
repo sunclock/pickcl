@@ -5,6 +5,7 @@ import { Text, HStack, Slider, Box } from 'native-base';
 import TrackPlayer, { Event, State, usePlaybackState, useProgress, useTrackPlayerEvents } from 'react-native-track-player';
 import { togglePlay } from '../../utils/Player';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch } from 'react-redux';
 import { changeTrack } from '../../reducers/track';
 import { SampleTrack } from '../../assets/sample';
@@ -64,12 +65,10 @@ function Controller({ track, tracks, isDarkMode, skipInterval }: ControllerProp)
 				width={60} height={60}
 			>
 				<Pressable
-					onPressIn={async () => setPress('play-back')}
-					onPressOut={async () => setPress('')}
 					onPress={async () => TrackPlayer.seekTo(progress.position - skipInterval)}>
-					<Ionicons
-						name={onPress === 'play-back' ? 'ios-play-back-sharp' : 'ios-play-back-outline'}
-						size={40}
+					<MaterialCommunityIcons
+						name={'rewind-' + skipInterval.toString()}
+						size={35}
 						color={iconColor}
 					/>
 				</Pressable>
@@ -111,12 +110,10 @@ function Controller({ track, tracks, isDarkMode, skipInterval }: ControllerProp)
 				width={60} height={60}
 			>
 				<Pressable
-					onPressIn={async () => setPress('play-forward')}
-					onPressOut={async () => setPress('')}
 					onPress={async () => TrackPlayer.seekTo(progress.position + skipInterval)}>
-					<Ionicons
-						name={onPress === 'play-forward' ? 'ios-play-forward-sharp' : 'ios-play-forward-outline'}
-						size={40}
+					<MaterialCommunityIcons
+						name={'fast-forward-' + skipInterval.toString()}
+						size={35}
 						color={iconColor}
 					/>
 				</Pressable>

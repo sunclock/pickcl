@@ -59,7 +59,7 @@ function Options({ track, isDarkMode, skipInterval }: OptionsProp) {
 					<Pressable
 						style={styles.button}
 						onPress={onOpen}>
-						<Text style={{ fontSize: 18, color: textColor }}>{skipInterval}s</Text>
+						<Text style={{ fontSize: 18, color: textColor }}>{skipInterval}초</Text>
 					</Pressable>
 				</Center>
 				<Center style={styles.buttonContainer}>
@@ -91,6 +91,10 @@ function Options({ track, isDarkMode, skipInterval }: OptionsProp) {
 								트랙 이동 시간 설정
 							</Text>
 						</Box>
+						<Actionsheet.Item onPress={() => {
+							dispatch(changeSkipInterval(5))
+							onClose()
+						}}>5초</Actionsheet.Item>
 						<Actionsheet.Item onPress={() => {
 							dispatch(changeSkipInterval(10))
 							onClose()

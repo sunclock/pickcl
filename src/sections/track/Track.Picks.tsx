@@ -27,8 +27,6 @@ function Picks({ picks, isDarkMode }: PicksProp) {
 	}
 	const memoOn = {
 		color: isDarkMode ? Colors.dark.primary : Colors.primary,
-		borderBottomColor: isDarkMode ? Colors.dark.primary : Colors.primary,
-		borderBottomWidth: 2,
 		fontWeight: 'bold',
 		flexShrink: 1,
 		lineHeight: 25,

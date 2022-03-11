@@ -88,7 +88,7 @@ function Options({ track, isDarkMode, skipInterval }: OptionsProp) {
 				<Actionsheet isOpen={isOpen} onClose={onClose}>
 					<Actionsheet.Content bgColor={backgroundColor}>
 						<Box w="100%" h={60} px={4} justifyContent="center">
-							<Text style={{ fontSize: 16, color: textColor }}>트랙 이동 시간 설정</Text>
+							<Text style={{ fontWeight: 'bold', fontSize: 16, color: textColor }}>트랙 이동 시간 설정</Text>
 						</Box>
 						<Actionsheet.Item
 							onPress={() => {
@@ -127,7 +127,7 @@ function Options({ track, isDarkMode, skipInterval }: OptionsProp) {
 						</Actionsheet.Item>
 						<Actionsheet.Item
 							onPress={() => onClose()}>
-							<Text style={{ fontSize: 16, color: textColor }}>닫기</Text>
+							<Text style={{ fontWeight: 'bold', fontSize: 16, color: textColor }}>닫기</Text>
 						</Actionsheet.Item>
 					</Actionsheet.Content>
 				</Actionsheet>

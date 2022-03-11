@@ -9,10 +9,10 @@ interface ArtworkProp {
 	isDarkMode: boolean,
 }
 
-function Artwork({ track, isDarkMode }: ArtworkProp) {
+function Artwork({ track }: ArtworkProp) {
 	return (
-		<Center alignSelf='center' borderRadius='20' style={styles.container}>
-			<Box px='6'>
+		<Center alignSelf='center' style={styles.container}>
+			<Box pl='4'>
 				{track.artwork
 					? <Image style={styles.artwork} source={{ uri: track.artwork.uri }} alt={track.filename} />
 					: <Image style={styles.artwork} source={{ uri: 'https://i.ibb.co/1fyhtQ1/Group-7-1.png' }} alt={track.filename} />
@@ -28,7 +28,7 @@ const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
 	container: {
-		width: width * 0.9,
+		width: width * 0.93,
 		height: height / 2,
 	},
 	artwork: {

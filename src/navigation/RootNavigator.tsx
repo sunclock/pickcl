@@ -9,7 +9,7 @@ import { CompositeNavigationProp } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import TrackPlayer from 'react-native-track-player';
-import { Alert, BackHandler, useColorScheme } from 'react-native';
+import { Alert, BackHandler, Dimensions, useColorScheme } from 'react-native';
 import { resetTrack } from '../reducers/track';
 import { resetPick } from '../reducers/pick';
 import { Colors } from '../styles/Colors';
@@ -53,6 +53,8 @@ export const RootNavigator = () => {
 
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
 
+const { width, height } = Dimensions.get('window');
+
 export const TabNavigator = () => {
 	const picks = useSelector((state: any) => state.picks.picks);
 	const tracks = useSelector((state: any) => state.tracks.tracks);
@@ -93,7 +95,7 @@ export const TabNavigator = () => {
 			inactiveColor={isDarkMode ? Colors.darkGray : Colors.darkGray}
 			barStyle={{
 				position: 'absolute',
-				bottom: 20,
+				bottom: height / 30,
 				left: 20,
 				right: 20,
 				backgroundColor: isDarkMode ? Colors.dark.hover : Colors.background,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dimensions, Pressable, StyleSheet, useColorScheme } from 'react-native';
 import { IPick, ITrack } from '../../types';
-import { Text, Box, FlatList, HStack } from 'native-base';
+import { Text, Box, FlatList, HStack, Center } from 'native-base';
 import TrackPlayer from 'react-native-track-player';
 import { Colors } from '../../styles/Colors';
 
@@ -62,17 +62,17 @@ function Picks({ picks, isDarkMode }: PicksProp) {
 		)
 	}
 	return (
-		<Box alignSelf={'center'} borderRadius='20' style={styles.container}>
-			<Box p='4'>
+		<Box borderRadius='20' style={styles.container}>
+			<Box px='6' style={styles.list}>
+				{picks?.length === 0 && <Text style={off}>아직 나만의 픽이 없어요! </Text>}
 				<FlatList
 					data={picks}
 					renderItem={renderItem}
 					extraData={picks?.length}
 					keyExtractor={(item) => item.id.toString()}
 				/>
-				{picks?.length === 0 && <Text style={off}>아직 나만의 픽이 없어요! </Text>}
 			</Box>
-		</Box >
+		</Box>
 	);
 }
 
@@ -82,5 +82,10 @@ const styles = StyleSheet.create({
 	container: {
 		width: width * 0.9,
 		height: height / 2,
-	}
+	},
+	list: {
+		width: width * 0.5,
+		height: width * 0.5,
+		flex: 1,
+	},
 });

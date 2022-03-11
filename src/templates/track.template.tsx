@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { useColorScheme, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
+import { useColorScheme, TouchableOpacity, SafeAreaView, StatusBar, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import { IPick } from '../types';
 import Title from '../sections/track/Track.Title';
 import Artwork from '../sections/track/Track.Artwork';
 import Picks from '../sections/track/Track.Picks';
-import Player from '../sections/track/Track.Player';
+import Controller from '../sections/track/Track.Controller';
 import { TrackScreenProp } from '../navigation/RootNavigator';
 import Header from '../sections/track/Track.Header';
 import { SampleTrack } from '../assets/sample';
 import { Colors } from '../styles/Colors';
-import BottomTab from '../sections/track/Track.BottomTab';
+import Options from '../sections/track/Track.Options';
+import ProgressBar from '../sections/track/Track.ProgressBar';
 
 interface TrackProp {
 	navigation: TrackScreenProp;
@@ -25,7 +26,6 @@ const Track = ({ navigation }: TrackProp) => {
 	const skipInterval = useSelector((state: any) => state.tracks.settings.skipInterval);
 	const picks = useSelector((state: any) => state.picks.picks.filter((pick: IPick) => pick.track.url === track.url));
 	const [isArtwork, setArtwork] = useState(false);
-
 	const isDarkMode = useColorScheme() === 'dark';
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? Colors.dark.background : Colors.background,
@@ -38,7 +38,7 @@ const Track = ({ navigation }: TrackProp) => {
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
 				backgroundColor={isDarkMode ? Colors.dark.background : Colors.background}
 			/>
-			<Header navigation={navigation} isDarkMode={isDarkMode} defaultSkipInterval={skipInterval} />
+			<Header navigation={navigation} isDarkMode={isDarkMode} />
 			<Title track={track} isDarkMode={isDarkMode} />
 			<TouchableOpacity onPress={() => setArtwork(!isArtwork)} >
 				{isArtwork
@@ -46,8 +46,9 @@ const Track = ({ navigation }: TrackProp) => {
 					: <Picks picks={picks} isDarkMode={isDarkMode} />
 				}
 			</TouchableOpacity>
-			<Player track={track} tracks={tracks} isDarkMode={isDarkMode} skipInterval={skipInterval} />
-			<BottomTab track={track} isDarkMode={isDarkMode} />
+			<ProgressBar isDarkMode={isDarkMode} />
+			<Options track={track} isDarkMode={isDarkMode} skipInterval={skipInterval} />
+			<Controller track={track} tracks={tracks} isDarkMode={isDarkMode} skipInterval={skipInterval} />
 		</SafeAreaView>
 	);
 }

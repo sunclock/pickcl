@@ -12,7 +12,7 @@ interface ArtworkProp {
 function Artwork({ track, isDarkMode }: ArtworkProp) {
 	return (
 		<Center alignSelf='center' borderRadius='20' style={styles.container}>
-			<Box p='4'>
+			<Box px='6'>
 				{track.artwork
 					? <Image style={styles.artwork} source={{ uri: track.artwork.uri }} alt={track.filename} />
 					: <Image style={styles.artwork} source={{ uri: 'https://i.ibb.co/1fyhtQ1/Group-7-1.png' }} alt={track.filename} />
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 		height: height / 2,
 	},
 	artwork: {
-		width: 200,
-		height: 200,
+		width: width * 0.5,
+		height: width * 0.5,
 	},
 });

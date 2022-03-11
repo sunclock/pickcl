@@ -13,7 +13,7 @@ import {
 } from './track.action.types';
 import { IVoiceActor, IImage, ITrack } from '../../types';
 
-export const addTrack = (tracks: ITrack[] | undefined): AddTrackAction => ({
+export const addTrack = (tracks: ITrack[] | undefined | ITrack): AddTrackAction => ({
 	type: TrackActionTypes.ADD_TRACK,
 	payload: tracks
 });

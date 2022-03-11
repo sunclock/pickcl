@@ -29,7 +29,11 @@ export const tracks = (
 	switch (action.type) {
 		case TrackActionTypes.ADD_TRACK:
 			if (action.payload) {
-				newState.tracks = newState.tracks.concat(action.payload);
+				if (Array.isArray(action.payload)) {
+					newState.tracks = [...action.payload];
+				} else {
+					newState.tracks.push(action.payload);
+				}
 			}
 			return newState;
 		case TrackActionTypes.REMOVE_TRACK:

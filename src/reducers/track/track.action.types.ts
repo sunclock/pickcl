@@ -16,7 +16,7 @@ export enum TrackActionTypes {
 
 export type AddTrackAction = {
 	type: TrackActionTypes.ADD_TRACK;
-	payload: ITrack[] | undefined;
+	payload: ITrack[] | undefined | ITrack;
 };
 
 export type RemoveTrackAction = {

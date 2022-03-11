@@ -1,4 +1,5 @@
 import TrackPlayer, { Capability, RepeatMode, State, Track } from 'react-native-track-player';
+import { useSelector } from 'react-redux';
 import { ITrack } from '../types';
 
 export function convertTrackType(tracks: ITrack | ITrack[]) {
@@ -26,6 +27,7 @@ export function convertTrackType(tracks: ITrack | ITrack[]) {
 
 export async function togglePlay(playbackState: State) {
 	const currentTrack = await TrackPlayer.getCurrentTrack();
+	console.log('currentTrack', currentTrack);
 	if (currentTrack === null || currentTrack === undefined)
 		await setupIfNeeded(undefined);
 	else {
@@ -34,8 +36,6 @@ export async function togglePlay(playbackState: State) {
 		else
 			await TrackPlayer.pause();
 	}
-	// Set up the player
-	await TrackPlayer.setupPlayer();
 
 	// Start playing it
 	await TrackPlayer.play();
@@ -44,6 +44,7 @@ export async function togglePlay(playbackState: State) {
 export async function setupIfNeeded(tracks: ITrack[] | undefined) {
 	// if app was relaunched and music was already playing, we don't setup again.
 	const currentTrack = await TrackPlayer.getCurrentTrack();
+	console.log('currentTrack', currentTrack);
 	if (currentTrack !== null) {
 		return;
 	}
@@ -64,6 +65,9 @@ export async function setupIfNeeded(tracks: ITrack[] | undefined) {
 	});
 	TrackPlayer.setRepeatMode(RepeatMode.Queue);
 	if (tracks) {
+		await TrackPlayer.add(convertTrackType(tracks));
+	} else {
+		const tracks = useSelector((state: any) => state.tracks.tracks);
 		await TrackPlayer.add(convertTrackType(tracks));
 	}
 }

@@ -10,6 +10,7 @@ import {
 	ChangeQueueAction,
 	ChangeTrackAction,
 	ResetTrackAction,
+	ChangeSkipIntervalAction,
 } from './track.action.types';
 import { IVoiceActor, IImage, ITrack } from '../../types';
 
@@ -77,4 +78,9 @@ export const changeQueue = (tracks: ITrack[]): ChangeQueueAction => ({
 
 export const resetTrack = (): ResetTrackAction => ({
 	type: TrackActionTypes.RESET_TRACK,
+});
+
+export const changeSkipInterval = (skipInterval: number): ChangeSkipIntervalAction => ({
+	type: TrackActionTypes.CHANGE_SKIP_INTERVAL,
+	payload: skipInterval
 });

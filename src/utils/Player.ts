@@ -56,7 +56,9 @@ export async function setupIfNeeded(tracks: ITrack[] | undefined) {
 			Capability.Stop,
 			Capability.SkipToNext,
 			Capability.SkipToPrevious,
-			Capability.SetRating,
+			Capability.SeekTo,
+			Capability.JumpBackward,
+			Capability.JumpForward,
 		],
 		compactCapabilities: [Capability.Play, Capability.Pause],
 	});

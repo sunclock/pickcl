@@ -12,6 +12,7 @@ export enum TrackActionTypes {
 	CHANGE_TRACK = 'CHANGE_TRACK',
 	CHANGE_QUEUE = 'CHANGE_QUEUE',
 	RESET_TRACK = 'RESET_TRACK',
+	CHANGE_SKIP_INTERVAL = 'CHANGE_SKIP_INTERVAL',
 }
 
 export type AddTrackAction = {
@@ -80,11 +81,19 @@ export type ResetTrackAction = {
 	type: TrackActionTypes.RESET_TRACK;
 }
 
+export type ChangeSkipIntervalAction = {
+	type: TrackActionTypes.CHANGE_SKIP_INTERVAL;
+	payload: number;
+}
+
 export type TracksState = {
 	tracks: ITrack[];
 	currentTrack: ITrack | undefined;
 	currentQueue: ITrack[];
 	isPlaying: boolean;
+	settings: {
+		skipInterval: number;
+	};
 };
 
 export type AppState = {

@@ -29,7 +29,7 @@ const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
 	container: {
 		width: width * 0.9,
-		height: height / 1.8,
+		height: height / 2,
 	},
 	artwork: {
 		width: 200,

@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* pickclTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* pickclTests.m */; };
 		04D68C1727CC6F9300F32D88 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D68C1627CC6F9300F32D88 /* dummy.swift */; };
+		04D7FA1527DEAB6600702077 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04D7FA1427DEAB6600702077 /* GoogleService-Info.plist */; };
+		04D7FA1827DEAD1D00702077 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 04D7FA1727DEAD1D00702077 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		04D7FA1A27DEAD1D00702077 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 04D7FA1927DEAD1D00702077 /* FirebaseAuth */; };
+		04D7FA1C27DEAD1D00702077 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 04D7FA1B27DEAD1D00702077 /* FirebaseFirestore */; };
+		04D7FA1E27DEAD1D00702077 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 04D7FA1D27DEAD1D00702077 /* FirebaseFunctions */; };
+		04D7FA2027DEAD1D00702077 /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 04D7FA1F27DEAD1D00702077 /* FirebaseInAppMessaging-Beta */; };
+		04D7FA2227DEAD1D00702077 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 04D7FA2127DEAD1D00702077 /* FirebaseMessaging */; };
+		04D7FA2427DEAD1D00702077 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 04D7FA2327DEAD1D00702077 /* FirebasePerformance */; };
+		04D7FA2627DEAD1D00702077 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 04D7FA2527DEAD1D00702077 /* FirebaseStorage */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -31,8 +40,10 @@
 		00E356EE1AD99517003FC87E /* pickclTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pickclTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* pickclTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pickclTests.m; sourceTree = "<group>"; };
+		049DF89727E037F4008AA567 /* pickcl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = pickcl.entitlements; path = pickcl/pickcl.entitlements; sourceTree = "<group>"; };
 		04D68C1527CC6F9300F32D88 /* pickcl-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pickcl-Bridging-Header.h"; sourceTree = "<group>"; };
 		04D68C1627CC6F9300F32D88 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
+		04D7FA1427DEAB6600702077 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* pickcl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pickcl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = pickcl/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = pickcl/AppDelegate.m; sourceTree = "<group>"; };
@@ -63,6 +74,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4CA9BB296CAC12394007120 /* libPods-pickcl.a in Frameworks */,
+				04D7FA1C27DEAD1D00702077 /* FirebaseFirestore in Frameworks */,
+				04D7FA2627DEAD1D00702077 /* FirebaseStorage in Frameworks */,
+				04D7FA2227DEAD1D00702077 /* FirebaseMessaging in Frameworks */,
+				04D7FA1E27DEAD1D00702077 /* FirebaseFunctions in Frameworks */,
+				04D7FA1A27DEAD1D00702077 /* FirebaseAuth in Frameworks */,
+				04D7FA1827DEAD1D00702077 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				04D7FA2427DEAD1D00702077 /* FirebasePerformance in Frameworks */,
+				04D7FA2027DEAD1D00702077 /* FirebaseInAppMessaging-Beta in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +108,8 @@
 		13B07FAE1A68108700A75B9A /* pickcl */ = {
 			isa = PBXGroup;
 			children = (
+				049DF89727E037F4008AA567 /* pickcl.entitlements */,
+				04D7FA1427DEAB6600702077 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -195,6 +216,16 @@
 			dependencies = (
 			);
 			name = pickcl;
+			packageProductDependencies = (
+				04D7FA1727DEAD1D00702077 /* FirebaseAnalyticsWithoutAdIdSupport */,
+				04D7FA1927DEAD1D00702077 /* FirebaseAuth */,
+				04D7FA1B27DEAD1D00702077 /* FirebaseFirestore */,
+				04D7FA1D27DEAD1D00702077 /* FirebaseFunctions */,
+				04D7FA1F27DEAD1D00702077 /* FirebaseInAppMessaging-Beta */,
+				04D7FA2127DEAD1D00702077 /* FirebaseMessaging */,
+				04D7FA2327DEAD1D00702077 /* FirebasePerformance */,
+				04D7FA2527DEAD1D00702077 /* FirebaseStorage */,
+			);
 			productName = pickcl;
 			productReference = 13B07F961A680F5B00A75B9A /* pickcl.app */;
 			productType = "com.apple.product-type.application";
@@ -205,7 +236,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1210;
+				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
@@ -225,6 +256,9 @@
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
+			packageReferences = (
+				04D7FA1627DEAD1D00702077 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -249,6 +283,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				04D7FA1527DEAB6600702077 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,7 +478,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = pickclTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -468,7 +503,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = pickclTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -491,19 +526,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = pickcl/pickcl.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AWL4B3BC3H;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = pickcl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pickcl;
 				PRODUCT_NAME = pickcl;
 				SWIFT_OBJC_BRIDGING_HEADER = "pickcl-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -518,18 +556,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = pickcl/pickcl.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AWL4B3BC3H;
 				INFOPLIST_FILE = pickcl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pickcl;
 				PRODUCT_NAME = pickcl;
 				SWIFT_OBJC_BRIDGING_HEADER = "pickcl-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -586,7 +627,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -644,7 +685,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -656,6 +697,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -691,6 +733,60 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		04D7FA1627DEAD1D00702077 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		04D7FA1727DEAD1D00702077 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D7FA1627DEAD1D00702077 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		04D7FA1927DEAD1D00702077 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D7FA1627DEAD1D00702077 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		04D7FA1B27DEAD1D00702077 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D7FA1627DEAD1D00702077 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		04D7FA1D27DEAD1D00702077 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D7FA1627DEAD1D00702077 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+		04D7FA1F27DEAD1D00702077 /* FirebaseInAppMessaging-Beta */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D7FA1627DEAD1D00702077 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseInAppMessaging-Beta";
+		};
+		04D7FA2127DEAD1D00702077 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D7FA1627DEAD1D00702077 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		04D7FA2327DEAD1D00702077 /* FirebasePerformance */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D7FA1627DEAD1D00702077 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebasePerformance;
+		};
+		04D7FA2527DEAD1D00702077 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D7FA1627DEAD1D00702077 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }

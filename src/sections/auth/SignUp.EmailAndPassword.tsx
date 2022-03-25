@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Text, Box, Input, FormControl, WarningOutlineIcon, Divider, Button } from 'native-base';
+import { Box, Input, FormControl, WarningOutlineIcon, Divider, Button } from 'native-base';
+import { Alert } from 'react-native';
 import { Colors } from '../../styles/Colors';
-import MonotoneButton from '../../components/MonotoneButton';
 import { SignInScreenProp } from '../../navigation/RootNavigator';
 import ColorButton from '../../components/ColorButton';
+import auth from '@react-native-firebase/auth';
+import { useDispatch } from 'react-redux';
+import { SignInRealName } from '../../reducers/auth';
 
 interface SignUpEmailAndPasswordProp {
 	isDarkMode: boolean;
@@ -15,6 +18,7 @@ function SignUpEmailAndPassword({ isDarkMode, navigation }: SignUpEmailAndPasswo
 	const [password, setPassword] = useState('');
 	const [isEmailValid, setIsEmailValid] = useState(true);
 	const [isPasswordValid, setIsPasswordValid] = useState(true);
+	const dispatch = useDispatch();
 	function validateEmail(email: string) {
 		setEmail(email);
 		const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -23,6 +27,38 @@ function SignUpEmailAndPassword({ isDarkMode, navigation }: SignUpEmailAndPasswo
 	function validatePassword(password: string) {
 		setPassword(password);
 		setIsPasswordValid(password.length >= 6);
+	}
+	function createUser() {
+		auth()
+			.createUserWithEmailAndPassword(email, password)
+			.then(() => {
+				console.log('User account created & signed in!');
+				const user = auth().currentUser;
+				dispatch(SignInRealName(user))
+				navigation.navigate('TrackList');
+			})
+			.catch(error => {
+				if (error.code === 'auth/email-already-in-use') {
+					console.log('That email address is already in use!');
+					Alert.alert("중복 이메일", "이미 사용중인 이메일입니다.", [
+						{
+							text: '확인',
+							onPress: () => null,
+						},
+					]);
+				}
+
+				if (error.code === 'auth/invalid-email') {
+					Alert.alert("유효하지 않은 이메일", "이메일 주소가 올바르지 않습니다.", [
+						{
+							text: '확인',
+							onPress: () => null,
+						},
+					]);
+				}
+
+				console.error(error);
+			});
 	}
 	return (
 		<Box>
@@ -53,7 +89,7 @@ function SignUpEmailAndPassword({ isDarkMode, navigation }: SignUpEmailAndPasswo
 					6자 이상으로 비밀번호를 작성해주세요.
 				</FormControl.ErrorMessage>
 			</FormControl>
-			<ColorButton onPress={() => console.log('이메일과 비밀번호로 회원가입')} text='다음' />
+			<ColorButton onPress={() => createUser()} text='다음' />
 			<Divider />
 		</Box>
 	);

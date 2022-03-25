@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useColorScheme, SafeAreaView, StatusBar, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import Header from '../sections/picks/Picks.Header';
+import Header from '../components/Header';
 import { PicksScreenProp } from '../navigation/RootNavigator';
 import FloatButton from '../sections/picks/Picks.FloatButton';
 import List from '../sections/picks/Picks.List';
@@ -24,7 +24,7 @@ function Picks({ navigation }: PicksProp) {
 	return (
 		<SafeAreaView style={backgroundStyle}>
 			<StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={isDarkMode ? Colors.dark.background : Colors.background} />
-			<Header isDarkMode={isDarkMode} />
+			<Header isDarkMode={isDarkMode} title={'좋아요'} />
 			<Navigation category={category} setCategory={setCategory} isDarkMode={isDarkMode} />
 			{category === '모두 보기' && <List navigation={navigation} tracks={tracks} picks={picks} isDarkMode={isDarkMode} />}
 			<FloatButton navigation={navigation} />

@@ -44,12 +44,23 @@ export interface IPick {
 }
 
 interface IUser {
-	id: number;
-	name: string;
-	email: string;
+	uid: string;
+	email?: string;
 	avatar?: string;
 	tracks?: ITrack[];
 	picks?: IPick[];
+	displayName?: string;
+	emailVerified: boolean;
+	isAnonymous: boolean;
+	metadata: {
+		creationTime: number;
+		lastSignInTime: number;
+	};
+	phoneNumber?: string;
+	photoURL?: string;
+	providerData: [];
+	providerId: string;
+	tenantId?: string;
 }
 
 export interface IProgress {

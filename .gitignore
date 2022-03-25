@@ -62,3 +62,6 @@ buck-out/
 # firebase
 GoogleService-Info.plist
 google-services.json
+
+# api keys
+strings.xml

@@ -13,6 +13,11 @@ import { Alert, BackHandler, Dimensions, useColorScheme } from 'react-native';
 import { resetTrack } from '../reducers/track';
 import { resetPick } from '../reducers/pick';
 import { Colors } from '../styles/Colors';
+import { SignInAnonymous, SignInRealName } from '../reducers/auth';
+import Auth from '../templates/auth.template';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import SignUp from '../templates/signup.template';
+import SignIn from '../templates/signin.template';
 
 type TabParamList = {
 	Picks: undefined;
@@ -22,11 +27,20 @@ type TabParamList = {
 type StackParamList = {
 	TrackList: undefined;
 	Track: undefined;
+	Auth: FirebaseAuthTypes.User | undefined;
+	SignIn: undefined;
+	SignUp: undefined;
 };
 
 export type TrackScreenRouteProp = RouteProp<StackParamList, 'Track'>;
 
 export type TrackScreenProp = NativeStackNavigationProp<StackParamList, 'Track'>;
+
+export type AuthScreenProp = NativeStackNavigationProp<StackParamList, 'Auth'>;
+
+export type SignInScreenProp = NativeStackNavigationProp<StackParamList, 'SignIn'>;
+
+export type SignUpScreenProp = NativeStackNavigationProp<StackParamList, 'SignUp'>;
 
 export type PicksScreenProp = CompositeNavigationProp<
 	MaterialBottomTabNavigationProp<TabParamList, 'Picks'>,
@@ -40,11 +54,34 @@ export type TrackListScreenProp = CompositeNavigationProp<
 
 export type TrackListScreenRouteProp = RouteProp<TabParamList, 'TrackListTab'>;
 
+export type AuthScreenRouteProp = RouteProp<StackParamList, 'Auth'>;
+
+export type SignInScreenRouteProp = RouteProp<StackParamList, 'SignIn'>;
+
 const Stack = createNativeStackNavigator<StackParamList>();
 
-export const RootNavigator = () => {
+export const RootNavigator = ({ user }: any) => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		const login = async () => {
+			if (user?.isAnonymous) {
+				dispatch(SignInAnonymous(user))
+			} else {
+				dispatch(SignInRealName(user));
+			}
+		};
+		login();
+	}, []);
+
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
+			{user.isAnonymous && (
+				<>
+					<Stack.Screen name="Auth" component={Auth} />
+					<Stack.Screen name="SignIn" component={SignIn} />
+					<Stack.Screen name="SignUp" component={SignUp} />
+				</>
+			)}
 			<Stack.Screen name="TrackList" component={TabNavigator} />
 			<Stack.Screen name="Track" component={Track} />
 		</Stack.Navigator>

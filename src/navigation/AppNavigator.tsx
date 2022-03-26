@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Linking, Platform } from 'react-native';
+import { Alert, Linking, Platform, View } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { TabNavigator } from './RootNavigator';
 import { SignInAnonymous, SignInRealName, SignOutAccount } from '../reducers/auth';
@@ -20,6 +20,7 @@ import Auth from '../templates/auth.template';
 import SignIn from '../templates/signin.template';
 import SignUp from '../templates/signup.template';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Avatar, Divider, Text } from 'native-base';
 
 type DrawerParamList = {
 	TrackList: undefined;
@@ -61,6 +62,7 @@ export const AppNavigator = () => {
 	const isDarkMode = useColorScheme() === 'dark';
 	const user = useSelector((state: any) => state.auth.user);
 	const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
+	console.log('isLoggedIn', isLoggedIn);
 	const dispatch = useDispatch();
 	// Set an initializing state whilst Firebase connects
 	const [isReady, setIsReady] = useState(false);
@@ -71,8 +73,9 @@ export const AppNavigator = () => {
 			dispatch(SignInAnonymous());
 			return;
 		}
-		if (!user.isAnonymous)
+		if (user.email) {
 			dispatch(SignInRealName(user as FirebaseAuthTypes.User));
+		}
 	};
 	// Handle user state changes
 	function onAuthStateChanged(user) {
@@ -97,7 +100,7 @@ export const AppNavigator = () => {
 					// Only restore state if there's no deep link and we're not on web
 					const savedStateString = await AsyncStorage.getItem('user');
 					const state = savedStateString ? JSON.parse(savedStateString) : user;
-					if (state && !state.isAnnonymous) {
+					if (state && state.email) {
 						dispatch(SignInRealName(user as FirebaseAuthTypes.User));
 					} else {
 						dispatch(SignInAnonymous());
@@ -161,39 +164,67 @@ export const AppNavigator = () => {
 function CustomDrawerContent(props) {
 	const dispatch = useDispatch();
 	const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+	const user = useSelector((state) => state.auth.user);
+	let version = 'v1.0.3';
+	const isDarkMode = useColorScheme() === 'dark';
 	return (
-		<DrawerContentScrollView {...props}>
-			<DrawerItemList {...props} />
+		<DrawerContentScrollView {...props} contentContainerStyle={
+			{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }
+		}>
 			{isLoggedIn ?
 				(
-					<DrawerItem
-						label='로그아웃'
-						onPress={() => {
-							Alert.alert('로그아웃', '로그아웃 하시겠습니까?', [
-								{
-									text: '취소',
-									onPress: () => { },
-									style: 'cancel'
-								},
-								{
-									text: '로그아웃',
-									onPress: () => {
-										dispatch(SignOutAccount())
-										props.navigation.navigate('AuthStack');
-									}
-								}
-							], { cancelable: false })
-						}}
-						icon={({ color, size }) => (
-							<Ionicons name='ios-log-out' size={size} color={color} />
-						)}
-					/>
+					<>
+						<View>
+							<DrawerItem
+								label={user.email}
+								labelStyle={{ fontWeight: 'bold' }}
+								onPress={() => { }}
+								icon={() =>
+									<Avatar size={50}
+										bg={isDarkMode ? Colors.dark.primary : Colors.primary}
+										source={{
+											uri: user.photoURL
+										}}></Avatar>}
+							/>
+							<Divider />
+							<DrawerItemList {...props} />
+						</View>
+						<View style={{ marginBottom: 40 }}>
+							<DrawerItem
+								label='로그아웃'
+								onPress={() => {
+									Alert.alert('로그아웃', '로그아웃 하시겠습니까?', [
+										{
+											text: '취소',
+											onPress: () => { },
+											style: 'cancel'
+										},
+										{
+											text: '로그아웃',
+											onPress: () => {
+												dispatch(SignOutAccount())
+												props.navigation.navigate('AuthStack');
+											}
+										}
+									], { cancelable: false })
+								}}
+								icon={({ color, size }) => (
+									<Ionicons name='ios-log-out' size={size} color={color} />
+								)}
+							/>
+						</View>
+					</>
 				) : (
-					<DrawerItem
-						label="로그인"
-						onPress={() => { props.navigation.navigate('AuthStack') }}
-						icon={() => <Ionicons name="ios-log-in" size={25} color={Colors.primary} />}
-					/>
+					<>
+						<DrawerItemList {...props} />
+						<View style={{ marginBottom: 40 }}>
+							<DrawerItem
+								label="로그인"
+								onPress={() => { props.navigation.navigate('AuthStack') }}
+								icon={() => <Ionicons name="ios-log-in" size={25} color={Colors.primary} />}
+							/>
+						</View>
+					</>
 				)
 			}
 		</DrawerContentScrollView>

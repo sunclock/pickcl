@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Linking, Platform, View } from 'react-native';
+import { Alert, Linking, Platform, View, NativeModules } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { TabNavigator } from './RootNavigator';
 import { SignInAnonymous, SignInRealName, SignOutAccount } from '../reducers/auth';
@@ -24,7 +24,7 @@ import { Avatar, Divider, Text } from 'native-base';
 
 type DrawerParamList = {
 	TrackList: undefined;
-	AuthStack: undefined;
+	Auth: undefined;
 	Track: undefined;
 }
 
@@ -38,7 +38,7 @@ type StackParamList = {
 export type SignOutScreenProp = NativeStackNavigationProp<StackParamList, 'SignOut'>;
 
 export type AuthScreenProp = CompositeNavigationProp<
-	DrawerNavigationProp<DrawerParamList, 'AuthStack'>,
+	DrawerNavigationProp<DrawerParamList, 'Auth'>,
 	NativeStackNavigationProp<StackParamList>
 >;
 
@@ -61,8 +61,8 @@ export const AuthStackNavigator = () => {
 export const AppNavigator = () => {
 	const isDarkMode = useColorScheme() === 'dark';
 	const user = useSelector((state: any) => state.auth.user);
+	console.log(user)
 	const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
-	console.log('isLoggedIn', isLoggedIn);
 	const dispatch = useDispatch();
 	// Set an initializing state whilst Firebase connects
 	const [isReady, setIsReady] = useState(false);
@@ -141,10 +141,13 @@ export const AppNavigator = () => {
 		>
 			<Drawer.Screen name="TrackList" component={TabNavigator}
 				options={{
-					title: '재생 목록'
+					title: '재생 목록',
+					drawerLabelStyle: {
+						fontSize: 16,
+					}
 				}}
 			/>
-			<Drawer.Screen name="AuthStack" component={AuthStackNavigator}
+			<Drawer.Screen name="Auth" component={AuthStackNavigator}
 				options={{
 					drawerItemStyle: {
 						display: 'none'
@@ -165,8 +168,8 @@ function CustomDrawerContent(props) {
 	const dispatch = useDispatch();
 	const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 	const user = useSelector((state) => state.auth.user);
-	let version = 'v1.0.3';
 	const isDarkMode = useColorScheme() === 'dark';
+	console.log(user)
 	return (
 		<DrawerContentScrollView {...props} contentContainerStyle={
 			{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }
@@ -176,14 +179,14 @@ function CustomDrawerContent(props) {
 					<>
 						<View>
 							<DrawerItem
-								label={user.email}
-								labelStyle={{ fontWeight: 'bold' }}
-								onPress={() => { }}
+								label={user.displayName ? user.displayName : user.email}
+								labelStyle={{ fontWeight: 'bold', fontSize: 16 }}
+								onPress={() => props.navigation.navigate('TrackList')}
 								icon={() =>
 									<Avatar size={50}
 										bg={isDarkMode ? Colors.dark.primary : Colors.primary}
 										source={{
-											uri: user.photoURL
+											uri: user?.photoURL
 										}}></Avatar>}
 							/>
 							<Divider />
@@ -203,7 +206,7 @@ function CustomDrawerContent(props) {
 											text: '로그아웃',
 											onPress: () => {
 												dispatch(SignOutAccount())
-												props.navigation.navigate('AuthStack');
+												props.navigation.navigate('Auth');
 											}
 										}
 									], { cancelable: false })
@@ -220,7 +223,7 @@ function CustomDrawerContent(props) {
 						<View style={{ marginBottom: 40 }}>
 							<DrawerItem
 								label="로그인"
-								onPress={() => { props.navigation.navigate('AuthStack') }}
+								onPress={() => { props.navigation.navigate('Auth') }}
 								icon={() => <Ionicons name="ios-log-in" size={25} color={Colors.primary} />}
 							/>
 						</View>

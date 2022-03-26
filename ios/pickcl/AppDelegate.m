@@ -5,7 +5,7 @@
 #import <React/RCTRootView.h>
 #import <RNSplashScreen.h> // here
 #import <Firebase.h>
-
+#import <TwitterKit/TWTRKit.h>
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -54,6 +54,10 @@ static void InitializeFlipper(UIApplication *application) {
 
   [RNSplashScreen show];  // here
   return YES;
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+  return [[Twitter sharedInstance] application:app openURL:url options:options];
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge

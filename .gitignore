@@ -65,3 +65,5 @@ google-services.json
 
 # api keys
 strings.xml
+SignIn.Google.tsx
+SignIn.Twitter.tsx

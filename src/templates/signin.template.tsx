@@ -7,7 +7,8 @@ import SignInEmailAndPassword from '../sections/auth/SignIn.EmailAndPassword';
 import Header from '../components/Header';
 import DividerWithText from '../components/DividerWithText';
 import { SignInScreenProp, SignInScreenRouteProp } from '../navigation/RootNavigator';
-import ColorButton from '../components/ColorButton';
+import SignInTwitter from '../sections/auth/SignIn.Twitter';
+import SignInGoogle from '../sections/auth/SignIn.Google';
 
 interface SignInProp {
 	navigation: SignInScreenProp;
@@ -32,8 +33,8 @@ function SignIn({ navigation, route }: SignInProp) {
 				</Heading>
 				<SignInEmailAndPassword isDarkMode={isDarkMode} navigation={navigation} />
 				<DividerWithText text={'또는'} />
-				<MonotoneButton onPress={() => console.log('구글로 로그인')} text='G 구글로 로그인' />
-				<MonotoneButton onPress={() => console.log('트위터로 로그인')} text='트위터로 로그인' />
+				<SignInGoogle navigation={navigation} />
+				<SignInTwitter navigation={navigation} />
 			</Center>
 		</KeyboardAvoidingView >
 	);

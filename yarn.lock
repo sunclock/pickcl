@@ -1728,6 +1728,11 @@
   "resolved" "https://registry.npmjs.org/@react-native-google-signin/google-signin/-/google-signin-7.2.2.tgz"
   "version" "7.2.2"
 
+"@react-native-twitter-signin/twitter-signin@^1.2.0":
+  "integrity" "sha512-varhgZUxCyN6mhdjhoRixUmtVSVpI1jkHQSHgOVt9v+YIdHYx85Dtd/gfYIo1MRVMbh+hz3veiT5xTzil7Dbzg=="
+  "resolved" "https://registry.npmjs.org/@react-native-twitter-signin/twitter-signin/-/twitter-signin-1.2.0.tgz"
+  "version" "1.2.0"
+
 "@react-native-windows/cli@0.67.1":
   "integrity" "sha512-lIVsXxLOhTHed5rzCowEmmTOZRdtRwSlK1F+cMtqd4i4M02UUAUEm5nVWAErkmalEkNhFGjqBW71oTbNVnW6Jw=="
   "resolved" "https://registry.npmjs.org/@react-native-windows/cli/-/cli-0.67.1.tgz"

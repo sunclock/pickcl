@@ -8,6 +8,9 @@ import MonotoneButton from '../components/MonotoneButton';
 import DividerWithText from '../components/DividerWithText';
 import ColorButton from '../components/ColorButton';
 import { AppleButton, appleAuth } from '@invertase/react-native-apple-authentication';
+import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import SignInTwitter from '../sections/auth/SignIn.Twitter';
+import SignInGoogle from '../sections/auth/SignIn.Google';
 
 interface AuthProp {
 	navigation: AuthScreenProp;
@@ -100,9 +103,8 @@ function Auth({ navigation, route }: AuthProp) {
 					<ActorsPreview index={index} isDarkMode={isDarkMode} />
 				</Animated.View>
 			</Center>
-			<MonotoneButton onPress={() => navigation.navigate('Auth')} text='G 구글로 회원가입' />
-			<MonotoneButton onPress={() => navigation.navigate('Auth')} text='트위터로 회원가입' />
-			<ColorButton onPress={() => navigation.navigate('SignUp')} text='이메일로 회원가입' />
+			<SignInGoogle navigation={navigation} />
+			<SignInTwitter navigation={navigation} />
 			{Platform.OS === 'ios' &&
 				<AppleButton
 					buttonStyle='AppleButton.Style.WHITE'
@@ -110,9 +112,7 @@ function Auth({ navigation, route }: AuthProp) {
 					style={{ width: 300, height: 50 }}
 					onPress={() => onAppleButtonPress()} />
 			}
-			<Divider w="300" m="4" />
-			<Text mb="4" fontSize={'md'} fontWeight={'extrabold'} color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>이미 계정이 있나요?</Text>
-			<ColorButton onPress={() => navigation.navigate('SignIn')} text='로그인' />
+			<ColorButton onPress={() => navigation.navigate('SignIn')} text='이메일로 시작하기' />
 		</SafeAreaView>
 	);
 }

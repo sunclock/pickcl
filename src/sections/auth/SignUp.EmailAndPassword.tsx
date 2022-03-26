@@ -82,7 +82,12 @@ function SignUpEmailAndPassword({ isDarkMode, navigation }: SignUpEmailAndPasswo
 					6자 이상으로 비밀번호를 작성해주세요.
 				</FormControl.ErrorMessage>
 			</FormControl>
-			<ColorButton onPress={() => createUser()} text='다음' />
+			<ColorButton onPress={() => {
+				if (isEmailValid && isPasswordValid) {
+					createUser()
+				}
+			}}
+				text='다음' />
 			<Divider />
 		</Box>
 	);

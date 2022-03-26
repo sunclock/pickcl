@@ -9,6 +9,7 @@ import DividerWithText from '../components/DividerWithText';
 import { SignInScreenProp, SignInScreenRouteProp } from '../navigation/RootNavigator';
 import SignInTwitter from '../sections/auth/SignIn.Twitter';
 import SignInGoogle from '../sections/auth/SignIn.Google';
+import SignUpEmailAndPassword from '../sections/auth/SignUp.EmailAndPassword';
 
 interface SignInProp {
 	navigation: SignInScreenProp;
@@ -33,8 +34,7 @@ function SignIn({ navigation, route }: SignInProp) {
 				</Heading>
 				<SignInEmailAndPassword isDarkMode={isDarkMode} navigation={navigation} />
 				<DividerWithText text={'또는'} />
-				<SignInGoogle navigation={navigation} />
-				<SignInTwitter navigation={navigation} />
+				<MonotoneButton onPress={() => navigation.navigate('SignUp')} text={'이메일로 회원가입'} />
 			</Center>
 		</KeyboardAvoidingView >
 	);

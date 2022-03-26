@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Linking, Platform, View, NativeModules } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { TabNavigator } from './RootNavigator';
-import { SignInAnonymous, SignInRealName, SignOutAccount } from '../reducers/auth';
+import { SignInRealName, SignOutAccount } from '../reducers/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../styles/Colors';
 import { useColorScheme } from 'react-native';
@@ -24,7 +24,7 @@ import { Avatar, Divider, Text } from 'native-base';
 
 type DrawerParamList = {
 	TrackList: undefined;
-	Auth: undefined;
+	AuthStack: undefined;
 	Track: undefined;
 }
 
@@ -38,7 +38,7 @@ type StackParamList = {
 export type SignOutScreenProp = NativeStackNavigationProp<StackParamList, 'SignOut'>;
 
 export type AuthScreenProp = CompositeNavigationProp<
-	DrawerNavigationProp<DrawerParamList, 'Auth'>,
+	DrawerNavigationProp<DrawerParamList, 'AuthStack'>,
 	NativeStackNavigationProp<StackParamList>
 >;
 
@@ -61,7 +61,6 @@ export const AuthStackNavigator = () => {
 export const AppNavigator = () => {
 	const isDarkMode = useColorScheme() === 'dark';
 	const user = useSelector((state: any) => state.auth.user);
-	console.log(user)
 	const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
 	const dispatch = useDispatch();
 	// Set an initializing state whilst Firebase connects
@@ -69,10 +68,6 @@ export const AppNavigator = () => {
 	const login = async (user) => {
 		if (isLoggedIn)
 			return;
-		if (!user) {
-			dispatch(SignInAnonymous());
-			return;
-		}
 		if (user.email) {
 			dispatch(SignInRealName(user as FirebaseAuthTypes.User));
 		}
@@ -102,8 +97,6 @@ export const AppNavigator = () => {
 					const state = savedStateString ? JSON.parse(savedStateString) : user;
 					if (state && state.email) {
 						dispatch(SignInRealName(user as FirebaseAuthTypes.User));
-					} else {
-						dispatch(SignInAnonymous());
 					}
 				}
 			} finally {
@@ -120,7 +113,7 @@ export const AppNavigator = () => {
 	return (
 		<Drawer.Navigator
 			drawerContent={(props) => <CustomDrawerContent {...props} />}
-			initialRouteName={user ? 'TrackList' : 'Auth'}
+			initialRouteName={user ? 'TrackList' : 'AuthStack'}
 			screenOptions={({ route }) => ({
 				drawerActiveBackgroundColor: isDarkMode ? Colors.dark.background : Colors.background,
 				drawerActiveTintColor: isDarkMode ? Colors.dark.primary : Colors.primary,
@@ -147,7 +140,7 @@ export const AppNavigator = () => {
 					}
 				}}
 			/>
-			<Drawer.Screen name="Auth" component={AuthStackNavigator}
+			<Drawer.Screen name="AuthStack" component={AuthStackNavigator}
 				options={{
 					drawerItemStyle: {
 						display: 'none'
@@ -169,7 +162,6 @@ function CustomDrawerContent(props) {
 	const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 	const user = useSelector((state) => state.auth.user);
 	const isDarkMode = useColorScheme() === 'dark';
-	console.log(user)
 	return (
 		<DrawerContentScrollView {...props} contentContainerStyle={
 			{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }
@@ -206,7 +198,10 @@ function CustomDrawerContent(props) {
 											text: '로그아웃',
 											onPress: () => {
 												dispatch(SignOutAccount())
-												props.navigation.navigate('Auth');
+												props.navigation.reset({
+													index: 0,
+													routes: [{ name: 'AuthStack' }],
+												});
 											}
 										}
 									], { cancelable: false })
@@ -223,7 +218,12 @@ function CustomDrawerContent(props) {
 						<View style={{ marginBottom: 40 }}>
 							<DrawerItem
 								label="로그인"
-								onPress={() => { props.navigation.navigate('Auth') }}
+								onPress={() => {
+									props.navigation.reset({
+										index: 0,
+										routes: [{ name: 'AuthStack' }],
+									});
+								}}
 								icon={() => <Ionicons name="ios-log-in" size={25} color={Colors.primary} />}
 							/>
 						</View>

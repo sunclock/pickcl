@@ -1,6 +1,5 @@
 import {
 	AuthActionTypes,
-	SignInAnonymousAction,
 	SignInAction,
 	SignOutAction,
 	AuthState,
@@ -35,15 +34,10 @@ async function removeUser() {
 
 export const auth = (
 	state: AuthState = initialState(),
-	action: SignInAnonymousAction | SignInAction | SignOutAction
+	action: SignInAction | SignOutAction
 ) => {
 	const newState: AuthState = _.cloneDeep(state);
 	switch (action.type) {
-		case AuthActionTypes.SIGNIN_ANONYMOUS:
-			storeUser(action.payload);
-			newState.isLoggedIn = false;
-			newState.user = action.payload;
-			return newState;
 		case AuthActionTypes.SIGNIN:
 			storeUser(action.payload);
 			newState.user = action.payload;

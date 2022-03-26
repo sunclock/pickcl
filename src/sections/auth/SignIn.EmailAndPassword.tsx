@@ -76,7 +76,12 @@ function SignInEmailAndPassword({ isDarkMode, navigation }: SignInEmailAndPasswo
 					6자 이상으로 비밀번호를 작성해주세요.
 				</FormControl.ErrorMessage>
 			</FormControl>
-			<ColorButton onPress={() => loginUser()} text='다음' />
+			<ColorButton onPress={() => {
+				if (isEmailValid && isPasswordValid) {
+					loginUser()
+				}
+			}}
+				text='다음' />
 			<Divider />
 		</Box>
 	);

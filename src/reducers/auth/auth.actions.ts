@@ -5,7 +5,7 @@ import {
 	SignOutAction,
 } from './auth.action.types';
 
-import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 export const SignInAnonymous = (user: FirebaseAuthTypes.User): SignInAnonymousAction => ({
 	type: AuthActionTypes.SIGNIN_ANONYMOUS,
@@ -17,6 +17,11 @@ export const SignInRealName = (user: FirebaseAuthTypes.User): SignInAction => ({
 	payload: user
 });
 
-export const SignOutAccount = (): SignOutAction => ({
-	type: AuthActionTypes.SIGN_OUT
-});
+export const SignOutAccount = (): SignOutAction => {
+	auth()
+		.signOut()
+		.then(() => console.log('User signed out!'));
+	return {
+		type: AuthActionTypes.SIGN_OUT
+	}
+}

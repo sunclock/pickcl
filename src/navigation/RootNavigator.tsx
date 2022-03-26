@@ -53,7 +53,7 @@ export type SignInScreenRouteProp = RouteProp<StackParamList, 'SignIn'>;
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
-export const RootNavigator = ({ user }: any) => {
+export const RootNavigator = () => {
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
 			<Stack.Screen name="TrackList" component={TabNavigator} />
@@ -69,7 +69,6 @@ const { width, height } = Dimensions.get('window');
 export const TabNavigator = () => {
 	const picks = useSelector((state: any) => state.picks.picks);
 	const tracks = useSelector((state: any) => state.tracks.tracks);
-	const dispatch = useDispatch()
 
 	const isDarkMode = useColorScheme() === 'dark';
 

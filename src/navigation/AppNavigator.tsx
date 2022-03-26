@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Linking, Platform } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { TabNavigator } from './RootNavigator';
-import Picks from '../templates/picks.template';
 import { SignInAnonymous, SignInRealName, SignOutAccount } from '../reducers/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text } from 'native-base';
 import { Colors } from '../styles/Colors';
 import { useColorScheme } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +15,6 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import SignOut from '../templates/signout.template';
 import Track from '../templates/track.template';
 import Auth from '../templates/auth.template';
 import SignIn from '../templates/signin.template';
@@ -65,17 +62,16 @@ export const AppNavigator = () => {
 	const user = useSelector((state) => state.auth.user);
 	const dispatch = useDispatch();
 
+	console.log('user', user)
 	// Set an initializing state whilst Firebase connects
 	const [isReady, setIsReady] = useState(false);
 	const login = async (user: FirebaseAuthTypes.User) => {
-		if (user?.isAnonymous)
-			dispatch(SignInAnonymous(user))
-		else
+		if (user.email)
 			dispatch(SignInRealName(user as FirebaseAuthTypes.User));
 	};
 	// Handle user state changes
 	function onAuthStateChanged(user) {
-		login(user);
+		login(user as FirebaseAuthTypes.User);
 		if (!isReady) setIsReady(true);
 	}
 
@@ -96,8 +92,7 @@ export const AppNavigator = () => {
 					// Only restore state if there's no deep link and we're not on web
 					const savedStateString = await AsyncStorage.getItem('user');
 					const state = savedStateString ? JSON.parse(savedStateString) : user;
-
-					if (state !== undefined) {
+					if (state?.email) {
 						dispatch(SignInRealName(user as FirebaseAuthTypes.User));
 					}
 				}
@@ -130,12 +125,6 @@ export const AppNavigator = () => {
 					if (route.name == 'TrackList')
 						if (focused) iconName = 'ios-list-sharp';
 						else iconName = 'ios-list-outline';
-					else if (route.name == 'AuthStack')
-						if (focused) iconName = 'ios-log-in'
-						else iconName = 'ios-log-in-outline';
-					else if (route.name == 'SignOut')
-						if (focused) iconName = 'ios-log-out'
-						else iconName = 'ios-log-out-outline';
 					return <Ionicons name={iconName} size={25} color={color} />;
 				}
 			})}
@@ -164,9 +153,8 @@ export const AppNavigator = () => {
 
 function CustomDrawerContent(props) {
 	const dispatch = useDispatch();
-	const user = useSelector((state) => state.auth.user);
 	const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
+	console.log('isLoggedin', isLoggedIn);
 	return (
 		<DrawerContentScrollView {...props}>
 			<DrawerItemList {...props} />

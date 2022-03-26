@@ -29,6 +29,10 @@ async function storeUser(user: FirebaseAuthTypes.User) {
 	await AsyncStorage.setItem('user', JSON.stringify(user));
 }
 
+async function removeUser() {
+	await AsyncStorage.removeItem('user');
+}
+
 export const auth = (
 	state: AuthState = initialState(),
 	action: SignInAnonymousAction | SignInAction | SignOutAction
@@ -45,8 +49,9 @@ export const auth = (
 			newState.isLoggedIn = true;
 			return newState;
 		case AuthActionTypes.SIGN_OUT:
-			newState.user = {} as FirebaseAuthTypes.User;
 			newState.isLoggedIn = false;
+			newState.user = {} as FirebaseAuthTypes.User;
+			removeUser();
 			return newState;
 		default:
 			return newState;

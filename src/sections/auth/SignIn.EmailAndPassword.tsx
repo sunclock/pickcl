@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Text, Box, Input, FormControl, WarningOutlineIcon, Divider, Button } from 'native-base';
+import { Box, Input, FormControl, WarningOutlineIcon, Divider } from 'native-base';
 import { Colors } from '../../styles/Colors';
-import MonotoneButton from '../../components/MonotoneButton';
 import { SignInScreenProp } from '../../navigation/RootNavigator';
 import ColorButton from '../../components/ColorButton';
+import { Alert } from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 interface SignInEmailAndPasswordProp {
 	isDarkMode: boolean;
@@ -23,6 +24,28 @@ function SignInEmailAndPassword({ isDarkMode, navigation }: SignInEmailAndPasswo
 	function validatePassword(password: string) {
 		setPassword(password);
 		setIsPasswordValid(password.length >= 6);
+	}
+	function loginUser() {
+		auth()
+			.signInWithEmailAndPassword(email, password)
+			.then(() => {
+				console.log('User account signed in!');
+				navigation.navigate('TrackList');
+			}
+			).catch(error => {
+				if (error.code === 'auth/wrong-password') {
+					Alert.alert('비밀번호 오류',
+						'비밀번호가 올바르지 않습니다.', [
+						{ text: '확인' }
+					]);
+				}
+				if (error.code === 'auth/user-not-found') {
+					Alert.alert('이메일 오류',
+						'존재하지 않는 이메일입니다.', [
+						{ text: '확인' }
+					])
+				}
+			});
 	}
 	return (
 		<Box>
@@ -53,7 +76,7 @@ function SignInEmailAndPassword({ isDarkMode, navigation }: SignInEmailAndPasswo
 					6자 이상으로 비밀번호를 작성해주세요.
 				</FormControl.ErrorMessage>
 			</FormControl>
-			<ColorButton onPress={() => console.log('이메일과 비밀번호로 로그인')} text='다음' />
+			<ColorButton onPress={() => loginUser()} text='다음' />
 			<Divider />
 		</Box>
 	);

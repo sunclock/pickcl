@@ -41,22 +41,16 @@ function SignUpEmailAndPassword({ isDarkMode, navigation }: SignUpEmailAndPasswo
 				if (error.code === 'auth/email-already-in-use') {
 					console.log('That email address is already in use!');
 					Alert.alert("중복 이메일", "이미 사용중인 이메일입니다.", [
-						{
-							text: '확인',
-							onPress: () => null,
-						},
+						{ text: '확인' },
 					]);
 				}
-
 				if (error.code === 'auth/invalid-email') {
-					Alert.alert("유효하지 않은 이메일", "이메일 주소가 올바르지 않습니다.", [
-						{
-							text: '확인',
-							onPress: () => null,
-						},
-					]);
+					Alert.alert('이메일 오류',
+						'존재하지 않는 이메일입니다.',
+						[
+							{ text: '확인' }
+						])
 				}
-
 				console.error(error);
 			});
 	}

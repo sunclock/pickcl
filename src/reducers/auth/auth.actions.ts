@@ -17,6 +17,6 @@ export const SignInRealName = (user: FirebaseAuthTypes.User): SignInAction => ({
 	payload: user
 });
 
-export const SignOut = (user: FirebaseAuthTypes.User): SignOutAction => ({
+export const SignOutAccount = (): SignOutAction => ({
 	type: AuthActionTypes.SIGN_OUT
 });

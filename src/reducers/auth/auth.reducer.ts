@@ -12,6 +12,7 @@ import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 export const initialState = () => {
 	let initialData = {
 		user: {} as FirebaseAuthTypes.User,
+		isLoggedIn: false,
 	};
 	async function getDataFromStorage() {
 		const data = await AsyncStorage.getItem('user');
@@ -41,9 +42,11 @@ export const auth = (
 		case AuthActionTypes.SIGNIN:
 			storeUser(action.payload);
 			newState.user = action.payload;
+			newState.isLoggedIn = true;
 			return newState;
 		case AuthActionTypes.SIGN_OUT:
 			newState.user = {} as FirebaseAuthTypes.User;
+			newState.isLoggedIn = false;
 			return newState;
 		default:
 			return newState;

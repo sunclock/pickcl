@@ -22,7 +22,9 @@ function FloatButton({ navigation }: FloatButtonProp) {
 		>
 			{/* I'm Feeling Lucky! */}
 			<Pressable
-				onPress={() => { navigation.navigate('Track'); }}
+				onPress={() => {
+					navigation.navigate('Track');
+				}}
 				onLongPress={() => setLongPress(true)}
 				onTouchEnd={() => setLongPress(false)}
 				onTouchCancel={() => setLongPress(false)}

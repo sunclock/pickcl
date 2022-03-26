@@ -208,14 +208,7 @@ interface ActorsPreviewProp {
 function ActorsPreview({ isDarkMode, index }: ActorsPreviewProp) {
 	const actor = actors[index]
 	const divider = ['❤️', '💛', '💚', '💙', '💜', '🖤', '💗', '🧡', '❤️‍🔥']
-	const [completeScrollBarHeight, setCompleteScrollBarHeight] = useState(1);
-	const [visibleScrollBarHeight, setVisibleScrollBarHeight] = useState(0);
 
-	const scrollIndicatorSize =
-		completeScrollBarHeight > visibleScrollBarHeight
-			? (visibleScrollBarHeight * visibleScrollBarHeight) /
-			completeScrollBarHeight
-			: visibleScrollBarHeight;
 	return (
 		<Box mb='8' w="300" h="300" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
 			borderColor: "coolGray.600",

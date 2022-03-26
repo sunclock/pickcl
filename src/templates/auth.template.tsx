@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useColorScheme, StatusBar, Dimensions, StyleSheet, Animated, SafeAreaView, FlatList, ScrollView } from 'react-native';
+import { useColorScheme, StatusBar, Dimensions, StyleSheet, Animated, SafeAreaView, FlatList, ScrollView, Platform } from 'react-native';
 import { Colors } from '../styles/Colors';
 import { AuthScreenProp, AuthScreenRouteProp } from '../navigation/RootNavigator';
 import { Box, Center, Container, Divider, Flex, Heading, HStack, Text, VStack } from 'native-base';
@@ -7,6 +7,7 @@ import ActorsPreview from '../sections/auth/Auth.ActorsPreview';
 import MonotoneButton from '../components/MonotoneButton';
 import DividerWithText from '../components/DividerWithText';
 import ColorButton from '../components/ColorButton';
+import { AppleButton, appleAuth } from '@invertase/react-native-apple-authentication';
 
 interface AuthProp {
 	navigation: AuthScreenProp;
@@ -31,7 +32,7 @@ function Auth({ navigation, route }: AuthProp) {
 		}).start();
 		setTimeout(() => {
 			setIsFaded(true);
-		}, 5000);
+		}, 3000);
 	};
 
 	const fadeOut = () => {
@@ -52,13 +53,28 @@ function Auth({ navigation, route }: AuthProp) {
 	useEffect(() => {
 		if (isFaded) {
 			fadeOut();
-			console.log('fadeOut');
 		} else {
 			fadeIn();
 			changeIndex();
-			console.log('fadeIn');
 		}
 	}, [isFaded]);
+
+	async function onAppleButtonPress() {
+		// performs login request
+		const appleAuthRequestResponse = await appleAuth.performRequest({
+			requestedOperation: appleAuth.Operation.LOGIN,
+			requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+		});
+
+		// get current authentication state for user
+		// /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+		const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+
+		// use credentialState response to ensure the user is authenticated
+		if (credentialState === appleAuth.State.AUTHORIZED) {
+			// user is authenticated
+		}
+	}
 
 	const isDarkMode = useColorScheme() === 'dark';
 	const backgroundStyle = {
@@ -87,6 +103,13 @@ function Auth({ navigation, route }: AuthProp) {
 			<MonotoneButton onPress={() => navigation.navigate('Auth')} text='G 구글로 회원가입' />
 			<MonotoneButton onPress={() => navigation.navigate('Auth')} text='트위터로 회원가입' />
 			<ColorButton onPress={() => navigation.navigate('SignUp')} text='이메일로 회원가입' />
+			{Platform.OS === 'ios' &&
+				<AppleButton
+					buttonStyle='AppleButton.Style.WHITE'
+					buttonType='AppleButton.Type.SIGN_IN'
+					style={{ width: 300, height: 50 }}
+					onPress={() => onAppleButtonPress()} />
+			}
 			<Divider w="300" m="4" />
 			<Text mb="4" fontSize={'md'} fontWeight={'extrabold'} color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>이미 계정이 있나요?</Text>
 			<ColorButton onPress={() => navigation.navigate('SignIn')} text='로그인' />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createMaterialBottomTabNavigator, MaterialBottomTabNavigationProp } from '@react-navigation/material-bottom-tabs';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -8,16 +8,9 @@ import Picks from '../templates/picks.template';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import TrackPlayer from 'react-native-track-player';
 import { Alert, BackHandler, Dimensions, useColorScheme } from 'react-native';
-import { resetTrack } from '../reducers/track';
-import { resetPick } from '../reducers/pick';
 import { Colors } from '../styles/Colors';
-import { SignInAnonymous, SignInRealName } from '../reducers/auth';
-import Auth from '../templates/auth.template';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import SignUp from '../templates/signup.template';
-import SignIn from '../templates/signin.template';
 
 type TabParamList = {
 	Picks: undefined;
@@ -61,27 +54,8 @@ export type SignInScreenRouteProp = RouteProp<StackParamList, 'SignIn'>;
 const Stack = createNativeStackNavigator<StackParamList>();
 
 export const RootNavigator = ({ user }: any) => {
-	const dispatch = useDispatch();
-	useEffect(() => {
-		const login = async () => {
-			if (user?.isAnonymous) {
-				dispatch(SignInAnonymous(user))
-			} else {
-				dispatch(SignInRealName(user));
-			}
-		};
-		login();
-	}, []);
-
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
-			{user.isAnonymous && (
-				<>
-					<Stack.Screen name="Auth" component={Auth} />
-					<Stack.Screen name="SignIn" component={SignIn} />
-					<Stack.Screen name="SignUp" component={SignUp} />
-				</>
-			)}
 			<Stack.Screen name="TrackList" component={TabNavigator} />
 			<Stack.Screen name="Track" component={Track} />
 		</Stack.Navigator>
@@ -99,32 +73,6 @@ export const TabNavigator = () => {
 
 	const isDarkMode = useColorScheme() === 'dark';
 
-	useEffect(() => {
-		const backAction = () => {
-			Alert.alert("앱 종료", "앱을 종료하시겠습니까? 모든 정보가 초기화됩니다.", [
-				{
-					text: "취소",
-					onPress: () => null,
-				},
-				{
-					text: "확인", onPress: () => {
-						dispatch(resetTrack());
-						dispatch(resetPick());
-						TrackPlayer.destroy()
-						BackHandler.exitApp()
-					}
-				}
-			]);
-			return true;
-		};
-
-		const backHandler = BackHandler.addEventListener(
-			"hardwareBackPress",
-			backAction
-		);
-
-		return () => backHandler.remove();
-	}, []);
 	return (
 		<Tab.Navigator
 			initialRouteName="TrackListTab"

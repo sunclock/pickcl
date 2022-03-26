@@ -33,7 +33,7 @@ const App = () => {
     }
     requestUserPermission();
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert(`${remoteMessage.title}`, remoteMessage.body, [
+      Alert.alert(`${remoteMessage.notification.title}`, remoteMessage.notification.body, [
         {
           text: '좋아요!',
         },

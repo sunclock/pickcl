@@ -67,3 +67,4 @@ google-services.json
 strings.xml
 SignIn.Google.tsx
 SignIn.Twitter.tsx
+android/app/src/main/res/values/strings.xml

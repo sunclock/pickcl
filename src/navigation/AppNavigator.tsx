@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Linking, Platform, View, NativeModules } from 'react-native';
+import { Alert, Linking, Platform, View } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { TabNavigator } from './RootNavigator';
 import { SignInRealName, SignOutAccount } from '../reducers/auth';
@@ -8,9 +8,6 @@ import { Colors } from '../styles/Colors';
 import { useColorScheme } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen'
-import RNPermissions, {
-	PERMISSIONS,
-} from 'react-native-permissions';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
@@ -20,7 +17,7 @@ import Auth from '../templates/auth.template';
 import SignIn from '../templates/signin.template';
 import SignUp from '../templates/signup.template';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Avatar, Divider, Text } from 'native-base';
+import { Avatar, Divider } from 'native-base';
 
 type DrawerParamList = {
 	TrackList: undefined;
@@ -61,14 +58,11 @@ export const AuthStackNavigator = () => {
 export const AppNavigator = () => {
 	const isDarkMode = useColorScheme() === 'dark';
 	const user = useSelector((state: any) => state.auth.user);
-	const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
 	const dispatch = useDispatch();
 	// Set an initializing state whilst Firebase connects
 	const [isReady, setIsReady] = useState(false);
 	const login = async (user) => {
-		if (isLoggedIn)
-			return;
-		if (user.email) {
+		if (user) {
 			dispatch(SignInRealName(user as FirebaseAuthTypes.User));
 		}
 	};
@@ -82,7 +76,6 @@ export const AppNavigator = () => {
 		const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
 		login(user);
 		SplashScreen.hide();
-		RNPermissions.request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
 		return subscriber; // unsubscribe on unmount
 	}, []);
 
@@ -90,12 +83,11 @@ export const AppNavigator = () => {
 		const restoreState = async () => {
 			try {
 				const initialUrl = await Linking.getInitialURL();
-
 				if (Platform.OS !== 'web' && initialUrl == null) {
 					// Only restore state if there's no deep link and we're not on web
 					const savedStateString = await AsyncStorage.getItem('user');
 					const state = savedStateString ? JSON.parse(savedStateString) : user;
-					if (state && state.email) {
+					if (state) {
 						dispatch(SignInRealName(user as FirebaseAuthTypes.User));
 					}
 				}
@@ -162,6 +154,11 @@ function CustomDrawerContent(props) {
 	const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 	const user = useSelector((state) => state.auth.user);
 	const isDarkMode = useColorScheme() === 'dark';
+	const label = isLoggedIn ?
+		user.displayName ?
+			user.displayName :
+			user.email :
+		'로그인';
 	return (
 		<DrawerContentScrollView {...props} contentContainerStyle={
 			{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }
@@ -171,7 +168,7 @@ function CustomDrawerContent(props) {
 					<>
 						<View>
 							<DrawerItem
-								label={user.displayName ? user.displayName : user.email}
+								label={label}
 								labelStyle={{ fontWeight: 'bold', fontSize: 16 }}
 								onPress={() => props.navigation.navigate('TrackList')}
 								icon={() =>

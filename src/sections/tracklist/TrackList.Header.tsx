@@ -18,7 +18,7 @@ interface HeaderProps {
 function Header({ tracks, isDarkMode }: HeaderProps) {
 	const dispatch = useDispatch();
 	return (
-		<HStack justifyContent={'space-between'}>
+		<HStack justifyContent={'space-between'} w="100%" h="50">
 			<Heading color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText} fontSize="2xl" pl="4" pt='2'>트랙리스트</Heading>
 			<HStack space='3' alignItems={'center'}>
 				<Pressable onPress={async () => {

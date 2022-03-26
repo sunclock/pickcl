@@ -41,6 +41,7 @@ export const auth = (
 	switch (action.type) {
 		case AuthActionTypes.SIGNIN_ANONYMOUS:
 			storeUser(action.payload);
+			newState.isLoggedIn = false;
 			newState.user = action.payload;
 			return newState;
 		case AuthActionTypes.SIGNIN:

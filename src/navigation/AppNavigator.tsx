@@ -59,25 +59,30 @@ export const AuthStackNavigator = () => {
 
 export const AppNavigator = () => {
 	const isDarkMode = useColorScheme() === 'dark';
-	const user = useSelector((state) => state.auth.user);
+	const user = useSelector((state: any) => state.auth.user);
+	const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
 	const dispatch = useDispatch();
-
-	console.log('user', user)
 	// Set an initializing state whilst Firebase connects
 	const [isReady, setIsReady] = useState(false);
-	const login = async (user: FirebaseAuthTypes.User) => {
-		if (user.email)
+	const login = async (user) => {
+		if (isLoggedIn)
+			return;
+		if (!user) {
+			dispatch(SignInAnonymous());
+			return;
+		}
+		if (!user.isAnonymous)
 			dispatch(SignInRealName(user as FirebaseAuthTypes.User));
 	};
 	// Handle user state changes
 	function onAuthStateChanged(user) {
-		login(user as FirebaseAuthTypes.User);
+		login(user);
 		if (!isReady) setIsReady(true);
 	}
 
 	useEffect(() => {
 		const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-		login(user as FirebaseAuthTypes.User);
+		login(user);
 		SplashScreen.hide();
 		RNPermissions.request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
 		return subscriber; // unsubscribe on unmount
@@ -92,8 +97,10 @@ export const AppNavigator = () => {
 					// Only restore state if there's no deep link and we're not on web
 					const savedStateString = await AsyncStorage.getItem('user');
 					const state = savedStateString ? JSON.parse(savedStateString) : user;
-					if (state?.email) {
+					if (state && !state.isAnnonymous) {
 						dispatch(SignInRealName(user as FirebaseAuthTypes.User));
+					} else {
+						dispatch(SignInAnonymous());
 					}
 				}
 			} finally {
@@ -154,7 +161,6 @@ export const AppNavigator = () => {
 function CustomDrawerContent(props) {
 	const dispatch = useDispatch();
 	const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-	console.log('isLoggedin', isLoggedIn);
 	return (
 		<DrawerContentScrollView {...props}>
 			<DrawerItemList {...props} />

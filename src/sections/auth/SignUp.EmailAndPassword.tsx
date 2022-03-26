@@ -39,7 +39,6 @@ function SignUpEmailAndPassword({ isDarkMode, navigation }: SignUpEmailAndPasswo
 			})
 			.catch(error => {
 				if (error.code === 'auth/email-already-in-use') {
-					console.log('That email address is already in use!');
 					Alert.alert("중복 이메일", "이미 사용중인 이메일입니다.", [
 						{ text: '확인' },
 					]);

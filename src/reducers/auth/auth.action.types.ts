@@ -16,7 +16,6 @@ export type SignInAction = {
 	payload: FirebaseAuthTypes.User;
 };
 
-
 export type SignOutAction = {
 	type: AuthActionTypes.SIGN_OUT;
 };

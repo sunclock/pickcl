@@ -37,7 +37,7 @@ const TrackList = ({ navigation }: TrackListProp) => {
 	return (
 		<SafeAreaView style={backgroundStyle}>
 			<StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={isDarkMode ? Colors.dark.background : Colors.background} />
-			<Header title={'재생 목록'} navigation={navigation} />
+			<Header title={'재생 목록'} navigation={navigation} isDarkMode={isDarkMode} />
 			<Navigation isDarkMode={isDarkMode} />
 			<List navigation={navigation} tracks={tracks} picks={picks} isDarkMode={isDarkMode} />
 			<FloatButton navigation={navigation} />

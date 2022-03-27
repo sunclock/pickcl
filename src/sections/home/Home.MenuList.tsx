@@ -13,10 +13,10 @@ function HomeMenuList({ navigation }: HomeMenuListProp) {
 				navigation.navigate('TrackList');
 			}} />
 			<HomeMenuItem title={'오디오 드라마'} iconName={'drama-masks'} onPress={() => {
-				navigation.navigate('TrackList');
+				navigation.navigate('Drama');
 			}} />
 			<HomeMenuItem title={'파일'} iconName={'file-music'} onPress={() => {
-				navigation.navigate('TrackList');
+				navigation.navigate('File');
 			}} />
 		</>
 	);

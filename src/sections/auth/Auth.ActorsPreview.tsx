@@ -223,12 +223,11 @@ function ActorsPreview({ isDarkMode, index }: ActorsPreviewProp) {
 					</Text>
 				</Stack>
 				<ScrollView
-					contentContainerStyle={{ paddingRight: 14 }}
+					contentContainerStyle={{ paddingRight: 14, paddingBottom: 20 }}
 					showsVerticalScrollIndicator={false}
 				>
 					<Text fontWeight="400" color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>
 						{divider[index]}{' '}{actor.filmography.sort().join(`\n${divider[index]} `)}
-						{'\n'}{'\n'}{'\n'}
 					</Text>
 				</ScrollView>
 			</Stack>

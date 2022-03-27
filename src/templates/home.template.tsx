@@ -23,7 +23,7 @@ function Home({ navigation }: HomeProp) {
 			<StatusBar
 				barStyle={isDarkMode ? 'light-content' : 'dark-content'}
 				backgroundColor={isDarkMode ? Colors.dark.background : Colors.background} />
-			<Header title={'홈'} navigation={navigation} />
+			<Header title={''} navigation={navigation} isDarkMode={isDarkMode} />
 			<Box justifyContent={'space-evenly'} m='1' p='1'>
 				<HomeMenuList navigation={navigation} />
 				<Box m='2' p='1'>

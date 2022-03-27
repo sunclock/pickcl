@@ -7,11 +7,11 @@ import { TouchableOpacity, useColorScheme } from 'react-native';
 interface HeaderProp {
 	title: string;
 	navigation: any;
+	isDarkMode: boolean;
 }
 
-function Header({ title, navigation }: HeaderProp) {
+function Header({ title, navigation, isDarkMode }: HeaderProp) {
 	const user = useSelector((state: any) => state.auth.user);
-	const isDarkMode = useColorScheme() === 'dark';
 
 	return (
 		<HStack p='1' ml='3' mt='2' mb='1' justifyContent={'space-between'} alignItems={'center'}>

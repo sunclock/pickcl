@@ -17,35 +17,52 @@ import Auth from '../templates/auth.template';
 import SignIn from '../templates/signin.template';
 import SignUp from '../templates/signup.template';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Avatar, Divider } from 'native-base';
+import { Avatar } from 'native-base';
 import Home from '../templates/home.template';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import TrackList from '../templates/new.tracklist.template';
+import Drama from '../templates/drama.template';
+import File from '../templates/file.template';
 
 type DrawerParamList = {
 	TrackList: undefined;
 	AuthStack: undefined;
+	HomeStack: undefined;
 	Track: undefined;
-	Home: undefined;
 }
 
-type StackParamList = {
+type AuthStackParamList = {
 	Auth: undefined;
 	SignIn: undefined;
 	SignUp: undefined;
 	SignOut: undefined;
 }
 
-export type SignOutScreenProp = NativeStackNavigationProp<StackParamList, 'SignOut'>;
+type HomeStackParamList = {
+	Home: undefined;
+	TrackList: undefined;
+	Drama: undefined;
+	File: undefined;
+	Track: undefined;
+}
 
+export type SignOutScreenProp = NativeStackNavigationProp<AuthStackParamList, 'SignOut'>;
 export type AuthScreenProp = CompositeNavigationProp<
 	DrawerNavigationProp<DrawerParamList, 'AuthStack'>,
-	NativeStackNavigationProp<StackParamList>
+	NativeStackNavigationProp<AuthStackParamList>
 >;
-
-export type HomeScreenProp = DrawerNavigationProp<DrawerParamList, 'Home'>;
-
-export type AuthScreenRouteProp = RouteProp<StackParamList, 'Auth'>;
-
-export type HomeScreenRouteProp = RouteProp<DrawerParamList, 'Home'>;
+export type HomeScreenProp = CompositeNavigationProp<
+	DrawerNavigationProp<DrawerParamList, 'HomeStack'>,
+	NativeStackNavigationProp<HomeStackParamList>
+>;
+export type TrackListScreenProp = NativeStackNavigationProp<HomeStackParamList, 'TrackList'>;
+export type DramaScreenProp = NativeStackNavigationProp<HomeStackParamList, 'Drama'>;
+export type FileScreenProp = NativeStackNavigationProp<HomeStackParamList, 'File'>;
+export type TrackScreenProp = CompositeNavigationProp<
+	DrawerNavigationProp<DrawerParamList, 'Track'>,
+	NativeStackNavigationProp<HomeStackParamList>
+>;
+export type AuthScreenRouteProp = RouteProp<AuthStackParamList, 'Auth'>;
 
 const Drawer = createDrawerNavigator();
 
@@ -61,19 +78,41 @@ export const AuthStackNavigator = () => {
 	);
 };
 
+const HomeStack = createNativeStackNavigator();
+
+export const HomeStackNavigator = () => {
+	return (
+		<HomeStack.Navigator screenOptions={{ headerShown: false }}>
+			<HomeStack.Screen name='Home' component={Home} />
+			<HomeStack.Screen name="TrackList" component={TrackList} />
+			<HomeStack.Screen name="Drama" component={Drama} />
+			<HomeStack.Screen name="File" component={File} />
+		</HomeStack.Navigator>
+	)
+}
+
 export const AppNavigator = () => {
 	const isDarkMode = useColorScheme() === 'dark';
 	const [initializing, setInitializing] = useState(true); // Set an initializing state whilst Firebase connects
 	const user = useSelector(state => state.auth.user);
 	const dispatch = useDispatch();
 	const labelStyle = { color: isDarkMode ? Colors.dark.primaryText : Colors.primaryText, fontSize: 16 }
+
 	useEffect(() => {
 		function onAuthStateChanged(user) {
 			if (user) dispatch(SignInRealName(user));
 			if (initializing) setInitializing(false);
 		}
+		async function isFirstOpen() {
+			await AsyncStorage.getItem('isFirstOpen').then(value => {
+				if (value === null) {
+					AsyncStorage.setItem('isFirstOpen', 'false');
+				}
+			})
+			SplashScreen.hide();
+		}
+		isFirstOpen();
 		const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-		SplashScreen.hide();
 		return subscriber; // unsubscribe on unmount
 	}, []);
 	if (initializing) return null;
@@ -81,7 +120,7 @@ export const AppNavigator = () => {
 	return (
 		<Drawer.Navigator
 			drawerContent={(props) => <CustomDrawerContent {...props} />}
-			initialRouteName={user ? 'Home' : 'AuthStack'}
+			initialRouteName={user ? 'HomeStack' : 'AuthStack'}
 			screenOptions={({ route }) => ({
 				drawerStyle: {
 					backgroundColor: isDarkMode ? Colors.dark.hover : Colors.background,
@@ -94,41 +133,33 @@ export const AppNavigator = () => {
 				drawerIcon: ({ focused }) => {
 					let iconName;
 					const color = isDarkMode ? Colors.dark.primaryText : Colors.primaryText;
-					if (route.name == 'TrackList')
+					if (route.name == 'OldTrackList')
 						if (focused) iconName = 'playlist-music';
 						else iconName = 'playlist-music-outline';
-					if (route.name == 'Home')
+					if (route.name == 'HomeStack')
 						if (focused) iconName = 'home';
 						else iconName = 'home-outline';
 					return <MaterialCommunityIcons name={iconName} size={25} color={color} />;
 				}
 			})}
 		>
-			<Drawer.Screen name="Home" component={Home}
+			<Drawer.Screen name="HomeStack" component={Home}
 				options={{
 					title: '홈',
 					drawerLabelStyle: labelStyle
 				}}
 			/>
-			<Drawer.Screen name="TrackList" component={TabNavigator}
+			<Drawer.Screen name="OldTrackList" component={TabNavigator}
 				options={{
 					title: '재생 목록',
 					drawerLabelStyle: labelStyle
 				}}
 			/>
-			<Drawer.Screen name="AuthStack" component={AuthStackNavigator}
-				options={{
-					drawerItemStyle: {
-						display: 'none'
-					}
-				}}
-			/>
-			<Drawer.Screen name="Track" component={Track}
-				options={{
-					drawerItemStyle: {
-						display: 'none'
-					}
-				}} />
+			<Drawer.Screen name="TrackList" component={TrackList} options={{ drawerItemStyle: { display: 'none' } }} />
+			<Drawer.Screen name="Drama" component={Drama} options={{ drawerItemStyle: { display: 'none' } }} />
+			<Drawer.Screen name="File" component={File} options={{ drawerItemStyle: { display: 'none' } }} />
+			<Drawer.Screen name="AuthStack" component={AuthStackNavigator} options={{ drawerItemStyle: { display: 'none' } }} />
+			<Drawer.Screen name="Track" component={Track} options={{ drawerItemStyle: { display: 'none' } }} />
 		</Drawer.Navigator>
 	);
 };

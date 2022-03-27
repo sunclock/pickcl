@@ -14,9 +14,11 @@ interface DramaProp {
 function Drama({ navigation }: DramaProp) {
 	const [loading, setLoading] = useState(true); // Set loading to true on component mount
 	const [dramas, setDramas] = useState([]); // Initial empty array of users
-	const test = useSelector((state: any) => state.drama);
 	const dispatch = useDispatch();
 	const isDarkMode = useColorScheme() === 'dark';
+	let boxSize = width / 3.5;
+	let borderColor = isDarkMode ? Colors.darkGray : Colors.gray;
+	let fontColor = isDarkMode ? Colors.dark.primaryText : Colors.primaryText;
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? Colors.dark.background : Colors.background,
 		flex: 1,
@@ -53,6 +55,7 @@ function Drama({ navigation }: DramaProp) {
 					data={dramas}
 					renderItem={({ item }) => (
 						<TouchableOpacity
+							style={{ margin: 10, padding: 3 }}
 							onPress={async () => {
 								if (item.url) {
 									const supported = await Linking.canOpenURL(item.url);
@@ -72,30 +75,25 @@ function Drama({ navigation }: DramaProp) {
 								}
 							}}
 						>
-							<HStack m='1' p='2'>
-								<Box mx='1' px='2' mt='1' w='100' h='100' borderWidth={0.5} borderColor={Colors.darkGray} borderRadius={'md'} justifyContent='center' alignItems={'center'}>
-									<Image
-										style={{
-											width: 60,
-											height: 60,
-										}}
-										source={{ uri: 'https://i.ibb.co/1fyhtQ1/Group-7-1.png' }}
-									/>
-								</Box>
-								<Box mx='1' px='2' w={Dimensions.get('window').width - 150}>
-									<Text fontSize='md' color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>
+							<HStack ml='1'>
+								{item.photo_url
+									? <Image style={{ width: boxSize, height: boxSize, borderRadius: 5, alignItems: 'center' }} source={{ uri: item.photo_url }} />
+									: <Box style={{ width: boxSize, height: boxSize, backgroundColor: borderColor, borderWidth: 1, borderColor: borderColor, borderRadius: 5 }} />
+								}
+								<Box w={Dimensions.get('window').width - boxSize - 30} mx='2' px='2'>
+									<Text fontSize='md' color={fontColor}>
 										{item.title}
 									</Text>
 									{item.author !== "" &&
-										<Text fontSize='sm' color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>
+										<Text fontSize='sm' color={fontColor}>
 											{item.author}
 										</Text>
 									}
-									<Text fontSize='xs' color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>
+									<Text fontSize='xs' color={fontColor}>
 										{item.production}
 									</Text>
 									{item.cast !== "" &&
-										<Text fontSize='xs' color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>
+										<Text fontSize='xs' color={fontColor}>
 											{item.cast.join(', ')}
 										</Text>
 									}
@@ -111,3 +109,5 @@ function Drama({ navigation }: DramaProp) {
 }
 
 export default Drama;
+
+const { width, height } = Dimensions.get('window');

@@ -16,6 +16,7 @@ const renderItem = (item: any, navigation: HomeScreenProp, isDarkMode: boolean) 
 			title={item.title}
 			uri={item.uri}
 			isDarkMode={isDarkMode}
+			iconName={item.iconName}
 			onPress={() => navigation.navigate('Album', { album: item })}
 		/>
 	);
@@ -55,6 +56,11 @@ function HomeAlbumList({ navigation, isDarkMode }: HomeAlbumListProp) {
 						id: '7',
 						title: 'Album 7',
 					},
+					{
+						id: '8',
+						title: '',
+						iconName: 'ios-add',
+					}
 				]}
 				renderItem={({ item }) => renderItem(item, navigation, isDarkMode)}
 				numColumns={2}

@@ -1,4 +1,4 @@
-import { Box, Center, Divider, HStack, Text } from 'native-base';
+import { Divider, HStack, Text } from 'native-base';
 import React from 'react';
 import { TouchableOpacity, useColorScheme } from 'react-native';
 import { Colors } from '../../styles/Colors';
@@ -12,16 +12,16 @@ interface HomeMenuItemProp {
 
 function HomeMenuItem({ title, iconName, onPress }: HomeMenuItemProp) {
 	const isDarkMode = useColorScheme() === 'dark';
+	const fontColor = isDarkMode ? Colors.dark.primaryText : Colors.primaryText;
 	return (
 		<TouchableOpacity onPress={() => onPress()}>
-			<HStack m='1' p='1' alignItems={'center'} justifyContent={'space-between'}>
-				<HStack space={'2'} alignItems={'center'}>
+			<HStack m='2' p='1' alignItems={'center'} justifyContent={'space-between'}>
+				<HStack space={'3'} alignItems={'center'}>
 					<MaterialCommunityIcons
 						name={iconName}
 						size={25}
-						color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}
-					/>
-					<Text fontSize={'xl'}>
+						color={fontColor} />
+					<Text fontSize={'lg'} color={fontColor}>
 						{title}
 					</Text>
 				</HStack>
@@ -31,7 +31,7 @@ function HomeMenuItem({ title, iconName, onPress }: HomeMenuItemProp) {
 					color={Colors.darkGray}
 				/>
 			</HStack>
-			<Divider mx='3' />
+			<Divider mx='3' thickness='0.3' bg={Colors.darkGray} />
 		</TouchableOpacity >
 	);
 }

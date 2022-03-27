@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useColorScheme, TouchableOpacity, SafeAreaView, StatusBar, ScrollView } from 'react-native';
+import { useColorScheme, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { useSelector } from 'react-redux';
 import { IPick } from '../types';
 import Title from '../sections/track/Track.Title';

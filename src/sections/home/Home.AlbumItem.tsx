@@ -7,23 +7,22 @@ interface HomeAlbumItemProp {
 	uri: string | undefined;
 	title: string;
 	onPress: Function;
+	isDarkMode: boolean;
 }
 
-function HomeAlbumItem({ uri, title, onPress }: HomeAlbumItemProp) {
+function HomeAlbumItem({ uri, title, onPress, isDarkMode }: HomeAlbumItemProp) {
 	let boxSize = width / 2.4;
 	let imageSize = boxSize * 0.8;
 	uri = uri ? uri : 'https://i.ibb.co/1fyhtQ1/Group-7-1.png';
 	return (
 		<TouchableOpacity onPress={() => onPress()} style={{ margin: 10, padding: 3 }}>
-			<Box w={boxSize} h={boxSize} borderWidth={0.5} borderColor={Colors.lightGray} borderRadius={'md'} alignItems={'center'} justifyContent={'center'}>
+			<Box w={boxSize} h={boxSize} borderWidth={0.5} borderColor={Colors.darkGray} borderRadius={'md'} alignItems={'center'} justifyContent={'center'}>
 				<Image
 					style={{ width: imageSize, height: imageSize }}
 					source={{ uri }}
 				/>
 			</Box>
-			<Text mt='1' fontSize={'md'}>
-				{title}
-			</Text>
+			<Text mt='1' fontSize={'md'} color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>{title}</Text>
 		</TouchableOpacity>
 	);
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useColorScheme, SafeAreaView, StatusBar, View } from 'react-native';
+import { useColorScheme, SafeAreaView, StatusBar } from 'react-native';
 import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import { PicksScreenProp } from '../navigation/RootNavigator';

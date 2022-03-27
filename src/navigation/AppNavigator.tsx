@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Linking, Platform, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { TabNavigator } from './RootNavigator';
 import { SignInRealName, SignOutAccount } from '../reducers/auth';
@@ -9,8 +9,7 @@ import { Colors } from '../styles/Colors';
 import { useColorScheme } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen'
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import Track from '../templates/track.template';
@@ -67,6 +66,7 @@ export const AppNavigator = () => {
 	const [initializing, setInitializing] = useState(true); // Set an initializing state whilst Firebase connects
 	const user = useSelector(state => state.auth.user);
 	const dispatch = useDispatch();
+	const labelStyle = { color: isDarkMode ? Colors.dark.primaryText : Colors.primaryText, fontSize: 16 }
 	useEffect(() => {
 		function onAuthStateChanged(user) {
 			if (user) dispatch(SignInRealName(user));
@@ -83,16 +83,17 @@ export const AppNavigator = () => {
 			drawerContent={(props) => <CustomDrawerContent {...props} />}
 			initialRouteName={user ? 'Home' : 'AuthStack'}
 			screenOptions={({ route }) => ({
-				drawerActiveBackgroundColor: isDarkMode ? Colors.dark.background : Colors.background,
-				drawerActiveTintColor: isDarkMode ? Colors.dark.primary : Colors.primary,
-				headerTintColor: isDarkMode ? Colors.dark.primary : Colors.primary,
-				headerTitleStyle: {
-					fontWeight: 'bold',
+				drawerStyle: {
+					backgroundColor: isDarkMode ? Colors.dark.hover : Colors.background,
 				},
+				drawerActiveBackgroundColor: isDarkMode ? Colors.dark.hover : Colors.background,
+				drawerActiveTintColor: isDarkMode ? Colors.dark.primaryText : Colors.primaryText,
+				drawerInactiveTintColor: isDarkMode ? Colors.dark.primaryText : Colors.primaryText,
+				drawerInactiveBackgroundColor: isDarkMode ? Colors.dark.hover : Colors.background,
 				headerShown: false,
 				drawerIcon: ({ focused }) => {
 					let iconName;
-					const color = focused ? Colors.primary : isDarkMode ? Colors.dark.primary : Colors.primary;
+					const color = isDarkMode ? Colors.dark.primaryText : Colors.primaryText;
 					if (route.name == 'TrackList')
 						if (focused) iconName = 'playlist-music';
 						else iconName = 'playlist-music-outline';
@@ -106,17 +107,13 @@ export const AppNavigator = () => {
 			<Drawer.Screen name="Home" component={Home}
 				options={{
 					title: '홈',
-					drawerLabelStyle: {
-						fontSize: 16,
-					}
+					drawerLabelStyle: labelStyle
 				}}
 			/>
 			<Drawer.Screen name="TrackList" component={TabNavigator}
 				options={{
 					title: '재생 목록',
-					drawerLabelStyle: {
-						fontSize: 16,
-					}
+					drawerLabelStyle: labelStyle
 				}}
 			/>
 			<Drawer.Screen name="AuthStack" component={AuthStackNavigator}
@@ -146,6 +143,8 @@ function CustomDrawerContent(props) {
 			user.displayName :
 			user.email :
 		'로그인';
+	const labelStyle = { color: isDarkMode ? Colors.dark.primaryText : Colors.primaryText, fontSize: 16 }
+	const iconColor = isDarkMode ? Colors.dark.primaryText : Colors.primaryText;
 	return (
 		<DrawerContentScrollView {...props} contentContainerStyle={
 			{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }
@@ -156,7 +155,7 @@ function CustomDrawerContent(props) {
 						<View>
 							<DrawerItem
 								label={label}
-								labelStyle={{ fontWeight: 'bold', fontSize: 16 }}
+								labelStyle={labelStyle}
 								onPress={() => props.navigation.closeDrawer()}
 								icon={() =>
 									<Avatar size={50}
@@ -165,12 +164,12 @@ function CustomDrawerContent(props) {
 											uri: user?.photoURL
 										}}></Avatar>}
 							/>
-							<Divider />
 							<DrawerItemList {...props} />
 						</View>
 						<View style={{ marginBottom: 40 }}>
 							<DrawerItem
 								label='로그아웃'
+								labelStyle={labelStyle}
 								onPress={() => {
 									Alert.alert('로그아웃', '로그아웃 하시겠습니까?', [
 										{
@@ -190,9 +189,7 @@ function CustomDrawerContent(props) {
 										}
 									], { cancelable: false })
 								}}
-								icon={({ color, size }) => (
-									<Ionicons name='ios-log-out' size={size} color={color} />
-								)}
+								icon={() => <Ionicons name={'ios-log-out-outline'} size={25} color={iconColor} />}
 							/>
 						</View>
 					</>
@@ -204,13 +201,14 @@ function CustomDrawerContent(props) {
 						<View style={{ marginBottom: 40 }}>
 							<DrawerItem
 								label="로그인"
+								labelStyle={labelStyle}
 								onPress={() => {
 									props.navigation.reset({
 										index: 0,
 										routes: [{ name: 'AuthStack' }],
 									});
 								}}
-								icon={() => <Ionicons name="ios-log-in" size={25} color={Colors.primary} />}
+								icon={() => <Ionicons name={'ios-log-in'} size={25} color={iconColor} />}
 							/>
 						</View>
 					</>

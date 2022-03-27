@@ -1,6 +1,6 @@
 import React from 'react';
 import { useColorScheme, KeyboardAvoidingView, StatusBar } from 'react-native';
-import { Stack, Center, Heading, Text, Divider } from 'native-base';
+import { Center, Heading } from 'native-base';
 import { Colors } from '../styles/Colors';
 import { SignInScreenProp, SignInScreenRouteProp } from '../navigation/RootNavigator';
 import SignUpEmailAndPassword from '../sections/auth/SignUp.EmailAndPassword';

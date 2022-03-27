@@ -6,21 +6,23 @@ import HomeAlbumItem from './Home.AlbumItem';
 
 interface HomeAlbumListProp {
 	navigation: HomeScreenProp;
+	isDarkMode: boolean;
 }
 
-const renderItem = (item: any, navigation: HomeScreenProp) => {
+const renderItem = (item: any, navigation: HomeScreenProp, isDarkMode: boolean) => {
 	return (
 		<HomeAlbumItem
 			key={item.id}
 			title={item.title}
 			uri={item.uri}
+			isDarkMode={isDarkMode}
 			onPress={() => navigation.navigate('Album', { album: item })}
 		/>
 	);
 };
 
 
-function HomeAlbumList({ navigation }: HomeAlbumListProp) {
+function HomeAlbumList({ navigation, isDarkMode }: HomeAlbumListProp) {
 	return (
 		<>
 			<FlatList
@@ -54,7 +56,7 @@ function HomeAlbumList({ navigation }: HomeAlbumListProp) {
 						title: 'Album 7',
 					},
 				]}
-				renderItem={({ item }) => renderItem(item, navigation)}
+				renderItem={({ item }) => renderItem(item, navigation, isDarkMode)}
 				numColumns={2}
 				keyExtractor={(item) => item.id}
 			/>

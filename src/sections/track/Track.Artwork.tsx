@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import { ITrack } from '../../types';
 import { Image, Box, Center } from 'native-base';
-import { Colors } from '../../styles/Colors';
 
 interface ArtworkProp {
 	track: ITrack,

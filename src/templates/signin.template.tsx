@@ -1,15 +1,11 @@
 import React from 'react';
 import { useColorScheme, KeyboardAvoidingView, StatusBar } from 'react-native';
-import { Stack, Center, Heading, Text, Divider } from 'native-base';
+import { Center, Heading } from 'native-base';
 import { Colors } from '../styles/Colors';
 import MonotoneButton from '../components/MonotoneButton';
 import SignInEmailAndPassword from '../sections/auth/SignIn.EmailAndPassword';
-import Header from '../components/Header';
 import DividerWithText from '../components/DividerWithText';
 import { SignInScreenProp, SignInScreenRouteProp } from '../navigation/RootNavigator';
-import SignInTwitter from '../sections/auth/SignIn.Twitter';
-import SignInGoogle from '../sections/auth/SignIn.Google';
-import SignUpEmailAndPassword from '../sections/auth/SignUp.EmailAndPassword';
 
 interface SignInProp {
 	navigation: SignInScreenProp;

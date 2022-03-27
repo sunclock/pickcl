@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { View, ScrollView } from 'react-native';
-import { Text, Box, AspectRatio, Image, Center, Stack, Heading, HStack } from 'native-base'
+import React from 'react';
+import { ScrollView } from 'react-native';
+import { Text, Box, Stack, Heading } from 'native-base'
 import { Colors } from '../../styles/Colors';
 
 const actors = [
@@ -210,25 +210,15 @@ function ActorsPreview({ isDarkMode, index }: ActorsPreviewProp) {
 	const divider = ['❤️', '💛', '💚', '💙', '💜', '🖤', '💗', '🧡', '❤️‍🔥']
 
 	return (
-		<Box mb='8' w="300" h="300" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
-			borderColor: "coolGray.600",
-			backgroundColor: "gray.700"
-		}} _web={{
-			shadow: 2,
-			borderWidth: 0
-		}} _light={{
-			backgroundColor: "gray.50"
-		}}>
+		<Box mb='8' w="300" h="300" rounded="lg" overflow="hidden"
+			borderColor={isDarkMode ? Colors.darkGray : Colors.gray} borderWidth="1"
+			bg={isDarkMode ? Colors.dark.hover : Colors.extraLightGray}>
 			<Stack p="4" space={3}>
 				<Stack space={2}>
-					<Heading size="md" ml="-1">
+					<Heading size="md" ml="-1" color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>
 						{actor.name} 성우
 					</Heading>
-					<Text fontSize="xs" _light={{
-						color: "violet.500"
-					}} _dark={{
-						color: "violet.400"
-					}} fontWeight="500" ml="-0.5" mt="-1">
+					<Text fontSize="xs" color={isDarkMode ? Colors.dark.primary : Colors.primary} ml="-0.5" mt="-1">
 						{actor.filmography[actor.filmography.length - 1]}
 					</Text>
 				</Stack>
@@ -236,7 +226,7 @@ function ActorsPreview({ isDarkMode, index }: ActorsPreviewProp) {
 					contentContainerStyle={{ paddingRight: 14 }}
 					showsVerticalScrollIndicator={false}
 				>
-					<Text fontWeight="400">
+					<Text fontWeight="400" color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>
 						{divider[index]}{' '}{actor.filmography.sort().join(`\n${divider[index]} `)}
 						{'\n'}{'\n'}{'\n'}
 					</Text>

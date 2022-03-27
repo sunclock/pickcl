@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Dimensions, Pressable, StyleSheet, useColorScheme } from 'react-native';
-import { IPick, ITrack } from '../../types';
-import { Text, Box, FlatList, HStack, Center } from 'native-base';
+import { Dimensions, Pressable, StyleSheet } from 'react-native';
+import { IPick } from '../../types';
+import { Text, Box, FlatList, HStack } from 'native-base';
 import TrackPlayer from 'react-native-track-player';
 import { Colors } from '../../styles/Colors';
 

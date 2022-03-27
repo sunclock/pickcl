@@ -1,7 +1,6 @@
 import React from 'react';
 import { useColorScheme } from 'react-native';
 import { Button, Text } from 'native-base';
-import { Colors } from '../styles/Colors';
 
 interface MonotoneButtonProp {
 	text: string;

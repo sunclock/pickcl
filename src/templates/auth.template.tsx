@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useColorScheme, StatusBar, Dimensions, StyleSheet, Animated, SafeAreaView, FlatList, ScrollView, Platform } from 'react-native';
+import { useColorScheme, StatusBar, Animated, SafeAreaView, Platform } from 'react-native';
 import { Colors } from '../styles/Colors';
 import { AuthScreenProp, AuthScreenRouteProp } from '../navigation/RootNavigator';
-import { Box, Center, Container, Divider, Flex, Heading, HStack, Text, VStack } from 'native-base';
+import { Center, Heading, Text } from 'native-base';
 import ActorsPreview from '../sections/auth/Auth.ActorsPreview';
-import MonotoneButton from '../components/MonotoneButton';
-import DividerWithText from '../components/DividerWithText';
 import ColorButton from '../components/ColorButton';
 import { AppleButton, appleAuth } from '@invertase/react-native-apple-authentication';
-import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import SignInTwitter from '../sections/auth/SignIn.Twitter';
 import SignInGoogle from '../sections/auth/SignIn.Google';
 

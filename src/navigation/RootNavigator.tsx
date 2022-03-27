@@ -7,8 +7,8 @@ import Track from '../templates/track.template';
 import Picks from '../templates/picks.template';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { Alert, BackHandler, Dimensions, useColorScheme } from 'react-native';
+import { useSelector } from 'react-redux';
+import { Dimensions, useColorScheme } from 'react-native';
 import { Colors } from '../styles/Colors';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
@@ -75,8 +75,8 @@ export const TabNavigator = () => {
 	return (
 		<Tab.Navigator
 			initialRouteName="TrackListTab"
-			activeColor={isDarkMode ? Colors.dark.primaryText : Colors.primary}
-			inactiveColor={isDarkMode ? Colors.darkGray : Colors.darkGray}
+			activeColor={isDarkMode ? Colors.dark.primary : Colors.primary}
+			inactiveColor={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}
 			barStyle={{
 				position: 'absolute',
 				bottom: height / 30,
@@ -90,19 +90,18 @@ export const TabNavigator = () => {
 			screenOptions={({ route }) => ({
 				tabBarIcon: ({ focused }) => {
 					let iconName;
-					const color = focused
-						? isDarkMode ? Colors.dark.primaryText : Colors.primary
-						: isDarkMode ? Colors.darkGray : Colors.lightGray;
+					const iconColor = focused
+						? isDarkMode ? Colors.dark.primary : Colors.primary
+						: isDarkMode ? Colors.dark.primaryText : Colors.primaryText;
 					if (route.name == 'TrackListTab')
 						if (focused) iconName = 'ios-list-sharp';
 						else iconName = 'ios-list-outline';
 					else if (route.name == 'Picks')
 						if (focused) iconName = 'ios-heart-sharp';
 						else iconName = 'ios-heart-outline';
-					return <IonIcons name={iconName} size={25} color={color} />;
+					return <IonIcons name={iconName} size={25} color={iconColor} />;
 				},
-			})}
-		>
+			})}>
 			<Tab.Screen
 				name="TrackListTab"
 				component={TrackList}

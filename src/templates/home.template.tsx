@@ -1,18 +1,16 @@
 import React from 'react';
-import { useColorScheme, StatusBar, SafeAreaView, ScrollView } from 'react-native';
+import { useColorScheme, StatusBar, SafeAreaView } from 'react-native';
 import { Colors } from '../styles/Colors';
-import { Box, Center, Heading, HStack, Text } from 'native-base';
-import { HomeScreenProp, HomeScreenRouteProp } from '../navigation/AppNavigator';
+import { Box, Heading } from 'native-base';
+import { HomeScreenProp } from '../navigation/AppNavigator';
 import Header from '../components/Header';
-import HomeMenu from '../sections/home/Home.MenuItem';
 import HomeAlbumList from '../sections/home/Home.AlbumList';
 import HomeMenuList from '../sections/home/Home.MenuList';
 
 interface HomeProp {
 	navigation: HomeScreenProp;
-	route: HomeScreenRouteProp;
 }
-function Home({ navigation, route }: HomeProp) {
+function Home({ navigation }: HomeProp) {
 	const isDarkMode = useColorScheme() === 'dark';
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? Colors.dark.background : Colors.background,
@@ -29,9 +27,9 @@ function Home({ navigation, route }: HomeProp) {
 			<Box justifyContent={'space-evenly'} m='1' p='1'>
 				<HomeMenuList navigation={navigation} />
 				<Box m='2' p='1'>
-					<Text fontSize={'lg'} fontWeight='bold'>내 리스트</Text>
+					<Heading fontSize={'lg'} color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}>내 리스트</Heading>
 				</Box>
-				<HomeAlbumList navigation={navigation} />
+				<HomeAlbumList navigation={navigation} isDarkMode={isDarkMode} />
 			</Box>
 		</SafeAreaView>
 	);

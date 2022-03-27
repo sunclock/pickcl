@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ITrack } from '../../types';
 import { Pressable, Dimensions, StyleSheet } from 'react-native';
-import { Text, HStack, Slider, Box, Center } from 'native-base';
+import { HStack, Center } from 'native-base';
 import TrackPlayer, { Event, State, usePlaybackState, useProgress, useTrackPlayerEvents } from 'react-native-track-player';
 import { togglePlay } from '../../utils/Player';
 import Ionicons from 'react-native-vector-icons/Ionicons';

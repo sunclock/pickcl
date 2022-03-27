@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Box, Center, Heading, HStack, Text } from 'native-base';
+import { Avatar, Box, Heading, HStack } from 'native-base';
 import { Colors } from '../styles/Colors';
 import { useSelector } from 'react-redux';
 import { TouchableOpacity, useColorScheme } from 'react-native';

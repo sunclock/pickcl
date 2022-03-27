@@ -1,20 +1,38 @@
 import React from 'react';
-import { Box, Heading } from 'native-base';
+import { Avatar, Box, Center, Heading, HStack, Text } from 'native-base';
 import { Colors } from '../styles/Colors';
+import { useSelector } from 'react-redux';
+import { TouchableOpacity, useColorScheme } from 'react-native';
 
 interface HeaderProp {
-	isDarkMode: boolean;
 	title: string;
+	navigation: any;
 }
-function Header({ isDarkMode, title }: HeaderProp) {
+
+function Header({ title, navigation }: HeaderProp) {
+	const user = useSelector((state: any) => state.auth.user);
+	const isDarkMode = useColorScheme() === 'dark';
+
 	return (
-		<Box w="100%" h="50">
+		<HStack p='1' ml='3' mt='2' mb='1' justifyContent={'space-between'} alignItems={'center'}>
+			<TouchableOpacity
+				onPress={() => {
+					navigation.openDrawer();
+				}}>
+				<Avatar size={30}
+					bg={isDarkMode ? Colors.dark.primary : Colors.primary}
+					source={{
+						uri: user?.photoURL
+					}}></Avatar>
+			</TouchableOpacity>
 			<Heading
 				color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}
-				fontSize="2xl" pl="4" pt='2'>
+				fontSize="xl">
 				{title}
 			</Heading>
-		</Box>
+			<Box w='10'>
+			</Box>
+		</HStack>
 	);
 }
 

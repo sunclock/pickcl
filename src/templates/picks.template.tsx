@@ -19,6 +19,7 @@ function Picks({ navigation }: PicksProp) {
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? Colors.dark.background : Colors.background,
 		flex: 1,
+		paddingBottom: StatusBar.currentHeight,
 	};
 
 	return (

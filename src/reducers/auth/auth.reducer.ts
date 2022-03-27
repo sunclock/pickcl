@@ -10,7 +10,7 @@ import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 export const initialState = () => {
 	let initialData = {
-		user: {} as FirebaseAuthTypes.User,
+		user: null,
 		isLoggedIn: false,
 	};
 	async function getDataFromStorage() {

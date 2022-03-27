@@ -23,6 +23,7 @@ type StackParamList = {
 	Auth: FirebaseAuthTypes.User | undefined;
 	SignIn: undefined;
 	SignUp: undefined;
+	Home: undefined;
 };
 
 export type TrackScreenRouteProp = RouteProp<StackParamList, 'Track'>;
@@ -69,7 +70,6 @@ const { width, height } = Dimensions.get('window');
 export const TabNavigator = () => {
 	const picks = useSelector((state: any) => state.picks.picks);
 	const tracks = useSelector((state: any) => state.tracks.tracks);
-
 	const isDarkMode = useColorScheme() === 'dark';
 
 	return (

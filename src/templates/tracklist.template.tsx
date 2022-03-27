@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useColorScheme, SafeAreaView, StatusBar } from 'react-native';
 import { useSelector } from 'react-redux';
 import Navigation from '../sections/tracklist/TrackList.Navigation';
-import Header from '../sections/tracklist/TrackList.Header';
 import FloatButton from '../sections/tracklist/TrackList.FloatButton';
 import List from '../sections/tracklist/TrackList.List';
 import { TrackListScreenProp } from '../navigation/RootNavigator';
@@ -10,6 +9,7 @@ import { IPick } from '../types';
 import { setupIfNeeded } from '../utils/Player';
 import { SampleTrack } from '../assets/sample';
 import { Colors } from '../styles/Colors';
+import Header from '../components/Header';
 
 interface TrackListProp {
 	navigation: TrackListScreenProp;
@@ -17,6 +17,7 @@ interface TrackListProp {
 
 const TrackList = ({ navigation }: TrackListProp) => {
 	const tracks = useSelector((state: any) => state.tracks.tracks);
+	const user = useSelector((state: any) => state.auth.user);
 	let track = useSelector((state: any) => state.tracks.currentTrack);
 	if (!track) {
 		track = SampleTrack;
@@ -26,6 +27,7 @@ const TrackList = ({ navigation }: TrackListProp) => {
 	const backgroundStyle = {
 		backgroundColor: isDarkMode ? Colors.dark.background : Colors.background,
 		flex: 1,
+		paddingBottom: StatusBar.currentHeight,
 	};
 
 	useEffect(() => {
@@ -35,7 +37,7 @@ const TrackList = ({ navigation }: TrackListProp) => {
 	return (
 		<SafeAreaView style={backgroundStyle}>
 			<StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} backgroundColor={isDarkMode ? Colors.dark.background : Colors.background} />
-			<Header tracks={tracks} isDarkMode={isDarkMode} />
+			<Header title={'재생 목록'} navigation={navigation} />
 			<Navigation isDarkMode={isDarkMode} />
 			<List navigation={navigation} tracks={tracks} picks={picks} isDarkMode={isDarkMode} />
 			<FloatButton navigation={navigation} />

@@ -4,6 +4,7 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemL
 import { TabNavigator } from './RootNavigator';
 import { SignInRealName, SignOutAccount } from '../reducers/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Colors } from '../styles/Colors';
 import { useColorScheme } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,11 +19,13 @@ import SignIn from '../templates/signin.template';
 import SignUp from '../templates/signup.template';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Avatar, Divider } from 'native-base';
+import Home from '../templates/home.template';
 
 type DrawerParamList = {
 	TrackList: undefined;
 	AuthStack: undefined;
 	Track: undefined;
+	Home: undefined;
 }
 
 type StackParamList = {
@@ -39,7 +42,11 @@ export type AuthScreenProp = CompositeNavigationProp<
 	NativeStackNavigationProp<StackParamList>
 >;
 
+export type HomeScreenProp = DrawerNavigationProp<DrawerParamList, 'Home'>;
+
 export type AuthScreenRouteProp = RouteProp<StackParamList, 'Auth'>;
+
+export type HomeScreenRouteProp = RouteProp<DrawerParamList, 'Home'>;
 
 const Drawer = createDrawerNavigator();
 
@@ -57,55 +64,24 @@ export const AuthStackNavigator = () => {
 
 export const AppNavigator = () => {
 	const isDarkMode = useColorScheme() === 'dark';
-	const user = useSelector((state: any) => state.auth.user);
+	const [initializing, setInitializing] = useState(true); // Set an initializing state whilst Firebase connects
+	const user = useSelector(state => state.auth.user);
 	const dispatch = useDispatch();
-	// Set an initializing state whilst Firebase connects
-	const [isReady, setIsReady] = useState(false);
-	const login = async (user) => {
-		if (user) {
-			dispatch(SignInRealName(user as FirebaseAuthTypes.User));
-		}
-	};
-	// Handle user state changes
-	function onAuthStateChanged(user) {
-		login(user);
-		if (!isReady) setIsReady(true);
-	}
-
 	useEffect(() => {
+		function onAuthStateChanged(user) {
+			if (user) dispatch(SignInRealName(user));
+			if (initializing) setInitializing(false);
+		}
 		const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-		login(user);
 		SplashScreen.hide();
 		return subscriber; // unsubscribe on unmount
 	}, []);
-
-	useEffect(() => {
-		const restoreState = async () => {
-			try {
-				const initialUrl = await Linking.getInitialURL();
-				if (Platform.OS !== 'web' && initialUrl == null) {
-					// Only restore state if there's no deep link and we're not on web
-					const savedStateString = await AsyncStorage.getItem('user');
-					const state = savedStateString ? JSON.parse(savedStateString) : user;
-					if (state) {
-						dispatch(SignInRealName(user as FirebaseAuthTypes.User));
-					}
-				}
-			} finally {
-				setIsReady(true);
-			}
-		};
-		if (!isReady) {
-			restoreState();
-		}
-	}, [isReady]);
-
-	if (!isReady) return null;
+	if (initializing) return null;
 
 	return (
 		<Drawer.Navigator
 			drawerContent={(props) => <CustomDrawerContent {...props} />}
-			initialRouteName={user ? 'TrackList' : 'AuthStack'}
+			initialRouteName={user ? 'Home' : 'AuthStack'}
 			screenOptions={({ route }) => ({
 				drawerActiveBackgroundColor: isDarkMode ? Colors.dark.background : Colors.background,
 				drawerActiveTintColor: isDarkMode ? Colors.dark.primary : Colors.primary,
@@ -118,12 +94,23 @@ export const AppNavigator = () => {
 					let iconName;
 					const color = focused ? Colors.primary : isDarkMode ? Colors.dark.primary : Colors.primary;
 					if (route.name == 'TrackList')
-						if (focused) iconName = 'ios-list-sharp';
-						else iconName = 'ios-list-outline';
-					return <Ionicons name={iconName} size={25} color={color} />;
+						if (focused) iconName = 'playlist-music';
+						else iconName = 'playlist-music-outline';
+					if (route.name == 'Home')
+						if (focused) iconName = 'home';
+						else iconName = 'home-outline';
+					return <MaterialCommunityIcons name={iconName} size={25} color={color} />;
 				}
 			})}
 		>
+			<Drawer.Screen name="Home" component={Home}
+				options={{
+					title: '홈',
+					drawerLabelStyle: {
+						fontSize: 16,
+					}
+				}}
+			/>
 			<Drawer.Screen name="TrackList" component={TabNavigator}
 				options={{
 					title: '재생 목록',
@@ -170,7 +157,7 @@ function CustomDrawerContent(props) {
 							<DrawerItem
 								label={label}
 								labelStyle={{ fontWeight: 'bold', fontSize: 16 }}
-								onPress={() => props.navigation.navigate('TrackList')}
+								onPress={() => props.navigation.closeDrawer()}
 								icon={() =>
 									<Avatar size={50}
 										bg={isDarkMode ? Colors.dark.primary : Colors.primary}
@@ -211,7 +198,9 @@ function CustomDrawerContent(props) {
 					</>
 				) : (
 					<>
-						<DrawerItemList {...props} />
+						<View>
+							<DrawerItemList {...props} />
+						</View>
 						<View style={{ marginBottom: 40 }}>
 							<DrawerItem
 								label="로그인"

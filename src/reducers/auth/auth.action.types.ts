@@ -15,7 +15,7 @@ export type SignOutAction = {
 };
 
 export type AuthState = {
-	user: FirebaseAuthTypes.User;
+	user: null | FirebaseAuthTypes.User;
 	isLoggedIn: boolean;
 };
 

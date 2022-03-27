@@ -1,7 +1,7 @@
 import React from 'react';
-import { Heading, HStack } from 'native-base';
+import { Avatar, Heading, HStack } from 'native-base';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import { Alert, Dimensions, Pressable } from 'react-native';
+import { Alert, Dimensions, Pressable, TouchableOpacity, useColorScheme } from 'react-native';
 import { pickFiles } from '../../utils/Uploader';
 import { useDispatch } from 'react-redux';
 import { addTrack, resetTrack } from '../../reducers/track';
@@ -9,17 +9,36 @@ import TrackPlayer from 'react-native-track-player';
 import { convertTrackType } from '../../utils/Player';
 import { ITrack } from '../../types';
 import { Colors } from '../../styles/Colors';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { TrackListScreenProp } from '../../navigation/RootNavigator';
 
 interface HeaderProps {
 	tracks: ITrack[];
-	isDarkMode: boolean;
+	user: FirebaseAuthTypes.User;
+	navigation: TrackListScreenProp;
 }
 
-function Header({ tracks, isDarkMode }: HeaderProps) {
+function Header({ tracks, navigation, user }: HeaderProps) {
 	const dispatch = useDispatch();
+	const isDarkMode = useColorScheme() === 'dark';
+
 	return (
-		<HStack justifyContent={'space-between'} w="100%" h="50">
-			<Heading color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText} fontSize="2xl" pl="4" pt='2'>트랙리스트</Heading>
+		<HStack p='1' ml='3' mt='2' mb='1' justifyContent={'space-between'} alignItems={'center'}>
+			<TouchableOpacity
+				onPress={() => {
+					navigation.openDrawer();
+				}}>
+				<Avatar size={30}
+					bg={isDarkMode ? Colors.dark.primary : Colors.primary}
+					source={{
+						uri: user?.photoURL
+					}}></Avatar>
+			</TouchableOpacity>
+			<Heading
+				color={isDarkMode ? Colors.dark.primaryText : Colors.primaryText}
+				fontSize="xl">
+				트랙리스트
+			</Heading>
 			<HStack space='3' alignItems={'center'}>
 				<Pressable onPress={async () => {
 					Alert.alert(
